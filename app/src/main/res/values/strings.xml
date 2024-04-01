@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Time Manager</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="sign_up">Войти</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="fill_all_field">Заполните все поля</string>
+    <string name="registration_completed_successfully">Регистрация прошла успешно</string>
+    <string name="error_has_occurred">Произошла ошибка: \n%s</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="accept_edit">Подтвердить</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="my_profile">Мой профиль</string>
+    <string name="create_new_profile">Создать новый профиль</string>
+    <string name="my_balance">Мой баланс</string>
+    <string name="register_new_profile">Регистрация нового пользователя</string>
+    <string name="parent">Родитель</string>
+    <string name="сhildren">Ребёнок</string>
+    <string name="set_you_role">Укажите, кто вы</string>
+    <string name="exit_profile">Выйти из профиля</string>
+    <string name="my_tasks">Мои задачи</string>
+    <string name="show_today">На сегодня</string>
+    <string name="show_all">Все</string>
+</resources>

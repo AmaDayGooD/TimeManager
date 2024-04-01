@@ -1,0 +1,78 @@
+package com.example.timemanager.ui.screens.profile
+
+import android.util.Log
+import com.example.timemanager.TimeManagerApp
+import com.example.timemanager.data.DataProfile
+import com.example.timemanager.data.Repository
+import com.example.timemanager.data.local_data_base.DataBaseDao
+import com.example.timemanager.data.local_data_base.Settings
+import com.example.timemanager.entity.Profile
+import com.example.timemanager.ui.base.BasePresenter
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import javax.inject.Inject
+
+class ProfilePresenter : BasePresenter<ProfileView>() {
+
+    companion object{
+        const val PREFIX_TOKEN = "Bearer"
+    }
+
+    init {
+        TimeManagerApp.appComponent!!.inject(this)
+    }
+
+    @Inject
+    lateinit var retrofit: Retrofit
+
+    @Inject
+    lateinit var dataBase: DataBaseDao
+
+    @Inject
+    lateinit var settings: Settings
+
+    private val repository: Repository = Repository(coroutineContext, retrofit, dataBase)
+
+    private lateinit var profile: Profile
+    private val token: String
+
+    init {
+        token = "$PREFIX_TOKEN ${getToken()}"
+    }
+
+    fun getProfile() {
+        launch {
+            profile = repository.getProfile(token)
+            viewState.setProfile(profile)
+        }
+    }
+
+    private fun getToken(): String {
+        return settings.getToken() ?: ""
+    }
+
+    fun editProfile(firstName: String, lastName: String) {
+        val profile = DataProfile(
+            username = "$firstName $lastName"
+        )
+        launch {
+            repository.editProfile(token, profile)
+            viewState.setDefaultVisibleButton()
+            getProfile()
+        }
+    }
+
+    fun getTasks() {
+        launch {
+            val listTasks = repository.getTasks(token)
+            listTasks?.forEach { task ->
+                Log.d("MyLog", "ЗАДАЧА: $task")
+            }
+        }
+    }
+
+    fun requestGotoAuthorization() {
+        settings.deleteToken()
+        viewState.gotoAuthorization()
+    }
+}

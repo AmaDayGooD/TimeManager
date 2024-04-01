@@ -1,0 +1,65 @@
+package com.example.timemanager.ui.screens.list_task
+
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.timemanager.R
+import com.example.timemanager.databinding.ActivityTasksBinding
+import com.example.timemanager.entity.Task
+import com.example.timemanager.ui.base.BaseActivity
+import com.example.timemanager.ui.screens.list_task.recycle_view.TaskListAdapter
+import com.omega_r.libs.extensions.context.orientation
+
+@RequiresApi(Build.VERSION_CODES.O)
+class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView {
+
+    private lateinit var binding: ActivityTasksBinding
+
+    override val presenter: TasksPresenter by providePresenter {
+        TasksPresenter()
+    }
+
+    companion object {
+        fun createIntentTaskActivity(context: Context): Intent {
+            return Intent(context, TasksActivity::class.java)
+        }
+    }
+
+    lateinit var recyclerView: RecyclerView
+
+    lateinit var buttonChangeView: Button
+    private val adapter = TaskListAdapter()
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityTasksBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        recyclerView = binding.recycleViewList
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+
+        buttonChangeView = binding.buttonChangeView
+
+        buttonChangeView.setOnClickListener {
+            presenter.changeViewList()
+        }
+
+        presenter.getTasks()
+    }
+
+    override fun setTaskList(list: List<Task>, state: Boolean) {
+        adapter.setList(list)
+        if (state) binding.buttonChangeView.text = getString(R.string.show_all)
+        else binding.buttonChangeView.text = getString(R.string.show_today)
+    }
+
+}
