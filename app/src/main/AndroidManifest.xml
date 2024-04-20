@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeManager"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        android:windowSoftInputMode="adjustPan|adjustResize"
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.screens.my_task.MyTaskActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.screens.my_children.MyChildrenActivity"
             android:exported="false" />
@@ -23,16 +27,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.screens.profile.ProfileActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:exported="false" />
         <activity
             android:name=".ui.screens.registration.RegistrationActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:exported="false" />
         <activity
             android:name=".ui.screens.authorization.AuthorizationActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan|adjustResize" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

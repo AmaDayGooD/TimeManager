@@ -11,4 +11,7 @@ interface AuthorizationView : BaseView {
 
     @MoxyViewCommand(StrategyType.SINGLE)
     fun requestGotoRegisterActivity()
+
+    @MoxyViewCommand(StrategyType.SINGLE)
+    fun showToast(text: String)
 }

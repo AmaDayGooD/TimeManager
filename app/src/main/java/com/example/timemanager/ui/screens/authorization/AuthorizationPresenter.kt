@@ -1,6 +1,7 @@
 package com.example.timemanager.ui.screens.authorization
 
 import android.util.Log
+import android.widget.Toast
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
@@ -32,22 +33,24 @@ class AuthorizationPresenter() : BasePresenter<AuthorizationView>() {
 
     fun checkEmptyTextField(login: String, password: String) {
         if (login.isEmpty() || password.isEmpty()) {
-            log("Веди логин и пароль!")
+            viewState.showToast("Заолните все поля")
         } else {
             authorization(login, password)
         }
     }
 
     private fun authorization(login: String, password: String) {
+        viewState.showLoading()
         launch {
             try {
                 val token = repository.login(login, password)
                 if (token != null) {
                     settings.saveToken(token)
                     viewState.requestGotoMainActivity()
+                    viewState.closeLoading()
                 }
             } catch (e: Exception) {
-                log("Error $e")
+                viewState.closeLoading()
                 e.printStackTrace()
             }
         }

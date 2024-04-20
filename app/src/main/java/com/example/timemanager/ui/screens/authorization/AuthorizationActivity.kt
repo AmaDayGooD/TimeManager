@@ -1,11 +1,16 @@
 package com.example.timemanager.ui.screens.authorization
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.ContentInfoCompat.Flags
 import com.example.timemanager.R
 import com.example.timemanager.databinding.ActivityAuthorizationBinding
@@ -22,13 +27,14 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
         AuthorizationPresenter()
     }
 
-    companion object{
+    companion object {
         fun createIntentAuthScreen(context: Context): Intent {
             return Intent(context, AuthorizationActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             }
         }
     }
+
     private lateinit var buttonLogin: Button
     private lateinit var buttonRegister: TextView
     private lateinit var editTextLogin: EditText
@@ -45,8 +51,8 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
         editTextPassword = binding.editTextPassword
 
         buttonLogin.setOnClickListener {
-            val textLogin = binding.editTextLogin.text.toString()
-            val textPassword = binding.editTextPassword.text.toString()
+            val textLogin = binding.editTextLogin.text.toString().trim()
+            val textPassword = binding.editTextPassword.text.toString().trim()
             presenter.checkEmptyTextField(textLogin, textPassword)
         }
 
@@ -63,4 +69,15 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
         startActivity(createIntentRegistrationScreen(this))
     }
 
+    override fun showToast(text: String) {
+        showToast(this, text)
+    }
+
+    override fun showLoading() {
+        showDialog(this)
+    }
+
+    override fun closeLoading() {
+        closeDialog()
+    }
 }
