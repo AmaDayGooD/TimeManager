@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface RemoteApi {
 
@@ -41,4 +42,27 @@ interface RemoteApi {
         @Header("Authorization") token: String?
     ): List<DataTask>
 
+    @GET("tasks/{taskId}")
+    suspend fun getTask(
+        @Header("Authorization") token: String?,
+        @Path("taskId") taskId: String
+    ): DataTask
+
+    @POST("/family/relations/create")
+    suspend fun addChild(
+        @Header("Authorization") token: String,
+        @Body profile: DataProfile
+    )
+
+    @GET("/family/children")
+    suspend fun getChildren(
+        @Header("Authorization") token: String?
+    ): List<DataProfile>
+
+
+    @GET("family/children/{childId}/tasks")
+    suspend fun getChildrenTasks(
+        @Header("Authorization") token: String?,
+        @Path("childId") childId: String,
+    ): List<DataTask>
 }

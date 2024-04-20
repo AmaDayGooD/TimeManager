@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.timemanager.R
 import com.example.timemanager.entity.Task
 
-class TaskListAdapter : RecyclerView.Adapter<ItemHolder>() {
+class TaskListAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<ItemHolder>() {
 
     private var listItem: List<Task> = emptyList()
 
@@ -19,7 +19,7 @@ class TaskListAdapter : RecyclerView.Adapter<ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
-        return ItemHolder(view)
+        return ItemHolder(view, listener)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -28,7 +28,6 @@ class TaskListAdapter : RecyclerView.Adapter<ItemHolder>() {
     }
 
     override fun getItemCount(): Int {
-        val size = listItem.size
-        return size
+        return listItem.size
     }
 }

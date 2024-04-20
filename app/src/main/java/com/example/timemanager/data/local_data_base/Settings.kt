@@ -1,7 +1,6 @@
 package com.example.timemanager.data.local_data_base
 
 import android.content.Context
-import android.util.Log
 
 class Settings(context: Context) {
 
@@ -15,15 +14,11 @@ class Settings(context: Context) {
         context.getSharedPreferences(PATH_FOR_TOKEN, Context.MODE_PRIVATE)
 
     fun saveToken(value: String) {
-        Log.d("MyLog", "token $value")
         sharedPreferences.edit().putString(KEY_FOR_TOKEN, value).apply()
     }
 
     fun getToken(): String? {
-        val token = sharedPreferences.getString(KEY_FOR_TOKEN, null)
-
-        Log.d("MyLog", "token $token")
-        return token
+        return sharedPreferences.getString(KEY_FOR_TOKEN, null)
     }
 
     fun deleteToken() {

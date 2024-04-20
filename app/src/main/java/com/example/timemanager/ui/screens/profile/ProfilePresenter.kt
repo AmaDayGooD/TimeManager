@@ -5,6 +5,7 @@ import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
+import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.data.local_data_base.Settings
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BasePresenter
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 class ProfilePresenter : BasePresenter<ProfileView>() {
 
-    companion object{
+    companion object {
         const val PREFIX_TOKEN = "Bearer"
     }
 
@@ -51,23 +52,18 @@ class ProfilePresenter : BasePresenter<ProfileView>() {
         return settings.getToken() ?: ""
     }
 
+    fun isParent(): Boolean = profile.userRole == Role.Parent
+
     fun editProfile(firstName: String, lastName: String) {
+        firstName.replace('ё', 'е', ignoreCase = true)
+        lastName.replace('ё', 'е', ignoreCase = true)
         val profile = DataProfile(
-            username = "$firstName $lastName"
+            username = firstName + lastName
         )
         launch {
             repository.editProfile(token, profile)
             viewState.setDefaultVisibleButton()
             getProfile()
-        }
-    }
-
-    fun getTasks() {
-        launch {
-            val listTasks = repository.getTasks(token)
-            listTasks?.forEach { task ->
-                Log.d("MyLog", "ЗАДАЧА: $task")
-            }
         }
     }
 

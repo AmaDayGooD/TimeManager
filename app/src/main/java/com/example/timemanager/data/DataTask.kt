@@ -38,6 +38,7 @@ data class DataTask(
 
     override val seriousness: Importance
         get() {
+            println("MyLog $importance")
             return Importance.valueOf(importance ?: Importance.Low.toString())
         }
 }

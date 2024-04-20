@@ -49,6 +49,8 @@ class RegistrationPresenter() : BasePresenter<RegistrationView>() {
     }
 
     fun onCheckFirstAndLastNames(firstName: String, lastName: String) {
+        firstName.replace('ё','е',ignoreCase = true)
+        lastName.replace('ё','е',ignoreCase = true)
         when{
             (firstName.isEmpty() && lastName.isEmpty()) -> {
                 viewState.emptyFirstAndLastNames(ALL)
@@ -105,9 +107,7 @@ class RegistrationPresenter() : BasePresenter<RegistrationView>() {
     private fun successfulRegistration(profile: DataProfile) {
         launch {
             val token = repository.login(profile.login!!, profile.password!!)
-            Log.d("MyLog","token $token")
             settings.saveToken(token.orEmpty())
-            Log.d("MyLog","settings ${settings.getToken()}")
             viewState.successfulRegistration()
         }
     }

@@ -19,7 +19,10 @@ data class DataProfile(
     )
 
     override var userRole: Role
-        get() = Role.valueOf(role ?: Role.Child.toString())
+        get()  {
+            println("MyLog role $role")
+           return Role.valueOf(role ?: Role.Child.toString())
+        }
         set(value) {}
 
     override val count: Int?

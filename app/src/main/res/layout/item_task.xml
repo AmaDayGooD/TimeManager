@@ -9,6 +9,7 @@
     app:cardCornerRadius="26dp">
 
     <LinearLayout
+        android:id="@+id/task_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -27,7 +28,7 @@
                 android:layout_weight="2"
                 android:lines="2"
                 android:maxLines="2"
-                android:text="Название задачи"
+                android:text="@string/task_name"
                 android:textColor="@color/main"
                 android:textSize="20sp" />
 

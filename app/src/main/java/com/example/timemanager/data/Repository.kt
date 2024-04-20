@@ -1,6 +1,5 @@
 package com.example.timemanager.data
 
-import android.util.Log
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.data.remote_data_base.GetDataFromApi
@@ -67,5 +66,41 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun getTask(token: String, taskId: String): Task? {
+        return try {
+            retrofit.getTask(token, taskId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun getChildrenTask(token: String, childId: String): List<Task>? {
+        return try {
+            retrofit.getChildrenTasks(token, childId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun getChildren(token: String): List<Profile>? {
+        return try {
+            retrofit.getChildren(token)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun addChild(token: String, profile: DataProfile): Boolean {
+        return try {
+            retrofit.addChild(token, profile)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
 
 }

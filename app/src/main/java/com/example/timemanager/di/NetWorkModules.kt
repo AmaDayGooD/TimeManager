@@ -23,7 +23,7 @@ class NetWorkModules {
             .add(KotlinJsonAdapterFactory())
             .build()
 
-        return Retrofit.Builder().baseUrl("http://192.168.0.102:3000/")
+        return Retrofit.Builder().baseUrl("https://savinov.site/")
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(client).build()
     }
 }

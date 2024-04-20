@@ -18,9 +18,20 @@
     <string name="register_new_profile">Регистрация нового пользователя</string>
     <string name="parent">Родитель</string>
     <string name="сhildren">Ребёнок</string>
-    <string name="set_you_role">Укажите, кто вы</string>
+    <string name="set_you_role">Выберите роль:</string>
     <string name="exit_profile">Выйти из профиля</string>
     <string name="my_tasks">Мои задачи</string>
     <string name="show_today">На сегодня</string>
     <string name="show_all">Все</string>
+    <string name="my_children">Мои дети</string>
+    <string name="add_chldren">Добавить ребёнка</string>
+    <string name="task_name">Название задачи</string>
+    <string name="find_child">Найти ребёнка</string>
+    <string name="filed_find">Пользователя с данным\nлогином и паролем не найдено\nили вы уже добавили этот профиль</string>
+    <string name="child_added">Ребёнок добавлен</string>
+    <string name="paren">Родитель</string>
+    <string name="task">Задача</string>
+    <string name="description_task">Описание задачи</string>
+    <string name="urgency">Срочность</string>
+    <string name="confirm">Подтвердить выполнение</string>
 </resources>

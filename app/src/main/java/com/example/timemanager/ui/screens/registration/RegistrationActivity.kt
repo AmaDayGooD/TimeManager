@@ -94,7 +94,6 @@ class RegistrationActivity : BaseActivity(R.layout.activity_registration), Regis
             presenter.onChildRole()
         }
 
-
         buttonContinueRegistration.setOnClickListener {
             val firstName = firstNameEditText.text.toString()
             val lastName = lastNameEditText.text.toString()
