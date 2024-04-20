@@ -67,8 +67,6 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         buttonStatistics = binding.buttonStatistics
         buttonLeaderBoard = binding.buttonLeaderBoard
 
-        presenter.getProfile()
-        //presenter.getTasks()
 
         buttonMyChildren.setOnClickListener {
             startActivity(createIntentMyChildren(this))
@@ -101,14 +99,16 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
     }
 
     override fun setProfile(profile: Profile) {
-        println("MyLog $profile")
         val username = profile.username?.split(" ")
         textViewFirstName.text = username?.get(0) ?: ""
         textViewLastName.text = username?.get(1) ?: ""
         if (presenter.isParent()) {
             labelMyBalance.text = getString(R.string.paren)
-            textViewBalance.visibility = View.GONE
-        } else textViewBalance.text = (profile.count ?: "0") as CharSequence?
+        } else {
+            textViewBalance.visibility = View.VISIBLE
+            textViewBalance.text = (profile.count ?: "0") as CharSequence?
+        }
+        closeLoading()
     }
 
     override fun setDefaultVisibleButton() {
@@ -124,5 +124,17 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
     override fun gotoAuthorization() {
         startActivity(createIntentAuthScreen(this))
+    }
+
+    override fun showToast(text: String) {
+        showToast(this, text)
+    }
+
+    override fun showLoading() {
+        showDialog(this)
+    }
+
+    override fun closeLoading() {
+        closeDialog()
     }
 }

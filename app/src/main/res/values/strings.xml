@@ -34,4 +34,5 @@
     <string name="description_task">Описание задачи</string>
     <string name="urgency">Срочность</string>
     <string name="confirm">Подтвердить выполнение</string>
+    <string name="invalid_password">Неверный пароль</string>
 </resources>

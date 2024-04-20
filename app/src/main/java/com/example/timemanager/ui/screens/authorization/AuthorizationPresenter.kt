@@ -2,6 +2,7 @@ package com.example.timemanager.ui.screens.authorization
 
 import android.util.Log
 import android.widget.Toast
+import com.example.timemanager.R
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
@@ -48,6 +49,8 @@ class AuthorizationPresenter() : BasePresenter<AuthorizationView>() {
                     settings.saveToken(token)
                     viewState.requestGotoMainActivity()
                     viewState.closeLoading()
+                } else {
+                    viewState.invalidPassword()
                 }
             } catch (e: Exception) {
                 viewState.closeLoading()

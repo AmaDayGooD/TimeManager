@@ -24,6 +24,10 @@ public open class AuthorizationMvpViewState<OMEGAVIEW : AuthorizationView> :
 		apply(ShowToastCommand(text))
 	}
 
+	override fun invalidPassword() {
+		apply(InvalidPasswordCommand())
+	}
+
 	override fun log(message: String) {
 		apply(LogCommand(message))
 	}
@@ -67,6 +71,15 @@ public open class AuthorizationMvpViewState<OMEGAVIEW : AuthorizationView> :
 		}
 
 		override fun toString(): String = buildString("showToast","text",text)
+	}
+
+	private class InvalidPasswordCommand<OMEGAVIEW : AuthorizationView>() :
+			ViewCommand<OMEGAVIEW>("invalidPassword", SingleStateStrategy) {
+		override fun apply(mvpView: OMEGAVIEW) {
+			mvpView.invalidPassword()
+		}
+
+		override fun toString(): String = buildString("invalidPassword",)
 	}
 
 	private class LogCommand<OMEGAVIEW : AuthorizationView>(

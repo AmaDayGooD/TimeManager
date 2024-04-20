@@ -43,7 +43,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical"
-            android:padding="30dp">
+            android:paddingBottom="20dp"
+            android:paddingTop="30dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_balance"
+                    android:visibility="gone"
                     android:textSize="26sp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -65,8 +69,8 @@
                     android:drawableEnd="@drawable/ic_coin_fire"
                     android:drawablePadding="10dp"
                     android:maxLength="7"
-                    android:text="1235621"
                     android:textAlignment="textEnd"
+                    android:visibility="gone"
                     android:textColor="@color/score_text"
                     android:textSize="26sp" />
             </LinearLayout>
@@ -137,7 +141,6 @@
                 android:id="@+id/button_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
                 android:padding="15dp"
                 app:cornerRadius="26dp"
                 android:elevation="0dp"

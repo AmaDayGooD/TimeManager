@@ -61,6 +61,12 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
         }
     }
 
+    override fun invalidPassword() {
+        closeDialog()
+        showToast(this, this.getString(R.string.invalid_password))
+    }
+
+
     override fun requestGotoMainActivity() {
         startActivity(createIntentMainScreen(this))
     }

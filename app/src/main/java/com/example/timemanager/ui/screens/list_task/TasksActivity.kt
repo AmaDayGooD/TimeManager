@@ -65,14 +65,22 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
     }
 
     override fun setTaskList(list: List<Task>, state: Boolean) {
-        println("MyLog list $list")
         adapter.setList(list)
         if (state) binding.buttonChangeView.text = getString(R.string.show_all)
         else binding.buttonChangeView.text = getString(R.string.show_today)
+        closeLoading()
     }
 
     override fun onClickOpenTask(taskId: Int) {
         startActivity(createIntentMyTask(this, taskId))
+    }
+
+    override fun showLoading() {
+        showDialog(this)
+    }
+
+    override fun closeLoading() {
+        closeDialog()
     }
 
 }

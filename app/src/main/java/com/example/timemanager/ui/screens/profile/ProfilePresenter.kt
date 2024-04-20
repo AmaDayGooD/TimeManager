@@ -11,6 +11,7 @@ import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BasePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
+import java.lang.Exception
 import javax.inject.Inject
 
 class ProfilePresenter : BasePresenter<ProfileView>() {
@@ -38,10 +39,12 @@ class ProfilePresenter : BasePresenter<ProfileView>() {
     private val token: String
 
     init {
+        viewState.showLoading()
         token = "$PREFIX_TOKEN ${getToken()}"
+        getProfile()
     }
 
-    fun getProfile() {
+    private fun getProfile() {
         launch {
             profile = repository.getProfile(token)
             viewState.setProfile(profile)
@@ -55,10 +58,11 @@ class ProfilePresenter : BasePresenter<ProfileView>() {
     fun isParent(): Boolean = profile.userRole == Role.Parent
 
     fun editProfile(firstName: String, lastName: String) {
+        viewState.showLoading()
         firstName.replace('ё', 'е', ignoreCase = true)
         lastName.replace('ё', 'е', ignoreCase = true)
         val profile = DataProfile(
-            username = firstName + lastName
+            username = "$firstName $lastName"
         )
         launch {
             repository.editProfile(token, profile)

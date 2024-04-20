@@ -64,11 +64,12 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
 
     override fun setList(childList: List<Profile>) {
         adapter.setList(childList)
+        closeLoading()
     }
 
     private fun showInputDialog() {
         dialog = Dialog(this, R.style.DialogStyle)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE) // Переместите вызов requestWindowFeature() перед setContentView()
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.dialog_add_child)
 
@@ -102,5 +103,13 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
 
     override fun filedAdded() {
         Toast.makeText(this, getString(R.string.filed_find), Toast.LENGTH_LONG).show()
+    }
+
+    override fun showLoading() {
+        showDialog(this)
+    }
+
+    override fun closeLoading() {
+        closeDialog()
     }
 }

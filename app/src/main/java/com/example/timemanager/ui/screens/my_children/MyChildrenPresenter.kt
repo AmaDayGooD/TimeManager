@@ -51,6 +51,7 @@ class MyChildrenPresenter : BasePresenter<MyChildrenView>() {
     }
 
     fun getChild() {
+        viewState.showLoading()
         launch {
             val listChildren = repository.getChildren(token)
             viewState.setList(listChildren.orEmpty())

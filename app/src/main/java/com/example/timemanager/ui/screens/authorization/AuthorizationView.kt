@@ -14,4 +14,6 @@ interface AuthorizationView : BaseView {
 
     @MoxyViewCommand(StrategyType.SINGLE)
     fun showToast(text: String)
+@MoxyViewCommand(StrategyType.SINGLE)
+    fun invalidPassword()
 }

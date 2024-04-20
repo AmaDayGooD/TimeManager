@@ -180,4 +180,12 @@ class RegistrationActivity : BaseActivity(R.layout.activity_registration), Regis
         Toast.makeText(this, getString(R.string.error_has_occurred, text), Toast.LENGTH_SHORT)
             .show()
     }
+
+    override fun showLoading() {
+        showDialog(this)
+    }
+
+    override fun closeLoading() {
+        closeDialog()
+    }
 }

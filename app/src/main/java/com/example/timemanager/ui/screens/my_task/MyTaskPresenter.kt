@@ -34,6 +34,7 @@ class MyTaskPresenter : BasePresenter<MyTaskView>() {
     fun getTask(taskId: Int) {
         launch {
             taskInfo = repository.getTask(token, taskId.toString())
+            log("taskInfo $taskInfo")
             viewState.setTaskInfo(taskInfo)
         }
     }

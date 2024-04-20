@@ -6,6 +6,8 @@ import com.omegar.mvp.viewstate.strategy.MoxyViewCommand
 import com.omegar.mvp.viewstate.strategy.StrategyType
 
 interface ProfileView : BaseView {
+    @MoxyViewCommand(StrategyType.SKIP)
+    fun showToast(text: String)
 
     @MoxyViewCommand(StrategyType.ADD_TO_END)
     fun setProfile(profile: Profile)

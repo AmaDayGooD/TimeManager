@@ -39,6 +39,7 @@ class TasksPresenter : BasePresenter<TasksView>() {
 
     fun getTasks() {
         launch {
+            viewState.showLoading()
             val listTasks = repository.getTasks(token)
             showAllTasks = true
             viewState.setTaskList(listTasks ?: emptyList(), showAllTasks)
