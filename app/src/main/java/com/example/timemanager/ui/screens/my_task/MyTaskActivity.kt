@@ -3,18 +3,15 @@ package com.example.timemanager.ui.screens.my_task
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.timemanager.R
 import com.example.timemanager.data.Condition
@@ -24,7 +21,8 @@ import com.example.timemanager.databinding.ActivityMyTaskBinding
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
-import com.omega_r.libs.omegatypes.backgroundColor
+import com.google.android.material.button.MaterialButton
+import com.omega_r.bind.model.binders.bindBackgroundTintColor
 
 class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
@@ -42,18 +40,21 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         }
     }
 
-    private lateinit var dialog: Dialog
+    private lateinit var dialogChangeStatusTask: Dialog
 
     private lateinit var buttonBack: ImageButton
+    private lateinit var textAward: TextView
     private lateinit var textViewNameTask: TextView
     private lateinit var textViewDescriptionTask: TextView
+    private lateinit var buttonEditTask: MaterialButton
     private lateinit var buttonTaskCompleted: Button
     private lateinit var buttonTaskNotCompleted: Button
     private lateinit var textTaskPerformer: TextView
     private lateinit var buttonTaskState: Button
 
-    private var idTask: Int = -1
+    private lateinit var seriousness: Importance
 
+    private var idTask: Int = -1
     private var isParent: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +65,14 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         idTask = intent.getIntExtra(TASK_ID, -1)
 
         buttonBack = binding.buttonBack
+        textAward = binding.textAward
         textViewNameTask = binding.textViewNameTask
         textViewDescriptionTask = binding.textViewDescriptionTask
+        buttonEditTask = binding.buttonEditTask
         buttonTaskCompleted = binding.buttonTaskCompleted
         buttonTaskNotCompleted = binding.buttonTaskNotCompleted
         textTaskPerformer = binding.textTaskPerformer
         buttonTaskState = binding.buttonTaskState
-
 
         buttonBack.setOnClickListener {
             finish()
@@ -101,9 +103,11 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     override fun setTaskInfo(task: Task?, userRole: Role, taskPerformer: Profile?) {
+        seriousness = task?.seriousness ?: Importance.Medium
+        textAward.text = task?.award
         textViewNameTask.text = task?.taskName
         setSeriousness(task?.seriousness ?: Importance.Medium)
-        setState(task?.condition ?: Condition.Open)
+        setState(buttonTaskState, task?.condition ?: Condition.Open)
         if (task?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
         else textViewDescriptionTask.text = task?.description
 
@@ -125,38 +129,84 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
                 isParent = true
             }
         }
+        setRole()
+        closeLoading()
     }
 
-    private fun setState(state: Condition) {
-        when (state) {
-            Condition.Accept -> {
-                buttonTaskState.apply {
-                    setBackgroundColor(getColor(R.color.accept))
-                    text = getString(R.string.task_accept)
-                }
+    private fun setRole() {
+        if (isParent) {
+            buttonEditTask.visibility = View.VISIBLE
+            buttonTaskNotCompleted.visibility = View.VISIBLE
+
+            buttonEditTask.setOnClickListener {
+                enableEditField()
             }
 
-            Condition.Completed -> {
-                buttonTaskState.apply {
-                    setBackgroundColor(getColor(R.color.completed))
-                    text = getString(R.string.task_completed)
-                }
-            }
+            buttonTaskNotCompleted.setOnClickListener {
 
-            Condition.Open -> {
-                buttonTaskState.apply {
-                    setBackgroundColor(getColor(R.color.main))
-                    text = getString(R.string.task_open)
-                }
+            }
+            buttonTaskCompleted.setOnClickListener {
 
             }
 
-            Condition.Reject -> {
-                buttonTaskState.apply {
-                    setBackgroundColor(getColor(R.color.reject))
-                    text = getString(R.string.task_reject)
+        } else {
+            buttonEditTask.visibility = View.GONE
+            buttonTaskNotCompleted.visibility = View.GONE
+
+            buttonTaskNotCompleted.setOnClickListener {
+
+            }
+            buttonTaskCompleted.setOnClickListener {
+
+            }
+        }
+    }
+
+    private fun enableEditField() {
+        setViewProperties(textViewNameTask, true, R.color.black)
+        setViewProperties(textAward, true, R.color.black)
+        setViewProperties(textViewDescriptionTask, true, R.color.black)
+
+
+        with(binding) {
+            icLowSeriousness.apply {
+                isClickable = true
+                setOnClickListener {
+                    setSeriousness(Importance.Low)
                 }
             }
+            icMediumSeriousness.apply {
+                isClickable = true
+                setOnClickListener {
+                    setSeriousness(Importance.Medium)
+                }
+            }
+            icHighSeriousness.apply {
+                isClickable = true
+                setOnClickListener {
+                    setSeriousness(Importance.High)
+                }
+            }
+            icExtraHighSeriousness.apply {
+                isClickable = true
+                setOnClickListener {
+                    setSeriousness(Importance.ExtraHigh)
+                }
+            }
+        }
+    }
+
+    private fun setViewProperties(view: View, isEnabled: Boolean, colorResId: Int) {
+        view.apply {
+            this.isEnabled = isEnabled
+            backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this@MyTaskActivity, colorResId))
+        }
+    }
+
+    private fun setState(button: Button, state: Condition) {
+        button.apply {
+            text = getString(state.textResId)
+            setBackgroundColor(ContextCompat.getColor(this@MyTaskActivity, state.colorRes))
         }
     }
 
@@ -198,17 +248,17 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
     private fun showInputDialog() {
         val task = presenter.getTask()
-        dialog = Dialog(this, R.style.DialogStyle)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(true)
-        dialog.setContentView(R.layout.dialog_change_state_task)
+        dialogChangeStatusTask = Dialog(this, R.style.DialogStyle)
+        dialogChangeStatusTask.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogChangeStatusTask.setCancelable(true)
+        dialogChangeStatusTask.setContentView(R.layout.dialog_change_state_task)
 
-        val taskState = dialog.findViewById<Button>(R.id.button_task_state)
-        val buttonStateOpen = dialog.findViewById<Button>(R.id.button_select_state_open)
-        val buttonStateCompleted = dialog.findViewById<Button>(R.id.button_select_state_completed)
-        val buttonStateReject = dialog.findViewById<Button>(R.id.button_select_state_reject)
-        val buttonStateAccept = dialog.findViewById<Button>(R.id.button_select_state_accept)
-        val buttonApplyChange = dialog.findViewById<Button>(R.id.button_apply_changes)
+        val taskState = dialogChangeStatusTask.findViewById<Button>(R.id.button_task_state)
+        val buttonStateOpen = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_open)
+        val buttonStateCompleted = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_completed)
+        val buttonStateReject = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_reject)
+        val buttonStateAccept = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_accept)
+        val buttonApplyChange = dialogChangeStatusTask.findViewById<Button>(R.id.button_apply_changes)
 
         var taskStatus: Condition = task.condition ?: Condition.Open
 
@@ -224,7 +274,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             buttonStateAccept to Condition.Accept
         )
 
-        // Для каждой кнопки устанавливаем обработчик нажатия
         buttons.forEach { (button, condition) ->
             button?.setOnClickListener {
                 taskState?.apply {
@@ -235,53 +284,19 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             }
         }
 
-
-//        buttonStateOpen.setOnClickListener {
-//            taskState?.apply {
-//                text = getString(R.string.task_open)
-//                setBackgroundColor(getColor(R.color.main))
-//            }
-//            taskStatus = Condition.Open
-//        }
-//
-//        buttonStateCompleted.setOnClickListener {
-//            taskState?.apply {
-//                text = getString(R.string.task_completed)
-//                setBackgroundColor(getColor(R.color.completed))
-//            }
-//            taskStatus = Condition.Completed
-//        }
-//
-//        buttonStateReject.setOnClickListener {
-//            taskState?.apply {
-//                text = getString(R.string.task_reject)
-//                setBackgroundColor(getColor(R.color.reject))
-//            }
-//            taskStatus = Condition.Reject
-//        }
-//
-//        buttonStateAccept.setOnClickListener {
-//            taskState?.apply {
-//                text = getString(R.string.task_accept)
-//                setBackgroundColor(getColor(R.color.accept))
-//            }
-//            taskStatus = Condition.Accept
-//        }
-
         buttonApplyChange.setOnClickListener {
             presenter.updateTaskStatus(taskStatus)
         }
 
-        val window = dialog.window
+        val window = dialogChangeStatusTask.window
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
         )
-        dialog.show()
+        dialogChangeStatusTask.show()
     }
 
-
     override fun closeDialogChangeStatus() {
-        dialog.dismiss()
+        dialogChangeStatusTask.dismiss()
     }
 
     override fun closeLoading() {

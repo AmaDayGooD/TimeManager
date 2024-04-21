@@ -43,4 +43,5 @@
     <string name="task_accept">Принята</string>
     <string name="state_task">Статус задачи</string>
     <string name="apply_changes">Применить изменения</string>
+    <string name="edit_task">Редактировать задачу</string>
 </resources>

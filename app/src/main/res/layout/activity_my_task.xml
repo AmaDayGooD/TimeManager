@@ -62,70 +62,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/manrope_bold"
-                            android:text="Исполнитель"
-                            android:textColor="@color/main"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/text_task_performer"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="15dp"
-                            android:fontFamily="@font/manrope_semi_bold"
-                            android:maxLines="3"
-                            android:textSize="24sp" />
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/task_name"
-                        android:textColor="@color/main"
-                        android:textSize="26sp" />
-
-                    <TextView
-                        android:id="@+id/text_view_name_task"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
-                        android:fontFamily="@font/manrope_semi_bold"
-                        android:maxLines="3"
-                        android:textSize="24sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/manrope_bold"
-                            android:text="@string/urgency"
-                            android:textSize="24sp" />
+                        android:orientation="horizontal">
 
                         <LinearLayout
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="end"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -152,12 +96,79 @@
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_lightning" />
                         </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/text_award"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableEnd="@drawable/ic_award_fire"
+                            android:drawablePadding="5dp"
+                            android:enabled="true"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical|end"
+                            android:textColor="@color/main"
+                            android:textSize="20sp"
+                            android:maxLines="1"
+                            android:maxLength="6"
+                            android:backgroundTint="@android:color/transparent" />
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Исполнитель"
+                            android:textColor="@color/main"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/text_task_performer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="@font/manrope_semi_bold"
+                            android:maxLines="3"
+                            android:textColor="@color/gray"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/task_name"
+                        android:textColor="@color/main"
+                        android:textSize="26sp" />
+
+                    <EditText
+                        android:id="@+id/text_view_name_task"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:backgroundTint="@color/background_edit_text"
+                        android:enabled="false"
+                        android:fontFamily="@font/manrope_semi_bold"
+                        android:maxLines="3"
+                        android:text="sdf"
+                        android:textColor="@color/gray"
+                        android:textSize="24sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -168,6 +179,7 @@
                             android:fontFamily="@font/manrope_bold"
                             android:gravity="center_vertical"
                             android:text="@string/status"
+                            android:textColor="@color/gray"
                             android:textSize="26sp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -175,8 +187,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end|center_vertical"
-                            android:gravity="center_vertical"
                             android:fontFamily="@font/manrope_medium"
+                            android:gravity="center_vertical"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="7dp"
                             android:text="Принята"
@@ -194,17 +206,35 @@
                         android:textColor="@color/main"
                         android:textSize="26sp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/text_view_description_task"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="25dp"
+                        android:backgroundTint="@color/background_edit_text"
+                        android:enabled="false"
                         android:fontFamily="@font/manrope_semi_bold"
-                        android:text="Вот вам яркий пример современных тенденциментов, поражающих по своей масштабности и грандиоз"
+                        android:text="gdfgdfgdf dfgdf gdf gdf gfd"
+                        android:textColor="@color/gray"
                         android:textSize="22sp" />
 
+
                     <!--Для родителя-->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_edit_task"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/blue"
+                        android:elevation="0dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:padding="15dp"
+                        android:text="@string/edit_task"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:cornerRadius="26dp" />
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_task_not_completed"
                         android:layout_width="match_parent"

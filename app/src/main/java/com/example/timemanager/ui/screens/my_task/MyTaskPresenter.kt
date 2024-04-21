@@ -42,6 +42,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
 
     private fun setTask(){
         launch {
+            viewState.showLoading()
             taskInfo = repository.getTask(token, taskId.toString())
             val taskPerformer = repository.getChild(token, taskInfo?.childUserId ?: "1")
             profile = repository.getProfile(token)
@@ -55,7 +56,9 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
     }
     fun updateTaskStatus(status: Condition) {
         launch {
+            viewState.showLoading()
             repository.updateTask(token, taskInfo, status)
+            viewState.closeLoading()
             setTask()
             viewState.closeDialogChangeStatus()
         }
