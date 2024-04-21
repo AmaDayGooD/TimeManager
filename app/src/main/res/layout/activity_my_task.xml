@@ -59,6 +59,31 @@
                     android:orientation="vertical"
                     android:padding="30dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/manrope_bold"
+                            android:text="Исполнитель"
+                            android:textColor="@color/main"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/text_task_performer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="@font/manrope_semi_bold"
+                            android:maxLines="3"
+                            android:textSize="24sp" />
+
+                    </LinearLayout>
+
 
                     <TextView
                         android:layout_width="match_parent"
@@ -66,7 +91,7 @@
                         android:fontFamily="@font/manrope_bold"
                         android:text="@string/task_name"
                         android:textColor="@color/main"
-                        android:textSize="28sp" />
+                        android:textSize="26sp" />
 
                     <TextView
                         android:id="@+id/text_view_name_task"
@@ -132,47 +157,42 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/manrope_bold"
                             android:layout_weight="1"
-                            android:text="@string/task_status"
+                            android:fontFamily="@font/manrope_bold"
+                            android:gravity="center_vertical"
+                            android:text="@string/status"
                             android:textSize="26sp" />
 
-                        <androidx.cardview.widget.CardView
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_task_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/main"
-
-                            app:cardCornerRadius="50dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end|center_vertical"
-                                android:paddingHorizontal="12dp"
-                                android:paddingVertical="7dp"
-                                android:textSize="20sp"
-                                android:fontFamily="@font/manrope_medium"
-                                android:textColor="@color/white"
-                                android:text="Открыта" />
-
-                        </androidx.cardview.widget.CardView>
+                            android:layout_gravity="end|center_vertical"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/manrope_medium"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="7dp"
+                            android:text="Принята"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            app:cornerRadius="60dp" />
 
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/manrope_semi_bold"
+                        android:fontFamily="@font/manrope_bold"
                         android:text="@string/description_task"
                         android:textColor="@color/main"
-                        android:textSize="28sp" />
+                        android:textSize="26sp" />
 
                     <TextView
                         android:id="@+id/text_view_description_task"

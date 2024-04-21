@@ -1,10 +1,13 @@
 package com.example.timemanager.ui.screens.my_task
 
 import com.example.timemanager.TimeManagerApp
+import com.example.timemanager.data.Condition
+import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.data.local_data_base.Settings
+import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BasePresenter
 import com.example.timemanager.ui.screens.profile.ProfilePresenter
@@ -31,13 +34,30 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
     private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
 
     private var taskInfo: Task? = null
-    private var userRole: Role = Role.Child
+    private var profile: Profile? = null
 
     init {
+        setTask()
+    }
+
+    private fun setTask(){
         launch {
             taskInfo = repository.getTask(token, taskId.toString())
-            userRole = repository.getProfile(token).userRole ?: Role.Child
-            viewState.setTaskInfo(taskInfo, userRole)
+            val taskPerformer = repository.getChild(token, taskInfo?.childUserId ?: "1")
+            profile = repository.getProfile(token)
+            val userRole = profile?.userRole ?: Role.Child
+            viewState.setTaskInfo(taskInfo, userRole, taskPerformer)
+        }
+    }
+
+    fun getTask(): Task{
+        return taskInfo!!
+    }
+    fun updateTaskStatus(status: Condition) {
+        launch {
+            repository.updateTask(token, taskInfo, status)
+            setTask()
+            viewState.closeDialogChangeStatus()
         }
     }
 

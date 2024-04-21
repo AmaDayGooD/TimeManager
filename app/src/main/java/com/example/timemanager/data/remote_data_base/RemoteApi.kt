@@ -3,6 +3,7 @@ package com.example.timemanager.data.remote_data_base
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
+import com.example.timemanager.entity.Profile
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -48,6 +49,13 @@ interface RemoteApi {
         @Path("taskId") taskId: String
     ): DataTask
 
+    @PUT("tasks/{taskId}")
+    suspend fun updateTask(
+        @Header("Authorization") token: String?,
+        @Path("taskId") taskId: String,
+        @Body task: DataTask
+    )
+
     @POST("/family/relations/create")
     suspend fun addChild(
         @Header("Authorization") token: String,
@@ -59,6 +67,11 @@ interface RemoteApi {
         @Header("Authorization") token: String?
     ): List<DataProfile>
 
+    @GET("/family/children/{childId}")
+    suspend fun getChild(
+        @Header("Authorization") token: String?,
+        @Path("childId") childId: String
+    ) : DataProfile?
 
     @GET("family/children/{childId}/tasks")
     suspend fun getChildrenTasks(

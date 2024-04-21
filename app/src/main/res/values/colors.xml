@@ -19,6 +19,8 @@
     <color name="gray_light">#8A8A8A</color>
     <color name="background_edit_text">#fafafa</color>
     <color name="completed">#1EB548</color>
+    <color name="reject">#D83C18</color>
+    <color name="accept">#E37D00</color>
 
     <color name="semitransparent_gray">#564A4A4A</color>
     <color name="transparent">#00FFFFFF</color>

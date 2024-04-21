@@ -1,6 +1,7 @@
 package com.example.timemanager.data.remote_data_base
 
 import com.example.timemanager.data.DataProfile
+import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
@@ -30,18 +31,27 @@ class GetDataFromApi(retrofit: Retrofit) {
         return api.getAllTasks(token)
     }
 
-    suspend fun getTask(token: String, idTask: String): Task{
+    suspend fun getTask(token: String, idTask: String): Task {
         return api.getTask(token, idTask)
     }
-    suspend fun getChildrenTasks(token: String, childId: String): List<Task>{
+
+    suspend fun updateTask(token: String, task: DataTask){
+        return api.updateTask(token, task.idTask.toString(), task)
+    }
+
+    suspend fun getChildrenTasks(token: String, childId: String): List<Task> {
         return api.getChildrenTasks(token, childId)
     }
 
-    suspend fun getChildren(token: String): List<Profile>{
+    suspend fun getChildren(token: String): List<Profile> {
         return api.getChildren(token)
     }
 
-    suspend fun addChild(token:String, profile: DataProfile){
+    suspend fun getChild(token: String, childId: String): Profile? {
+        return api.getChild(token, childId)
+    }
+
+    suspend fun addChild(token: String, profile: DataProfile) {
         api.addChild(token, profile)
     }
 }

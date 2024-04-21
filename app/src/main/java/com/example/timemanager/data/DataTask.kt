@@ -2,6 +2,7 @@ package com.example.timemanager.data
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.timemanager.R
 import com.example.timemanager.entity.Task
 import java.time.Instant
 import java.time.LocalDateTime
@@ -38,13 +39,16 @@ data class DataTask(
         get() = Importance.valueOf(importance ?: Importance.Low.toString())
 
     override val condition: Condition
-        get() = Condition.valueOf(status ?: Condition.Open.toString())
+        get() = Condition.valueOf(status ?: Condition.Accept.toString())
 }
 
 enum class Importance {
     Low, Medium, High, ExtraHigh
 }
 
-enum class Condition {
-    Open, Reject, Accept
+enum class Condition(val colorRes: Int, val textResId: Int) {
+    Open(R.color.main, R.string.task_open),
+    Completed(R.color.completed, R.string.task_completed),
+    Reject(R.color.reject, R.string.task_reject),
+    Accept(R.color.accept, R.string.task_accept)
 }

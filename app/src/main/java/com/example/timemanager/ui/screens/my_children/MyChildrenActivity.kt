@@ -73,7 +73,6 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.dialog_add_child)
 
-
         val buttonAddChild = dialog.findViewById<Button>(R.id.button_add_child)
 
         buttonAddChild.setOnClickListener {

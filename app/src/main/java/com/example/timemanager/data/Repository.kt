@@ -5,6 +5,7 @@ import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.data.remote_data_base.GetDataFromApi
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
+import com.omega_r.base.logs.log
 import kotlinx.coroutines.CoroutineScope
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 class Repository @Inject constructor(
     override val coroutineContext: CoroutineContext,
     retrofit: Retrofit,
-    private val dataBaseDao: DataBaseDao
+    private val dataBaseDao: DataBaseDao,
 ) : CoroutineScope {
 
     private val retrofit = GetDataFromApi(retrofit)
@@ -75,6 +76,25 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun updateTask(token: String, taskInfo: Task?, status: Condition) {
+        val dataTask = DataTask(
+            idTask = taskInfo!!.idTask,
+            parentUserId = taskInfo.parentUserId,
+            childUserId = taskInfo.childUserId,
+            taskName = taskInfo.taskName,
+            description = taskInfo.description,
+            deadline = taskInfo.limit.toString(),
+            award = taskInfo.award,
+            status = status.name,
+            importance = taskInfo.seriousness.toString()
+        )
+        try {
+            retrofit.updateTask(token, dataTask)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     suspend fun getChildrenTask(token: String, childId: String): List<Task>? {
         return try {
             retrofit.getChildrenTasks(token, childId)
@@ -87,6 +107,15 @@ class Repository @Inject constructor(
     suspend fun getChildren(token: String): List<Profile>? {
         return try {
             retrofit.getChildren(token)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun getChild(token: String, childId: String): Profile? {
+        return try {
+            retrofit.getChild(token, childId)
         } catch (e: Exception) {
             e.printStackTrace()
             null

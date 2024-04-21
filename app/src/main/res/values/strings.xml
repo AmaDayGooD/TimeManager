@@ -36,5 +36,11 @@
     <string name="confirm">Подтвердить выполнение</string>
     <string name="invalid_password">Неверный пароль</string>
     <string name="task_not_completed">Задача не выполнена</string>
-    <string name="task_status">Статус</string>
+    <string name="status">Статус</string>
+    <string name="task_open">Открыта</string>
+    <string name="task_completed">Завершена</string>
+    <string name="task_reject">Не принята</string>
+    <string name="task_accept">Принята</string>
+    <string name="state_task">Статус задачи</string>
+    <string name="apply_changes">Применить изменения</string>
 </resources>

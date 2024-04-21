@@ -1,6 +1,7 @@
 package com.example.timemanager.ui.screens.my_task
 
 import com.example.timemanager.`data`.local_data_base.Role
+import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.omega_r.base.mvp.views.OmegaMvpViewState
 import com.omegar.mvp.CustomPresenterFactory
@@ -15,8 +16,16 @@ import kotlin.reflect.KClass
 
 public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState<OMEGAVIEW>(),
 		MyTaskView {
-	override fun setTaskInfo(task: Task?, userRole: Role) {
-		apply(SetTaskInfoCommand(task, userRole))
+	override fun setTaskInfo(
+		task: Task?,
+		userRole: Role,
+		taskPerformer: Profile?,
+	) {
+		apply(SetTaskInfoCommand(task, userRole, taskPerformer))
+	}
+
+	override fun closeDialogChangeStatus() {
+		apply(CloseDialogChangeStatusCommand())
 	}
 
 	override fun log(message: String) {
@@ -39,12 +48,23 @@ public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState
 	private class SetTaskInfoCommand<OMEGAVIEW : MyTaskView>(
 		public val task: Task?,
 		public val userRole: Role,
+		public val taskPerformer: Profile?,
 	) : ViewCommand<OMEGAVIEW>("setTaskInfo", AddToEndStrategy) {
 		override fun apply(mvpView: OMEGAVIEW) {
-			mvpView.setTaskInfo(task, userRole)
+			mvpView.setTaskInfo(task, userRole, taskPerformer)
 		}
 
-		override fun toString(): String = buildString("setTaskInfo","task",task, "userRole",userRole)
+		override fun toString(): String = buildString("setTaskInfo","task",task, "userRole",userRole,
+				"taskPerformer",taskPerformer)
+	}
+
+	private class CloseDialogChangeStatusCommand<OMEGAVIEW : MyTaskView>() :
+			ViewCommand<OMEGAVIEW>("closeDialogChangeStatus", AddToEndStrategy) {
+		override fun apply(mvpView: OMEGAVIEW) {
+			mvpView.closeDialogChangeStatus()
+		}
+
+		override fun toString(): String = buildString("closeDialogChangeStatus",)
 	}
 
 	private class LogCommand<OMEGAVIEW : MyTaskView>(
