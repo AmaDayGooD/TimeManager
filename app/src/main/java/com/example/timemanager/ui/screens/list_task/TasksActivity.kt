@@ -60,8 +60,6 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         buttonProfile.setOnClickListener {
             startActivity(createIntentMainScreen(this))
         }
-
-        presenter.getTasks()
     }
 
     override fun setTaskList(list: List<Task>, state: Boolean) {

@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.example.timemanager.R
 import com.example.timemanager.data.Importance
+import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.databinding.ActivityMyTaskBinding
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
@@ -18,7 +19,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var binding: ActivityMyTaskBinding
 
     override val presenter: MyTaskPresenter by providePresenter {
-        MyTaskPresenter()
+        MyTaskPresenter(intent.getIntExtra(TASK_ID, -1))
     }
 
     companion object {
@@ -32,9 +33,12 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonBack: ImageButton
     private lateinit var textViewNameTask: TextView
     private lateinit var textViewDescriptionTask: TextView
-    private lateinit var buttonConfirmTask: Button
+    private lateinit var buttonTaskCompleted: Button
+    private lateinit var buttonTaskNotCompleted: Button
 
     private var idTask: Int = -1
+
+    private var isParent: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,26 +50,50 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonBack = binding.buttonBack
         textViewNameTask = binding.textViewNameTask
         textViewDescriptionTask = binding.textViewDescriptionTask
-        buttonConfirmTask = binding.buttonConfirmTask
-
-        if (idTask != -1) {
-            presenter.getTask(idTask)
-        } else showToast(this, "Задача не найдена")
+        buttonTaskCompleted = binding.buttonTaskCompleted
+        buttonTaskNotCompleted = binding.buttonTaskNotCompleted
 
         buttonBack.setOnClickListener {
             finish()
         }
 
-        buttonConfirmTask.setOnClickListener {
+        buttonTaskCompleted.setOnClickListener {
+            if (isParent) {
+
+            } else {
+
+            }
+        }
+
+        buttonTaskNotCompleted.setOnClickListener {
+            log("isParent buttonTaskCompleted")
+            if (isParent) {
+
+            } else {
+
+            }
 
         }
     }
 
-    override fun setTaskInfo(task: Task?) {
+    override fun setTaskInfo(task: Task?, userRole: Role) {
         textViewNameTask.text = task?.taskName
         setSeriousness(task?.seriousness ?: Importance.Medium)
         if (task?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
         else textViewDescriptionTask.text = task?.description
+
+        when (userRole) {
+            Role.Child -> {
+                buttonTaskNotCompleted.visibility = View.GONE
+                isParent = false
+            }
+
+            Role.Parent -> {
+                buttonTaskNotCompleted.visibility = View.VISIBLE
+                isParent = true
+            }
+        }
+        log("$userRole $isParent")
     }
 
     private fun setSeriousness(seriousness: Importance) {

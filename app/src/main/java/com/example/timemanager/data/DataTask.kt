@@ -15,8 +15,8 @@ data class DataTask(
     override val description: String,
     val deadline: String,
     override val award: String,
-    override val status: String,
-    val importance : String?,
+    val status: String?,
+    val importance: String?,
 ) : Task {
     constructor(task: Task) : this(
         task.idTask,
@@ -26,23 +26,25 @@ data class DataTask(
         task.description,
         "",
         task.award,
-        task.status,
+        null,
         null
     )
 
     override val limit: LocalDateTime
         @RequiresApi(Build.VERSION_CODES.O)
-        get() {
-            return LocalDateTime.ofInstant(Instant.parse(deadline), ZoneId.of("UTC"))
-        }
+        get() = LocalDateTime.ofInstant(Instant.parse(deadline), ZoneId.of("UTC"))
 
     override val seriousness: Importance
-        get() {
-            println("MyLog $importance")
-            return Importance.valueOf(importance ?: Importance.Low.toString())
-        }
+        get() = Importance.valueOf(importance ?: Importance.Low.toString())
+
+    override val condition: Condition
+        get() = Condition.valueOf(status ?: Condition.Open.toString())
 }
 
 enum class Importance {
     Low, Medium, High, ExtraHigh
+}
+
+enum class Condition {
+    Open, Reject, Accept
 }

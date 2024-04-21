@@ -1,5 +1,6 @@
 package com.example.timemanager.ui.screens.my_task
 
+import com.example.timemanager.`data`.local_data_base.Role
 import com.example.timemanager.entity.Task
 import com.omega_r.base.mvp.views.OmegaMvpViewState
 import com.omegar.mvp.CustomPresenterFactory
@@ -14,8 +15,8 @@ import kotlin.reflect.KClass
 
 public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState<OMEGAVIEW>(),
 		MyTaskView {
-	override fun setTaskInfo(task: Task?) {
-		apply(SetTaskInfoCommand(task))
+	override fun setTaskInfo(task: Task?, userRole: Role) {
+		apply(SetTaskInfoCommand(task, userRole))
 	}
 
 	override fun log(message: String) {
@@ -37,12 +38,13 @@ public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState
 
 	private class SetTaskInfoCommand<OMEGAVIEW : MyTaskView>(
 		public val task: Task?,
+		public val userRole: Role,
 	) : ViewCommand<OMEGAVIEW>("setTaskInfo", AddToEndStrategy) {
 		override fun apply(mvpView: OMEGAVIEW) {
-			mvpView.setTaskInfo(task)
+			mvpView.setTaskInfo(task, userRole)
 		}
 
-		override fun toString(): String = buildString("setTaskInfo","task",task)
+		override fun toString(): String = buildString("setTaskInfo","task",task, "userRole",userRole)
 	}
 
 	private class LogCommand<OMEGAVIEW : MyTaskView>(

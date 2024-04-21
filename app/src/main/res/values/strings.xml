@@ -35,4 +35,6 @@
     <string name="urgency">Срочность</string>
     <string name="confirm">Подтвердить выполнение</string>
     <string name="invalid_password">Неверный пароль</string>
+    <string name="task_not_completed">Задача не выполнена</string>
+    <string name="task_status">Статус</string>
 </resources>

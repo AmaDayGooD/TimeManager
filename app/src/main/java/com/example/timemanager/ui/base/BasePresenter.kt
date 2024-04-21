@@ -1,5 +1,6 @@
 package com.example.timemanager.ui.base
 
+import android.provider.ContactsContract.Profile
 import android.util.Log
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 import com.omega_r.base.mvp.views.OmegaView
@@ -28,4 +29,5 @@ open class BasePresenter<View: OmegaView>: OmegaPresenter<View>(), CoroutineScop
             // Здесь можно реализовать логирование, отправку отчетов об ошибках и т.д.
         }
     }
+
 }
