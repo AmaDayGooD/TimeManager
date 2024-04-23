@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -15,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.timemanager.R
 import com.example.timemanager.data.Condition
+import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.Importance
 import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.databinding.ActivityMyTaskBinding
@@ -22,7 +22,6 @@ import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
 import com.google.android.material.button.MaterialButton
-import com.omega_r.bind.model.binders.bindBackgroundTintColor
 
 class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
@@ -53,10 +52,11 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonTaskState: Button
 
     private lateinit var seriousness: Importance
+    private var currentTask: Task? = null
 
     private var idTask: Int = -1
     private var isParent: Boolean = false
-
+    private var modeEditTask: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyTaskBinding.inflate(layoutInflater)
@@ -73,6 +73,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonTaskNotCompleted = binding.buttonTaskNotCompleted
         textTaskPerformer = binding.textTaskPerformer
         buttonTaskState = binding.buttonTaskState
+
 
         buttonBack.setOnClickListener {
             finish()
@@ -103,13 +104,14 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     override fun setTaskInfo(task: Task?, userRole: Role, taskPerformer: Profile?) {
-        seriousness = task?.seriousness ?: Importance.Medium
-        textAward.text = task?.award
-        textViewNameTask.text = task?.taskName
-        setSeriousness(task?.seriousness ?: Importance.Medium)
-        setState(buttonTaskState, task?.condition ?: Condition.Open)
-        if (task?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
-        else textViewDescriptionTask.text = task?.description
+        currentTask = task
+        seriousness = currentTask?.seriousness ?: Importance.Medium
+        textAward.text = currentTask?.award
+        textViewNameTask.text = currentTask?.taskName
+        setSeriousness(currentTask?.seriousness ?: Importance.Medium)
+        setState(buttonTaskState, currentTask?.condition ?: Condition.Open)
+        if (currentTask?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
+        else textViewDescriptionTask.text = currentTask?.description
 
         when (userRole) {
             Role.Child -> {
@@ -139,6 +141,15 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             buttonTaskNotCompleted.visibility = View.VISIBLE
 
             buttonEditTask.setOnClickListener {
+                changeEnableButton()
+                if (modeEditTask) {
+                    buttonEditTask.text = getString(R.string.edit_task)
+                    applyTaskChanges()
+                    modeEditTask = false
+                } else {
+                    buttonEditTask.text = getString(R.string.accept_edit)
+                    modeEditTask = true
+                }
                 enableEditField()
             }
 
@@ -162,38 +173,48 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         }
     }
 
+    private fun changeEnableButton() {
+        if (modeEditTask) {
+            buttonTaskState.isEnabled = true
+            buttonTaskCompleted.isEnabled = true
+            buttonTaskNotCompleted.isEnabled = true
+        } else {
+            buttonTaskState.isEnabled = false
+            buttonTaskCompleted.isEnabled = false
+            buttonTaskNotCompleted.isEnabled = false
+        }
+    }
+
     private fun enableEditField() {
-        setViewProperties(textViewNameTask, true, R.color.black)
-        setViewProperties(textAward, true, R.color.black)
-        setViewProperties(textViewDescriptionTask, true, R.color.black)
+        val seriousnessMap = mapOf(
+            binding.icLowSeriousness to Importance.Low,
+            binding.icMediumSeriousness to Importance.Medium,
+            binding.icHighSeriousness to Importance.High,
+            binding.icExtraHighSeriousness to Importance.ExtraHigh
+        )
 
+        setViewProperties(textViewNameTask, modeEditTask, if (modeEditTask) R.color.black else R.color.white)
+        setViewProperties(textAward, modeEditTask, if (modeEditTask) R.color.black else R.color.white)
+        setViewProperties(textViewDescriptionTask, modeEditTask, if (modeEditTask) R.color.black else R.color.white)
 
-        with(binding) {
-            icLowSeriousness.apply {
-                isClickable = true
+        seriousnessMap.forEach { (view, importance) ->
+            view.apply {
+                isClickable = modeEditTask
                 setOnClickListener {
-                    setSeriousness(Importance.Low)
-                }
-            }
-            icMediumSeriousness.apply {
-                isClickable = true
-                setOnClickListener {
-                    setSeriousness(Importance.Medium)
-                }
-            }
-            icHighSeriousness.apply {
-                isClickable = true
-                setOnClickListener {
-                    setSeriousness(Importance.High)
-                }
-            }
-            icExtraHighSeriousness.apply {
-                isClickable = true
-                setOnClickListener {
-                    setSeriousness(Importance.ExtraHigh)
+                    setSeriousness(importance)
                 }
             }
         }
+    }
+
+    private fun applyTaskChanges() {
+        val newTask = (currentTask as DataTask).copy(
+            taskName = textViewNameTask.text.toString(),
+            description = textViewDescriptionTask.text.toString(),
+            importance = seriousness.name,
+            award = textAward.text.toString()
+        )
+        presenter.applyChanges(newTask)
     }
 
     private fun setViewProperties(view: View, isEnabled: Boolean, colorResId: Int) {
@@ -210,8 +231,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         }
     }
 
-    private fun setSeriousness(seriousness: Importance) {
-        when (seriousness) {
+    private fun setSeriousness(importance: Importance) {
+        when (importance) {
             Importance.Low -> {
                 binding.icLowSeriousness.setImageResource(R.drawable.ic_fill_lightning)
                 binding.icMediumSeriousness.setImageResource(R.drawable.ic_lightning)
@@ -240,6 +261,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
                 binding.icExtraHighSeriousness.setImageResource(R.drawable.ic_fill_lightning)
             }
         }
+        seriousness = importance
     }
 
     override fun showLoading() {

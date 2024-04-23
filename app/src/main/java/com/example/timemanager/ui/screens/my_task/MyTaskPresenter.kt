@@ -3,6 +3,7 @@ package com.example.timemanager.ui.screens.my_task
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Condition
 import com.example.timemanager.data.DataTask
+import com.example.timemanager.data.Importance
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Role
@@ -11,6 +12,7 @@ import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BasePresenter
 import com.example.timemanager.ui.screens.profile.ProfilePresenter
+import com.omega_r.libs.extensions.common.ifNull
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -40,7 +42,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         setTask()
     }
 
-    private fun setTask(){
+    private fun setTask() {
         launch {
             viewState.showLoading()
             taskInfo = repository.getTask(token, taskId.toString())
@@ -51,17 +53,34 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         }
     }
 
-    fun getTask(): Task{
+    fun getTask(): Task {
         return taskInfo!!
     }
-    fun updateTaskStatus(status: Condition) {
+
+    fun updateTaskStatus(newStatus: Condition) {
+        taskInfo = (taskInfo as DataTask).copy(
+            status = newStatus.name
+        )
+        launch {
+            updateTask(taskInfo as DataTask)
+        }
+    }
+
+    fun applyChanges(newTask: DataTask) {
+        launch {
+            updateTask(newTask)
+        }
+    }
+
+    private fun updateTask(newTask: DataTask) {
         launch {
             viewState.showLoading()
-            repository.updateTask(token, taskInfo, status)
+            repository.updateTask(token, newTask)
             viewState.closeLoading()
             setTask()
             viewState.closeDialogChangeStatus()
         }
     }
+
 
 }

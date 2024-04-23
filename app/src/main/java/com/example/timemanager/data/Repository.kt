@@ -1,5 +1,6 @@
 package com.example.timemanager.data
 
+import android.provider.ContactsContract.Data
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.data.remote_data_base.GetDataFromApi
@@ -76,20 +77,9 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun updateTask(token: String, taskInfo: Task?, status: Condition) {
-        val dataTask = DataTask(
-            idTask = taskInfo!!.idTask,
-            parentUserId = taskInfo.parentUserId,
-            childUserId = taskInfo.childUserId,
-            taskName = taskInfo.taskName,
-            description = taskInfo.description,
-            deadline = taskInfo.limit.toString(),
-            award = taskInfo.award,
-            status = status.name,
-            importance = taskInfo.seriousness.toString()
-        )
+    suspend fun updateTask(token: String, taskInfo: Task?) {
         try {
-            retrofit.updateTask(token, dataTask)
+            retrofit.updateTask(token, taskInfo as DataTask)
         } catch (e: Exception) {
             e.printStackTrace()
         }

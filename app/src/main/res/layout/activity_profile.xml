@@ -80,27 +80,33 @@
                         android:id="@+id/textview_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/background_edit_text"
+                        android:backgroundTint="@color/transparent"
                         android:enabled="false"
                         android:fontFamily="@font/manrope_medium"
-                        android:hint="@string/first_name"
+                        android:hint="@string/login"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:lines="1"
                         android:maxLength="30"
                         android:maxLines="1"
                         android:textColor="@color/base_black"
-                        android:textSize="20sp" />
+                        android:textSize="26sp" />
 
                     <EditText
                         android:id="@+id/textview_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/background_edit_text"
+                        android:backgroundTint="@color/transparent"
                         android:enabled="false"
                         android:fontFamily="@font/manrope_medium"
                         android:hint="@string/last_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:lines="1"
                         android:maxLength="30"
                         android:maxLines="1"
                         android:textColor="@color/base_black"
-                        android:textSize="20sp" />
+                        android:textSize="26sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_my_children"

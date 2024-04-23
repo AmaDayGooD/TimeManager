@@ -62,6 +62,11 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.updateList()
+    }
+
     override fun setTaskList(list: List<Task>, state: Boolean) {
         adapter.setList(list)
         if (state) binding.buttonChangeView.text = getString(R.string.show_all)
