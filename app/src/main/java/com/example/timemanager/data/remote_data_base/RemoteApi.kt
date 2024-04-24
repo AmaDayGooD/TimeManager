@@ -32,6 +32,13 @@ interface RemoteApi {
         @Body dataProfile: DataProfile
     )
 
+    @PUT("user/update_balance/{userId}/{reward}")
+    suspend fun payReward(
+        @Header("Authorization") token: String?,
+        @Path("userId") userId: String,
+        @Path("reward") reward: Float
+    )
+
     @POST("tasks/create")
     suspend fun createTask(
         @Header("Authorization") token: String?,

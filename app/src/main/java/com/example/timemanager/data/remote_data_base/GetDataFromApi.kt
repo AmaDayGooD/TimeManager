@@ -27,6 +27,10 @@ class GetDataFromApi(retrofit: Retrofit) {
         api.editProfile(token, profile)
     }
 
+    suspend fun payReward(token: String, userId: String, reward: Float) {
+        api.payReward(token, userId, reward)
+    }
+
     suspend fun getTasks(token: String): List<Task> {
         return api.getAllTasks(token)
     }

@@ -68,8 +68,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -102,16 +102,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:backgroundTint="@android:color/transparent"
                             android:drawableEnd="@drawable/ic_award_fire"
                             android:drawablePadding="5dp"
-                            android:enabled="true"
+                            android:enabled="false"
                             android:fontFamily="@font/manrope_bold"
                             android:gravity="center_vertical|end"
-                            android:textColor="@color/main"
-                            android:textSize="20sp"
-                            android:maxLines="1"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:lines="1"
                             android:maxLength="6"
-                            android:backgroundTint="@android:color/transparent" />
+                            android:maxLines="1"
+                            android:textColor="@color/main"
+                            android:textSize="20sp" />
 
                     </LinearLayout>
 
@@ -159,8 +162,9 @@
                         android:backgroundTint="@color/background_edit_text"
                         android:enabled="false"
                         android:fontFamily="@font/manrope_semi_bold"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
                         android:maxLines="3"
-                        android:text="sdf"
                         android:textColor="@color/gray"
                         android:textSize="24sp" />
 
@@ -191,7 +195,7 @@
                             android:gravity="center_vertical"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="7dp"
-                            android:text="Принята"
+                            android:text="@string/status"
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             app:cornerRadius="60dp" />
@@ -215,7 +219,10 @@
                         android:backgroundTint="@color/background_edit_text"
                         android:enabled="false"
                         android:fontFamily="@font/manrope_semi_bold"
-                        android:text="gdfgdfgdf dfgdf gdf gdf gfd"
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        android:maxLength="200"
+                        android:maxLines="5"
                         android:textColor="@color/gray"
                         android:textSize="22sp" />
 

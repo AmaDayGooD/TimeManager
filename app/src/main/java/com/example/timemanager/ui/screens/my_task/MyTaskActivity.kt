@@ -1,5 +1,7 @@
 package com.example.timemanager.ui.screens.my_task
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -22,6 +24,7 @@ import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
 import com.google.android.material.button.MaterialButton
+import com.omega_r.libs.omegatypes.backgroundColor
 
 class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
@@ -40,6 +43,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     private lateinit var dialogChangeStatusTask: Dialog
+    private lateinit var dialogAcceptTask: Dialog
 
     private lateinit var buttonBack: ImageButton
     private lateinit var textAward: TextView
@@ -135,6 +139,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         closeLoading()
     }
 
+
+    @SuppressLint("ResourceAsColor")
     private fun setRole() {
         if (isParent) {
             buttonEditTask.visibility = View.VISIBLE
@@ -153,20 +159,44 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
                 enableEditField()
             }
 
-            buttonTaskNotCompleted.setOnClickListener {
+            if (currentTask?.condition != Condition.Reject) {
 
+                buttonTaskNotCompleted.apply {
+                    isEnabled = true
+                    backgroundTintList = ColorStateList.valueOf(getColor(R.color.error))
+                }
+
+                buttonTaskNotCompleted.setOnClickListener {
+                    val newTask = (currentTask as DataTask).copy(
+                        status = Condition.Reject.name
+                    )
+                    presenter.applyChanges(newTask)
+                }
+
+            } else buttonTaskNotCompleted.apply {
+                isEnabled = false
+                backgroundTintList = ColorStateList.valueOf(getColor(R.color.button_disable))
             }
-            buttonTaskCompleted.setOnClickListener {
 
+            if (currentTask?.condition != Condition.Accept) {
+                buttonTaskCompleted.apply {
+                    isEnabled = true
+                    backgroundTintList = ColorStateList.valueOf(getColor(R.color.completed))
+                }
+
+                buttonTaskCompleted.setOnClickListener {
+                    showDialogAcceptTask()
+                }
+
+            } else buttonTaskCompleted.apply {
+                isEnabled = false
+                backgroundTintList = ColorStateList.valueOf(getColor(R.color.button_disable))
             }
 
         } else {
             buttonEditTask.visibility = View.GONE
             buttonTaskNotCompleted.visibility = View.GONE
 
-            buttonTaskNotCompleted.setOnClickListener {
-
-            }
             buttonTaskCompleted.setOnClickListener {
 
             }
@@ -221,13 +251,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         view.apply {
             this.isEnabled = isEnabled
             backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this@MyTaskActivity, colorResId))
-        }
-    }
-
-    private fun setState(button: Button, state: Condition) {
-        button.apply {
-            text = getString(state.textResId)
-            setBackgroundColor(ContextCompat.getColor(this@MyTaskActivity, state.colorRes))
         }
     }
 
@@ -307,7 +330,10 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         }
 
         buttonApplyChange.setOnClickListener {
-            presenter.updateTaskStatus(taskStatus)
+            val updatedTask = (task as DataTask).copy(
+                status = taskStatus.name
+            )
+            presenter.applyChanges(updatedTask)
         }
 
         val window = dialogChangeStatusTask.window
@@ -315,6 +341,41 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
         )
         dialogChangeStatusTask.show()
+    }
+
+    private fun showDialogAcceptTask() {
+        val task = presenter.getTask()
+        dialogAcceptTask = Dialog(this, R.style.DialogStyle)
+        dialogAcceptTask.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogAcceptTask.setCancelable(false)
+        dialogAcceptTask.setContentView(R.layout.dialog_accept_task)
+
+        val buttonPositive = dialogAcceptTask.findViewById<Button>(R.id.button_positive)
+        val buttonNegative = dialogAcceptTask.findViewById<Button>(R.id.button_negative)
+
+        buttonPositive.setOnClickListener {
+            val newTask = (currentTask as DataTask).copy(
+                status = Condition.Accept.name
+            )
+            presenter.applyChanges(newTask)
+            presenter.payReward(task.award.toFloat())
+            finish()
+        }
+
+        buttonNegative.setOnClickListener {
+            dialogAcceptTask.dismiss()
+        }
+
+
+        dialogAcceptTask.show()
+
+    }
+
+    private fun setState(button: Button, state: Condition) {
+        button.apply {
+            text = getString(state.textResId)
+            setBackgroundColor(ContextCompat.getColor(this@MyTaskActivity, state.colorRes))
+        }
     }
 
     override fun closeDialogChangeStatus() {

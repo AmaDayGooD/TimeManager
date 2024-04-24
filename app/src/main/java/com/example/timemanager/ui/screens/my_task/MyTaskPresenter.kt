@@ -57,18 +57,15 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         return taskInfo!!
     }
 
-    fun updateTaskStatus(newStatus: Condition) {
-        taskInfo = (taskInfo as DataTask).copy(
-            status = newStatus.name
-        )
-        launch {
-            updateTask(taskInfo as DataTask)
-        }
-    }
-
     fun applyChanges(newTask: DataTask) {
         launch {
             updateTask(newTask)
+        }
+    }
+
+    fun payReward(reward: Float) {
+        launch {
+            repository.payReward(token, taskInfo?.childUserId.orEmpty(), reward)
         }
     }
 

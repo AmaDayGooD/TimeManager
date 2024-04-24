@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#BAA26A</color>
+    <color name="button_disable">#8E8E8E</color>
 
     <color name="score_text">#F18228</color>
     <color name="base_black">#000000</color>

@@ -59,6 +59,15 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun payReward(token: String, userId: String, reward: Float) {
+        try {
+            retrofit.payReward(token, userId, reward)
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+
+    }
+
     suspend fun getTasks(token: String): List<Task>? {
         return try {
             retrofit.getTasks(token)

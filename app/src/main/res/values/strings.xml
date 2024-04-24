@@ -44,4 +44,8 @@
     <string name="state_task">Статус задачи</string>
     <string name="apply_changes">Применить изменения</string>
     <string name="edit_task">Редактировать задачу</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="confirmation_info">Вы действительно подтвердаете выполнение задачи?</string>
+    <string name="confirmation">Подтверждение</string>
 </resources>
