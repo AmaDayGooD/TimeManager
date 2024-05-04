@@ -31,16 +31,11 @@ class Repository @Inject constructor(
             e.printStackTrace()
             null
         }
-
     }
 
     suspend fun registration(profile: DataProfile): String {
-        var dataProfile = profile
         return try {
-            if (dataProfile.role == Role.Child.toString()) {
-                dataProfile = dataProfile.copy(balance = "18")
-            }
-            retrofit.registration(dataProfile)
+            retrofit.registration(profile)
             "successful"
         } catch (e: Exception) {
             "${e.message}"
@@ -48,7 +43,13 @@ class Repository @Inject constructor(
     }
 
     suspend fun getProfile(token: String): Profile {
-        return retrofit.getProfile(token)
+        return try {
+             retrofit.getProfile(token)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            println("MyLog $e")
+            DataProfile()
+        }
     }
 
     suspend fun editProfile(token: String, profile: DataProfile) {
@@ -124,7 +125,8 @@ class Repository @Inject constructor(
 
     suspend fun getChildByRelationId(token:String, relationId: Int): Profile? {
         return try {
-            retrofit.getChildByRelationId(token, relationId)
+           val r = retrofit.getChildByRelationId(token, relationId)
+            r
         } catch (e: Exception) {
             e.printStackTrace()
             null

@@ -1,5 +1,6 @@
 package com.example.timemanager.ui.screens.my_task
 
+import com.example.timemanager.R
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Condition
 import com.example.timemanager.data.DataTask
@@ -37,7 +38,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
 
     private var taskInfo: Task? = null
     private var profile: Profile? = null
-    private val childUserId: Int? = null
+    private var childUserId: Int? = null
 
     init {
         setTask()
@@ -47,7 +48,8 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         launch {
             viewState.showLoading()
             taskInfo = repository.getTask(token, taskId.toString())
-            val taskPerformer = repository.getChildByRelationId(token, taskInfo?.relationId ?: 1)
+            val taskPerformer: Profile? = repository.getChildByRelationId(token, taskInfo?.relationId ?: 1)
+            childUserId = taskPerformer?.id
             profile = repository.getProfile(token)
             val userRole = profile?.userRole ?: Role.Child
             viewState.setTaskInfo(taskInfo, userRole, taskPerformer)
@@ -62,6 +64,11 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         launch {
             updateTask(newTask)
         }
+    }
+
+    fun taskCompleted() {
+        applyChanges((taskInfo as DataTask).copy(status = Condition.Completed.toString()))
+        viewState.taskCompletedShowDialog()
     }
 
     fun payReward(reward: Float) {

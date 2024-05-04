@@ -83,7 +83,7 @@ interface RemoteApi {
     @GET("/family/child/{relationId}")
     suspend fun getChildByRelationId(
         @Header("Authorization") token: String?,
-        @Path("childId") relationId: Int
+        @Path("relationId") relationId: Int
     ) : DataProfile?
 
     @GET("family/children/{childId}/tasks")

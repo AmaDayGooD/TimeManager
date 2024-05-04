@@ -9,12 +9,12 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 data class DataTask(
-    override val idTask: Int,
+    override val idTask: Int?,
     override val relationId: Int,
     override val taskName: String,
     override val description: String,
-    val startDateTime: String,
-    val endDateTime: String,
+    val startDateTime: String?,
+    val endDateTime: String?,
     override val award: String,
     val status: String?,
     val importance: String?,

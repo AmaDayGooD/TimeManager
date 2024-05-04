@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timemanager.R
+import com.example.timemanager.data.Condition
 import com.example.timemanager.databinding.ActivityTasksBinding
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
@@ -76,6 +78,21 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
 
     override fun onClickOpenTask(taskId: Int) {
         startActivity(createIntentMyTask(this, taskId))
+    }
+
+    override fun setState(button: Button, state: Condition): Button{
+        return button.apply {
+            text = getString(state.textResId)
+            setBackgroundColor(ContextCompat.getColor(this@TasksActivity, state.colorRes))
+        }
+    }
+
+    override fun getResourcesString(idString: Int, vararg formatArgs: Any): String {
+        return if (formatArgs.isNotEmpty()) {
+            getString(idString, *formatArgs)
+        } else {
+            getString(idString)
+        }
     }
 
     override fun showLoading() {

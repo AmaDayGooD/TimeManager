@@ -16,6 +16,7 @@ import com.example.timemanager.databinding.ActivityProfileBinding
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BaseActivity
 import com.example.timemanager.ui.screens.authorization.AuthorizationActivity.Companion.createIntentAuthScreen
+import com.example.timemanager.ui.screens.create_task.CreateTaskActivity.Companion.createIntentCreateTaskActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity.Companion.createIntentTaskActivity
 import com.example.timemanager.ui.screens.my_children.MyChildrenActivity.Companion.createIntentMyChildren
 import com.google.android.material.card.MaterialCardView
@@ -39,6 +40,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
     private lateinit var buttonStatistics: MaterialCardView
     private lateinit var buttonLeaderBoard: MaterialCardView
     private lateinit var buttonMyChildren: Button
+    private lateinit var buttonCreateNewTask: Button
 
     companion object {
         fun createIntentMainScreen(context: Context): Intent {
@@ -62,6 +64,8 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         textViewLastName = binding.textviewLastName
         buttonAcceptEdit = binding.buttonAcceptEdit
         buttonMyChildren = binding.buttonMyChildren
+        buttonCreateNewTask = binding.buttonCreateNewTask
+
 
         buttonListTasks = binding.buttonTasks
         buttonStatistics = binding.buttonStatistics
@@ -70,6 +74,10 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
         buttonMyChildren.setOnClickListener {
             startActivity(createIntentMyChildren(this))
+        }
+
+        buttonCreateNewTask.setOnClickListener {
+            startActivity(createIntentCreateTaskActivity(this))
         }
 
         buttonListTasks.setOnClickListener {
@@ -100,13 +108,13 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
     override fun setProfile(profile: Profile) {
         val username = profile.username?.split(" ")
-        textViewFirstName.text = username?.get(0) ?: ""
-        textViewLastName.text = username?.get(1) ?: ""
+        textViewFirstName.text = username?.get(0).orEmpty()
+        textViewLastName.text = username?.get(1).orEmpty()
         if (presenter.isParent()) {
             labelMyBalance.text = getString(R.string.paren)
         } else {
             textViewBalance.visibility = View.VISIBLE
-            textViewBalance.text = (profile.count ?: "0") as CharSequence?
+            textViewBalance.text = (profile.count ?: 0).toString()
         }
         closeLoading()
     }

@@ -24,7 +24,7 @@ open class BasePresenter<View: OmegaView>: OmegaPresenter<View>(), CoroutineScop
     private fun coroutineExceptionHandler(): CoroutineContext {
         return kotlinx.coroutines.CoroutineExceptionHandler { _, throwable ->
             // Обработка ошибки здесь
-            log("Coroutine exception: ${throwable.localizedMessage}")
+            log("Coroutine exception: $throwable")
             throwable.printStackTrace()
             // Здесь можно реализовать логирование, отправку отчетов об ошибках и т.д.
         }

@@ -51,13 +51,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:backgroundTint="@color/transparent"
+                        android:backgroundTint="@color/main"
                         android:drawablePadding="10dp"
                         android:hint="@string/login"
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:lines="1"
                         android:maxLines="1"
+                        android:textCursorDrawable="@drawable/edit_text_cursor"
                         android:textSize="26sp" />
 
                 </LinearLayout>
@@ -90,7 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:backgroundTint="@color/transparent"
+                        android:backgroundTint="@color/main"
                         android:drawablePadding="10dp"
                         android:hint="@string/password"
                         android:imeOptions="actionDone"
@@ -98,6 +99,7 @@
                         android:lines="1"
                         android:maxLength="30"
                         android:maxLines="1"
+                        android:textCursorDrawable="@drawable/edit_text_cursor"
                         android:textSize="26sp" />
 
                 </LinearLayout>

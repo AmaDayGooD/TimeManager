@@ -17,6 +17,9 @@
         android:windowSoftInputMode="adjustPan|adjustResize"
         tools:targetApi="31">
         <activity
+            android:name=".ui.screens.create_task.CreateTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.screens.my_task.MyTaskActivity"
             android:exported="false" />
         <activity

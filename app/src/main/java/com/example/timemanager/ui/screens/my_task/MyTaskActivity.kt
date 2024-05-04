@@ -6,13 +6,17 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.timemanager.R
 import com.example.timemanager.data.Condition
@@ -25,7 +29,12 @@ import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
 import com.google.android.material.button.MaterialButton
 import com.omega_r.libs.omegatypes.backgroundColor
+import com.omega_r.libs.omegatypes.toText
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
     private lateinit var binding: ActivityMyTaskBinding
@@ -54,6 +63,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonTaskNotCompleted: Button
     private lateinit var textTaskPerformer: TextView
     private lateinit var buttonTaskState: Button
+    private lateinit var textDeadlines: TextView
+    private lateinit var labelExecutor: LinearLayout
 
     private lateinit var seriousness: Importance
     private var currentTask: Task? = null
@@ -77,6 +88,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonTaskNotCompleted = binding.buttonTaskNotCompleted
         textTaskPerformer = binding.textTaskPerformer
         buttonTaskState = binding.buttonTaskState
+        textDeadlines = binding.textViewDeadlines
+        labelExecutor = binding.labelExecutor
 
 
         buttonBack.setOnClickListener {
@@ -86,39 +99,28 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonTaskState.setOnClickListener {
             showInputDialog()
         }
-
-
-        buttonTaskCompleted.setOnClickListener {
-            if (isParent) {
-                // TODO
-            } else {
-                // TODO
-            }
-        }
-
-        buttonTaskNotCompleted.setOnClickListener {
-            log("isParent buttonTaskCompleted")
-            if (isParent) {
-                // TODO
-            } else {
-                // TODO
-            }
-
-        }
     }
 
     override fun setTaskInfo(task: Task?, userRole: Role, taskPerformer: Profile?) {
         currentTask = task
-        seriousness = currentTask?.seriousness ?: Importance.Medium
-        textAward.text = currentTask?.award
-        textViewNameTask.text = currentTask?.taskName
-        setSeriousness(currentTask?.seriousness ?: Importance.Medium)
-        setState(buttonTaskState, currentTask?.condition ?: Condition.Open)
+        currentTask?.let { currentTask ->
+            seriousness = currentTask.seriousness ?: Importance.Medium
+            textAward.text = currentTask.award
+            textViewNameTask.text = currentTask.taskName
+            textDeadlines.text =
+                getString(R.string.deadlines, formatDate(currentTask.taskStart), formatDate(currentTask.taskEnd))
+            setSeriousness(currentTask.seriousness ?: Importance.Medium)
+            setState(buttonTaskState, currentTask.condition ?: Condition.Open)
+
+
+        }
+
         if (currentTask?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
         else textViewDescriptionTask.text = currentTask?.description
 
         when (userRole) {
             Role.Child -> {
+                labelExecutor.visibility = View.GONE
                 textTaskPerformer.visibility = View.GONE
                 buttonTaskNotCompleted.visibility = View.GONE
                 buttonTaskState.isEnabled = false
@@ -126,6 +128,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             }
 
             Role.Parent -> {
+                labelExecutor.visibility = View.VISIBLE
                 textTaskPerformer.apply {
                     visibility = View.VISIBLE
                     text = taskPerformer?.username
@@ -136,7 +139,18 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             }
         }
         setRole()
+
+        if(currentTask?.condition == Condition.Accept){
+            goneAllButtons()
+        }
         closeLoading()
+    }
+
+    private fun goneAllButtons(){
+        buttonEditTask.visibility = View.GONE
+        buttonTaskCompleted.visibility = View.GONE
+        buttonTaskNotCompleted.visibility = View.GONE
+        buttonTaskState.isEnabled = false
     }
 
 
@@ -197,21 +211,25 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             buttonEditTask.visibility = View.GONE
             buttonTaskNotCompleted.visibility = View.GONE
 
-            buttonTaskCompleted.setOnClickListener {
-
+            if (currentTask?.condition == Condition.Completed || currentTask?.condition == Condition.Accept) {
+                buttonTaskCompleted.visibility = View.GONE
+            } else {
+                buttonTaskCompleted.setOnClickListener {
+                    presenter.taskCompleted()
+                }
             }
         }
     }
 
     private fun changeEnableButton() {
         if (modeEditTask) {
-            buttonTaskState.isEnabled = true
-            buttonTaskCompleted.isEnabled = true
-            buttonTaskNotCompleted.isEnabled = true
+            buttonTaskState.visibility = View.VISIBLE
+            buttonTaskCompleted.visibility = View.VISIBLE
+            buttonTaskNotCompleted.visibility = View.VISIBLE
         } else {
-            buttonTaskState.isEnabled = false
-            buttonTaskCompleted.isEnabled = false
-            buttonTaskNotCompleted.isEnabled = false
+            buttonTaskState.visibility = View.GONE
+            buttonTaskCompleted.visibility = View.GONE
+            buttonTaskNotCompleted.visibility = View.GONE
         }
     }
 
@@ -285,6 +303,14 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             }
         }
         seriousness = importance
+    }
+
+    private fun formatDate(inputDate: LocalDateTime): String {
+        return inputDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+    }
+
+    override fun taskCompletedShowDialog() {
+        showInfoDialog(context = this, title = getString(R.string.task_completed), text = getString(R.string.text_compete_task))
     }
 
     override fun showLoading() {
@@ -365,7 +391,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonNegative.setOnClickListener {
             dialogAcceptTask.dismiss()
         }
-
 
         dialogAcceptTask.show()
 

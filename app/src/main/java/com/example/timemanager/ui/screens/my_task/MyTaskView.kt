@@ -13,4 +13,7 @@ interface MyTaskView : BaseView {
 
     @MoxyViewCommand(StrategyType.ADD_TO_END)
     fun closeDialogChangeStatus()
+
+    @MoxyViewCommand(StrategyType.SINGLE)
+    fun taskCompletedShowDialog()
 }

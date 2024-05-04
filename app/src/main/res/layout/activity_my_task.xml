@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="30dp">
+                    android:padding="15dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -119,8 +119,10 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/label_executor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <TextView
@@ -172,7 +174,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -183,7 +185,7 @@
                             android:fontFamily="@font/manrope_bold"
                             android:gravity="center_vertical"
                             android:text="@string/status"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/main"
                             android:textSize="26sp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -206,7 +208,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_bold"
-                        android:text="@string/description_task"
+                        android:text="@string/deadline"
+                        android:textColor="@color/main"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_deadlines"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/manrope_semi_bold"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/manrope_bold"
+                        android:text="@string/task_description"
                         android:textColor="@color/main"
                         android:textSize="26sp" />
 
