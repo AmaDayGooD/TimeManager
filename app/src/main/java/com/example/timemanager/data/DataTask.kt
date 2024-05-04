@@ -10,30 +10,34 @@ import java.time.ZoneId
 
 data class DataTask(
     override val idTask: Int,
-    override val parentUserId: String,
-    override val childUserId: String,
+    override val relationId: Int,
     override val taskName: String,
     override val description: String,
-    val deadline: String,
+    val startDateTime: String,
+    val endDateTime: String,
     override val award: String,
     val status: String?,
     val importance: String?,
 ) : Task {
     constructor(task: Task) : this(
         task.idTask,
-        task.parentUserId,
-        task.childUserId,
+        task.relationId,
         task.taskName,
         task.description,
+        "",
         "",
         task.award,
         null,
         null
     )
 
-    override val limit: LocalDateTime
+    override val taskStart: LocalDateTime
         @RequiresApi(Build.VERSION_CODES.O)
-        get() = LocalDateTime.ofInstant(Instant.parse(deadline), ZoneId.of("UTC"))
+        get() = LocalDateTime.ofInstant(Instant.parse(startDateTime), ZoneId.of("UTC"))
+
+    override val taskEnd: LocalDateTime
+        @RequiresApi(Build.VERSION_CODES.O)
+        get() = LocalDateTime.ofInstant(Instant.parse(endDateTime), ZoneId.of("UTC"))
 
     override val seriousness: Importance
         get() = Importance.valueOf(importance ?: Importance.Low.toString())

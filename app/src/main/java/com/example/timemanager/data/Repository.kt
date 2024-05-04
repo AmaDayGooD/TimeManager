@@ -70,9 +70,10 @@ class Repository @Inject constructor(
 
     suspend fun getTasks(token: String): List<Task>? {
         return try {
-            retrofit.getTasks(token)
+           retrofit.getTasks(token)
         } catch (e: Exception) {
             e.printStackTrace()
+            println("MyLog $e")
             null
         }
     }
@@ -112,9 +113,18 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getChild(token: String, childId: String): Profile? {
+    suspend fun getChild(token: String, childId: Int): Profile? {
         return try {
             retrofit.getChild(token, childId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun getChildByRelationId(token:String, relationId: Int): Profile? {
+        return try {
+            retrofit.getChildByRelationId(token, relationId)
         } catch (e: Exception) {
             e.printStackTrace()
             null

@@ -37,6 +37,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
 
     private var taskInfo: Task? = null
     private var profile: Profile? = null
+    private val childUserId: Int? = null
 
     init {
         setTask()
@@ -46,7 +47,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         launch {
             viewState.showLoading()
             taskInfo = repository.getTask(token, taskId.toString())
-            val taskPerformer = repository.getChild(token, taskInfo?.childUserId ?: "1")
+            val taskPerformer = repository.getChildByRelationId(token, taskInfo?.relationId ?: 1)
             profile = repository.getProfile(token)
             val userRole = profile?.userRole ?: Role.Child
             viewState.setTaskInfo(taskInfo, userRole, taskPerformer)
@@ -65,7 +66,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
 
     fun payReward(reward: Float) {
         launch {
-            repository.payReward(token, taskInfo?.childUserId.orEmpty(), reward)
+            repository.payReward(token, childUserId.toString(), reward)
         }
     }
 

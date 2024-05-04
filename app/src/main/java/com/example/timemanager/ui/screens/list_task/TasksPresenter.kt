@@ -12,7 +12,6 @@ import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -60,6 +59,6 @@ class TasksPresenter : BasePresenter<TasksView>() {
 
     private fun getToDayTasks(listTasks: List<Task>?): List<Task>? {
         val toDay = LocalDate.now()
-        return listTasks?.filter { it.limit.toLocalDate() == toDay }
+        return listTasks?.filter { it.taskStart.toLocalDate() == toDay }
     }
 }

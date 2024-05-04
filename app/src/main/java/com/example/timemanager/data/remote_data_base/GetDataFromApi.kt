@@ -39,7 +39,7 @@ class GetDataFromApi(retrofit: Retrofit) {
         return api.getTask(token, idTask)
     }
 
-    suspend fun updateTask(token: String, task: DataTask){
+    suspend fun updateTask(token: String, task: DataTask) {
         return api.updateTask(token, task.idTask.toString(), task)
     }
 
@@ -51,8 +51,12 @@ class GetDataFromApi(retrofit: Retrofit) {
         return api.getChildren(token)
     }
 
-    suspend fun getChild(token: String, childId: String): Profile? {
+    suspend fun getChild(token: String, childId: Int): Profile? {
         return api.getChild(token, childId)
+    }
+
+    suspend fun getChildByRelationId(token: String, relationId: Int): DataProfile? {
+        return api.getChildByRelationId(token, relationId)
     }
 
     suspend fun addChild(token: String, profile: DataProfile) {

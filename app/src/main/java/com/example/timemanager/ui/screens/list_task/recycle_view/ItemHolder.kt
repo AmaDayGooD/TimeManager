@@ -3,13 +3,11 @@ package com.example.timemanager.ui.screens.list_task.recycle_view
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timemanager.R
 import com.example.timemanager.data.Importance
 import com.example.timemanager.databinding.ItemTaskBinding
 import com.example.timemanager.entity.Task
-import com.example.timemanager.ui.screens.my_task.MyTaskActivity.Companion.createIntentMyTask
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -20,7 +18,7 @@ class ItemHolder(private val itemView: View, private val listener: OnItemClickLi
     @RequiresApi(Build.VERSION_CODES.O)
     fun onBindView(itemTask: Task) = with(binding) {
         textViewTaskName.text = itemTask.taskName
-        textTaskLimit.text = formatDate(itemTask.limit)
+//        textTaskLimit.text = formatDate(itemTask.limit)
         textAward.text = itemTask.award
         setSeriousness(itemTask.seriousness ?: Importance.Low)
         taskItem.setOnClickListener {
