@@ -47,6 +47,7 @@
                         android:src="@drawable/ic_email" />
 
                     <EditText
+                        android:autofillHints="emailAddress"
                         android:id="@+id/edit_text_login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,6 +88,7 @@
                         android:src="@drawable/ic_password" />
 
                     <EditText
+                        android:autofillHints="password"
                         android:id="@+id/edit_text_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
