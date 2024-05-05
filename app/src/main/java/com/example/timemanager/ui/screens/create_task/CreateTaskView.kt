@@ -13,4 +13,7 @@ interface CreateTaskView : BaseView {
 
     @MoxyViewCommand(StrategyType.ADD_TO_END)
     fun setNameChild(nameChild: List<String>)
+
+    @MoxyViewCommand(StrategyType.SINGLE)
+    fun showResultCreateTask(result: Boolean)
 }

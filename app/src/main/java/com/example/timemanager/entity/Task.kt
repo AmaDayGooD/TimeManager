@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 interface Task {
     val idTask: Int?
-    val relationId: Int
+    val relationId: Int?
     val taskName: String
     val description: String
     val taskStart: LocalDateTime

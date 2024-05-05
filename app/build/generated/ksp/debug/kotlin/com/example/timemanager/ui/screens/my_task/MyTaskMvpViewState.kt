@@ -28,6 +28,10 @@ public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState
 		apply(CloseDialogChangeStatusCommand())
 	}
 
+	override fun taskCompletedShowDialog() {
+		apply(TaskCompletedShowDialogCommand())
+	}
+
 	override fun log(message: String) {
 		apply(LogCommand(message))
 	}
@@ -65,6 +69,15 @@ public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState
 		}
 
 		override fun toString(): String = buildString("closeDialogChangeStatus",)
+	}
+
+	private class TaskCompletedShowDialogCommand<OMEGAVIEW : MyTaskView>() :
+			ViewCommand<OMEGAVIEW>("taskCompletedShowDialog", SingleStateStrategy) {
+		override fun apply(mvpView: OMEGAVIEW) {
+			mvpView.taskCompletedShowDialog()
+		}
+
+		override fun toString(): String = buildString("taskCompletedShowDialog",)
 	}
 
 	private class LogCommand<OMEGAVIEW : MyTaskView>(

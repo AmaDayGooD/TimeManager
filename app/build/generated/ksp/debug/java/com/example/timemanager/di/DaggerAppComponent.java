@@ -4,6 +4,8 @@ import com.example.timemanager.data.local_data_base.DataBaseDao;
 import com.example.timemanager.data.local_data_base.Settings;
 import com.example.timemanager.ui.screens.authorization.AuthorizationPresenter;
 import com.example.timemanager.ui.screens.authorization.AuthorizationPresenter_MembersInjector;
+import com.example.timemanager.ui.screens.create_task.CreateTaskPresenter;
+import com.example.timemanager.ui.screens.create_task.CreateTaskPresenter_MembersInjector;
 import com.example.timemanager.ui.screens.list_task.TasksPresenter;
 import com.example.timemanager.ui.screens.list_task.TasksPresenter_MembersInjector;
 import com.example.timemanager.ui.screens.my_children.MyChildrenPresenter;
@@ -140,6 +142,11 @@ public final class DaggerAppComponent {
     }
 
     @Override
+    public void inject(CreateTaskPresenter presenter) {
+      injectCreateTaskPresenter(presenter);
+    }
+
+    @Override
     public DataBaseDao getRoom() {
       return RoomModules_ProvideDataBaseFactory.provideDataBase(roomModules, ContextModules_ProvideContextFactory.provideContext(contextModules));
     }
@@ -188,6 +195,13 @@ public final class DaggerAppComponent {
       MyTaskPresenter_MembersInjector.injectRetrofit(instance, NetWorkModules_ProvideRetrofitFactory.provideRetrofit(netWorkModules));
       MyTaskPresenter_MembersInjector.injectDataBase(instance, getRoom());
       MyTaskPresenter_MembersInjector.injectSettings(instance, settings());
+      return instance;
+    }
+
+    private CreateTaskPresenter injectCreateTaskPresenter(CreateTaskPresenter instance) {
+      CreateTaskPresenter_MembersInjector.injectRetrofit(instance, NetWorkModules_ProvideRetrofitFactory.provideRetrofit(netWorkModules));
+      CreateTaskPresenter_MembersInjector.injectDataBase(instance, getRoom());
+      CreateTaskPresenter_MembersInjector.injectSettings(instance, settings());
       return instance;
     }
   }

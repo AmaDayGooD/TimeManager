@@ -7,10 +7,12 @@ import com.example.timemanager.entity.Task
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import kotlin.reflect.KCallable
+import kotlin.reflect.full.starProjectedType
 
 data class DataTask(
     override val idTask: Int?,
-    override val relationId: Int,
+    override val relationId: Int?,
     override val taskName: String,
     override val description: String,
     val startDateTime: String?,
@@ -56,3 +58,4 @@ enum class Condition(val colorRes: Int, val textResId: Int) {
     Reject(R.color.reject, R.string.task_reject),
     Accept(R.color.accept, R.string.task_accept)
 }
+

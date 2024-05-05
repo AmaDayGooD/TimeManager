@@ -61,7 +61,6 @@ abstract class BaseActivity : OmegaActivity, BaseView {
 
         buttonOk?.setOnClickListener {
             infoDialog?.dismiss()
-            finish()
         }
 
         infoDialog?.show()

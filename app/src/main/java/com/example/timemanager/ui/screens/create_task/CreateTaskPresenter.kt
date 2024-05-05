@@ -1,14 +1,18 @@
 package com.example.timemanager.ui.screens.create_task
 
 import com.example.timemanager.TimeManagerApp
+import com.example.timemanager.data.Condition
 import com.example.timemanager.data.DataTask
+import com.example.timemanager.data.Importance
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Settings
+import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BasePresenter
 import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 
@@ -34,17 +38,59 @@ class CreateTaskPresenter : BasePresenter<CreateTaskView>() {
 
     private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
 
-    private val currentDataTask: DataTask? = null
+    private var currentDataTask: DataTask
+    private var listChildren: MutableList<Profile> = mutableListOf()
+    private var childId: String = ""
 
     init {
         getListNameChild()
+        currentDataTask = DataTask(
+            idTask = null,
+            relationId = null,
+            taskName = "",
+            description = "",
+            startDateTime = null,
+            endDateTime = null,
+            award = "",
+            status = null,
+            importance = null
+        )
+    }
+
+    fun setChildId(userName: String) {
+        childId = (listChildren.find { it.username == userName }?.id ?: 0).toString()
+    }
+
+    fun createNewTask(
+        taskName: String,
+        taskDescription: String,
+        seriousness: Importance,
+        award: String,
+        dateTimeStart: LocalDateTime?,
+        dateTimeEnd: LocalDateTime?,
+    ) {
+        viewState.showLoading()
+        currentDataTask = currentDataTask.copy(
+            taskName = taskName.trim(),
+            description = taskDescription.trim(),
+            startDateTime = dateTimeStart.toString(),
+            endDateTime = dateTimeEnd.toString(),
+            status = Condition.Open.toString(),
+            award = award,
+            importance = seriousness.name
+        )
+        launch {
+            viewState.showResultCreateTask(repository.createTask(token, childId, currentDataTask))
+
+
+        }
     }
 
     private fun getListNameChild() {
-        val listNameChildren = mutableListOf<String>()
+        var listNameChildren = mutableListOf<String>()
         launch {
-            val listChildren = repository.getChildren(token)
-            listChildren?.let { list ->
+            listChildren.addAll(repository.getChildren(token) ?: emptyList())
+            listChildren.let { list ->
                 list.forEach { child ->
                     child.username?.let { listNameChildren.add(it) }
                 }

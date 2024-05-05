@@ -3,7 +3,6 @@ package com.example.timemanager.data.remote_data_base
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
-import com.example.timemanager.entity.Profile
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -15,7 +14,7 @@ interface RemoteApi {
 
     @POST("users/register")
     suspend fun registration(
-        @Body dataLogin: DataProfile
+        @Body dataLogin: DataProfile,
     )
 
     @POST("users/login")
@@ -23,68 +22,69 @@ interface RemoteApi {
 
     @GET("users/me")
     suspend fun getProfile(
-        @Header("Authorization") token: String?
+        @Header("Authorization") token: String?,
     ): DataProfile
 
     @PUT("user/edit")
     suspend fun editProfile(
         @Header("Authorization") token: String?,
-        @Body dataProfile: DataProfile
+        @Body dataProfile: DataProfile,
     )
 
     @PUT("user/update_balance/{userId}/{reward}")
     suspend fun payReward(
         @Header("Authorization") token: String?,
         @Path("userId") userId: String,
-        @Path("reward") reward: Float
+        @Path("reward") reward: Float,
     )
 
-    @POST("tasks/create")
+    @POST("tasks/create/{childId}")
     suspend fun createTask(
         @Header("Authorization") token: String?,
-        @Body task: DataTask
+        @Path("childId") childId: String,
+        @Body task: DataTask,
     )
 
     @GET("tasks")
     suspend fun getAllTasks(
-        @Header("Authorization") token: String?
+        @Header("Authorization") token: String?,
     ): List<DataTask>
 
     @GET("tasks/{taskId}")
     suspend fun getTask(
         @Header("Authorization") token: String?,
-        @Path("taskId") taskId: String
+        @Path("taskId") taskId: String,
     ): DataTask
 
     @PUT("tasks/{taskId}")
     suspend fun updateTask(
         @Header("Authorization") token: String?,
         @Path("taskId") taskId: String,
-        @Body task: DataTask
+        @Body task: DataTask,
     )
 
     @POST("/family/relations/create")
     suspend fun addChild(
         @Header("Authorization") token: String,
-        @Body profile: DataProfile
+        @Body profile: DataProfile,
     )
 
     @GET("/family/children")
     suspend fun getChildren(
-        @Header("Authorization") token: String?
+        @Header("Authorization") token: String?,
     ): List<DataProfile>
 
     @GET("/family/children/{childId}")
     suspend fun getChild(
         @Header("Authorization") token: String?,
-        @Path("childId") childId: Int
-    ) : DataProfile?
+        @Path("childId") childId: Int,
+    ): DataProfile?
 
     @GET("/family/child/{relationId}")
     suspend fun getChildByRelationId(
         @Header("Authorization") token: String?,
-        @Path("relationId") relationId: Int
-    ) : DataProfile?
+        @Path("relationId") relationId: Int,
+    ): DataProfile?
 
     @GET("family/children/{childId}/tasks")
     suspend fun getChildrenTasks(

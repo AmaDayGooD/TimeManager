@@ -113,6 +113,8 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         if (presenter.isParent()) {
             labelMyBalance.text = getString(R.string.paren)
         } else {
+            buttonCreateNewTask.visibility = View.GONE
+            buttonMyChildren.visibility = View.GONE
             textViewBalance.visibility = View.VISIBLE
             textViewBalance.text = (profile.count ?: 0).toString()
         }

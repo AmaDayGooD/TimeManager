@@ -42,10 +42,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="26dp">
 
@@ -63,6 +60,7 @@
                         android:id="@+id/spinner_childs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
                         android:background="@drawable/bg_spinner"
                         android:scrollbarSize="0dp" />
 
@@ -109,6 +107,150 @@
                         android:textColor="@color/gray"
                         android:textCursorDrawable="@drawable/edit_text_cursor"
                         android:textSize="24sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="15dp"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="19dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/importance"
+                                android:textColor="@color/main"
+                                android:textSize="26sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/ic_low_seriousness"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_lightning" />
+
+                                <ImageView
+                                    android:id="@+id/ic_medium_seriousness"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_lightning" />
+
+                                <ImageView
+                                    android:id="@+id/ic_high_seriousness"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_lightning" />
+
+                                <ImageView
+                                    android:id="@+id/ic_extra_high_seriousness"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_lightning" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/manrope_bold"
+                                android:text="@string/award"
+                                android:textColor="@color/main"
+                                android:textSize="26sp" />
+
+                            <EditText
+                                android:id="@+id/text_award"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:textAlignment="textEnd"
+                                android:backgroundTint="@color/main"
+                                android:drawableEnd="@drawable/ic_award_fire"
+                                android:fontFamily="@font/manrope_bold"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLength="6"
+                                android:maxLines="1"
+                                android:textColor="@color/main"
+                                android:textSize="20sp" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:maxLines="2"
+                        android:text="@string/begin_and_end_task"
+                        android:textColor="@color/main"
+                        android:textSize="26sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_set_time_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:padding="15dp"
+                        android:text="@string/press_for_enter_time_start"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:cornerRadius="26dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_set_time_end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:padding="15dp"
+                        android:text="@string/press_for_enter_time_end"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:cornerRadius="26dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_accept_new_task"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/gray"
+                        android:clickable="false"
+                        android:elevation="0dp"
+                        android:fontFamily="@font/manrope_bold"
+                        android:padding="15dp"
+                        android:text="@string/accept_edit"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:cornerRadius="26dp" />
 
                 </LinearLayout>
 

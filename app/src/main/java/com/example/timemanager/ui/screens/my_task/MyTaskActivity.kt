@@ -311,6 +311,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
     override fun taskCompletedShowDialog() {
         showInfoDialog(context = this, title = getString(R.string.task_completed), text = getString(R.string.text_compete_task))
+        finish()
     }
 
     override fun showLoading() {

@@ -1,12 +1,9 @@
 package com.example.timemanager.data
 
-import android.provider.ContactsContract.Data
 import com.example.timemanager.data.local_data_base.DataBaseDao
-import com.example.timemanager.data.local_data_base.Role
 import com.example.timemanager.data.remote_data_base.GetDataFromApi
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
-import com.omega_r.base.logs.log
 import kotlinx.coroutines.CoroutineScope
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -22,8 +19,7 @@ class Repository @Inject constructor(
 
     suspend fun login(login: String, password: String): String? {
         val dataLoginPassword = DataProfile(
-            login = login,
-            password = password
+            login = login, password = password
         )
         return try {
             retrofit.login(dataLoginPassword)?.token
@@ -44,7 +40,7 @@ class Repository @Inject constructor(
 
     suspend fun getProfile(token: String): Profile {
         return try {
-             retrofit.getProfile(token)
+            retrofit.getProfile(token)
         } catch (e: Exception) {
             e.printStackTrace()
             println("MyLog $e")
@@ -63,15 +59,25 @@ class Repository @Inject constructor(
     suspend fun payReward(token: String, userId: String, reward: Float) {
         try {
             retrofit.payReward(token, userId, reward)
-        } catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
 
+    suspend fun createTask(token: String, childId: String, newTask: DataTask): Boolean {
+        return try {
+            retrofit.createTask(token, childId, newTask)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
     suspend fun getTasks(token: String): List<Task>? {
         return try {
-           retrofit.getTasks(token)
+            retrofit.getTasks(token)
         } catch (e: Exception) {
             e.printStackTrace()
             println("MyLog $e")
@@ -123,9 +129,9 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getChildByRelationId(token:String, relationId: Int): Profile? {
+    suspend fun getChildByRelationId(token: String, relationId: Int): Profile? {
         return try {
-           val r = retrofit.getChildByRelationId(token, relationId)
+            val r = retrofit.getChildByRelationId(token, relationId)
             r
         } catch (e: Exception) {
             e.printStackTrace()
