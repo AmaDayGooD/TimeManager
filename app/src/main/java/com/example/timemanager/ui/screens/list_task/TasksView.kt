@@ -8,5 +8,11 @@ import com.omegar.mvp.viewstate.strategy.StrategyType
 interface TasksView : BaseView {
 
     @MoxyViewCommand(StrategyType.ADD_TO_END)
-    fun setTaskList(list: List<Task>, state:Boolean)
+    fun setTaskList(list: List<Task>)
+
+    @MoxyViewCommand(StrategyType.ADD_TO_END)
+    fun setIconSortField(state: TasksActivity.StateSortField)
+
+    @MoxyViewCommand(StrategyType.ADD_TO_END)
+    fun setIconSortOrder(state: TasksActivity.StateOrder)
 }

@@ -46,7 +46,7 @@ abstract class BaseActivity : OmegaActivity, BaseView {
     }
 
     private var infoDialog: Dialog? = null
-    fun showInfoDialog(context: Context, title: String = "", text: String = "") {
+    fun showInfoDialog(context: Context, title: String = "", text: String = "", cancelable: Boolean = false) {
         infoDialog = Dialog(this, R.style.DialogFullscreen)
         infoDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE) // Переместите вызов requestWindowFeature() перед setContentView()
         infoDialog?.setCancelable(false)

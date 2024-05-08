@@ -6,13 +6,13 @@ import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Settings
-import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BasePresenter
 import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
-import java.time.LocalDate
 import javax.inject.Inject
+import com.example.timemanager.ui.screens.list_task.TasksActivity.StateSortField as StateSortField
+import com.example.timemanager.ui.screens.list_task.TasksActivity.StateOrder as StateOrder
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TasksPresenter : BasePresenter<TasksView>() {
@@ -33,32 +33,46 @@ class TasksPresenter : BasePresenter<TasksView>() {
 
     private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
 
-    private var showAllTasks: Boolean = true
+    private var currentSortState = 0
+    private var currentOrderState = 0
 
-
-    fun updateList(){
+    fun updateList() {
         launch {
             viewState.showLoading()
-            val listTasks = repository.getTasks(token)
-            showAllTasks = true
-            viewState.setTaskList(listTasks ?: emptyList(), showAllTasks)
+            val listTasks = repository.getTasks(
+                token,
+                StateSortField.entries[currentSortState].name,
+                StateOrder.entries[currentOrderState].name
+            )
+            viewState.setTaskList(listTasks ?: emptyList())
         }
     }
 
-    fun changeViewList() {
-        showAllTasks = !showAllTasks
+    fun changeSortField() {
+        currentSortState = (currentSortState + 1) % 5
+        println("MyLog $currentSortState ${StateSortField.entries[currentSortState].icon}")
+        setListTask()
+    }
+
+    fun changeOrder() {
+        currentOrderState = (currentOrderState + 1) % 2
+        setListTask()
+    }
+
+    private fun setListTask() {
         launch {
-            val listTasks = repository.getTasks(token)
-            if (showAllTasks) {
-                viewState.setTaskList(listTasks ?: emptyList(), showAllTasks)
-            } else {
-                viewState.setTaskList(getToDayTasks(listTasks) ?: emptyList(), showAllTasks)
-            }
-        }
-    }
+            val field = StateSortField.entries[currentSortState]
+            val order = StateOrder.entries[currentOrderState]
 
-    private fun getToDayTasks(listTasks: List<Task>?): List<Task>? {
-        val toDay = LocalDate.now()
-        return listTasks?.filter { it.taskStart.toLocalDate() == toDay }
+            val listTasks = repository.getTasks(
+                token,
+                field.name,
+                order.name
+            )
+            viewState.setIconSortField(field)
+            viewState.setIconSortOrder(order)
+            viewState.setTaskList(listTasks ?: emptyList())
+
+        }
     }
 }

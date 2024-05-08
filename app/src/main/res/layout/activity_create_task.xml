@@ -111,8 +111,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginBottom="15dp"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
@@ -185,7 +185,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
-                                android:textAlignment="textEnd"
                                 android:backgroundTint="@color/main"
                                 android:drawableEnd="@drawable/ic_award_fire"
                                 android:fontFamily="@font/manrope_bold"
@@ -194,6 +193,7 @@
                                 android:lines="1"
                                 android:maxLength="6"
                                 android:maxLines="1"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/main"
                                 android:textSize="20sp" />
 
@@ -213,29 +213,42 @@
                         android:textColor="@color/main"
                         android:textSize="26sp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_set_time_start"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:elevation="0dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:padding="15dp"
-                        android:text="@string/press_for_enter_time_start"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        app:cornerRadius="26dp" />
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_set_time_end"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:elevation="0dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:padding="15dp"
-                        android:text="@string/press_for_enter_time_end"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        app:cornerRadius="26dp" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_set_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:elevation="0dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="10dp"
+                            android:text="@string/task_date"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:cornerRadius="26dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_set_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:elevation="0dp"
+                            android:fontFamily="@font/manrope_bold"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="10dp"
+                            android:text="@string/task_time"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:cornerRadius="26dp" />
+
+                    </LinearLayout>
+
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_accept_new_task"

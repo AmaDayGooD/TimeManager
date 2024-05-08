@@ -75,9 +75,9 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getTasks(token: String): List<Task>? {
+    suspend fun getTasks(token: String, sortField: String = "START_DATE_TIME", sortOrder: String = "ASC"): List<Task>? {
         return try {
-            retrofit.getTasks(token)
+            retrofit.getTasks(token, sortField, sortOrder)
         } catch (e: Exception) {
             e.printStackTrace()
             println("MyLog $e")

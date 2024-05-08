@@ -58,13 +58,14 @@
     <string name="importance">Важность</string>
     <string name="begin_and_end_task">Начало и окончание задачи</string>
 
-    <string name="press_for_enter_time_start">Нажмите для ввода начала</string>
-    <string name="press_for_enter_time_end">Нажмите для ввода окончания</string>
+    <string name="task_date">Дата</string>
+    <string name="task_time">Время</string>
     <string name="award">Награда</string>
     <string name="create_task">Создание задачи</string>
 
     <string name="title_incorrect_start_end_data">Ошибка</string>
-    <string name="info_incorrect_start_end_data">Введите корректные даты начала и окончания задачи</string>
+    <string name="info_incorrect_start_end_data">Введите корректные значения времени</string>
+    <string name="info_incorrect_post_time">Время не может быть прошедшим</string>
 
     <string name="successfully">Успешно</string>
     <string name="error">Ошибка</string>

@@ -192,6 +192,7 @@
                             android:id="@+id/button_task_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:clickable="false"
                             android:layout_gravity="end|center_vertical"
                             android:fontFamily="@font/manrope_medium"
                             android:gravity="center_vertical"
@@ -212,14 +213,43 @@
                         android:textColor="@color/main"
                         android:textSize="26sp" />
 
-                    <TextView
-                        android:id="@+id/text_view_deadlines"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/manrope_semi_bold"
-                        android:textSize="24sp" />
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_set_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:elevation="0dp"
+                            android:clickable="false"
+                            android:fontFamily="@font/manrope_bold"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="10dp"
+                            android:text="@string/task_date"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:cornerRadius="26dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_set_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:elevation="0dp"
+                            android:clickable="false"
+                            android:fontFamily="@font/manrope_bold"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="10dp"
+                            android:text="@string/task_time"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:cornerRadius="26dp" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -252,7 +282,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:backgroundTint="@color/blue"
+                        android:backgroundTint="@color/main"
                         android:elevation="0dp"
                         android:fontFamily="@font/manrope_medium"
                         android:padding="15dp"

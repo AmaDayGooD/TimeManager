@@ -5,7 +5,6 @@ import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
-import retrofit2.Response
 import retrofit2.Retrofit
 
 class GetDataFromApi(retrofit: Retrofit) {
@@ -36,8 +35,8 @@ class GetDataFromApi(retrofit: Retrofit) {
         api.createTask(token, childId, newTask)
     }
 
-    suspend fun getTasks(token: String): List<Task> {
-        return api.getAllTasks(token)
+    suspend fun getTasks(token: String, sortField: String, sortOrder: String): List<Task> {
+        return api.getAllTasks(token, sortField, sortOrder)
     }
 
     suspend fun getTask(token: String, idTask: String): Task {

@@ -1,17 +1,16 @@
 package com.example.timemanager.ui.screens.my_task
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -28,11 +27,12 @@ import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
 import com.google.android.material.button.MaterialButton
-import com.omega_r.libs.omegatypes.backgroundColor
-import com.omega_r.libs.omegatypes.toText
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
@@ -63,7 +63,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonTaskNotCompleted: Button
     private lateinit var textTaskPerformer: TextView
     private lateinit var buttonTaskState: Button
-    private lateinit var textDeadlines: TextView
+    private lateinit var buttonData: Button
+    private lateinit var buttonTime: Button
     private lateinit var labelExecutor: LinearLayout
 
     private lateinit var seriousness: Importance
@@ -72,6 +73,11 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private var idTask: Int = -1
     private var isParent: Boolean = false
     private var modeEditTask: Boolean = false
+
+    private var taskStart: LocalDateTime = LocalDateTime.now()
+    private var taskEnd: LocalDateTime = LocalDateTime.now().plusMinutes(10)
+    private var isError = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyTaskBinding.inflate(layoutInflater)
@@ -88,31 +94,30 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonTaskNotCompleted = binding.buttonTaskNotCompleted
         textTaskPerformer = binding.textTaskPerformer
         buttonTaskState = binding.buttonTaskState
-        textDeadlines = binding.textViewDeadlines
+        buttonData = binding.buttonSetData
+        buttonTime = binding.buttonSetTime
         labelExecutor = binding.labelExecutor
-
 
         buttonBack.setOnClickListener {
             finish()
         }
 
-        buttonTaskState.setOnClickListener {
-            showInputDialog()
-        }
     }
 
     override fun setTaskInfo(task: Task?, userRole: Role, taskPerformer: Profile?) {
         currentTask = task
+        taskStart = task?.taskStart ?: LocalDateTime.now()
+        taskEnd = task?.taskEnd ?: LocalDateTime.now()
+
         currentTask?.let { currentTask ->
             seriousness = currentTask.seriousness ?: Importance.Medium
             textAward.text = currentTask.award
             textViewNameTask.text = currentTask.taskName
-            textDeadlines.text =
-                getString(R.string.deadlines, formatDate(currentTask.taskStart), formatDate(currentTask.taskEnd))
+            buttonData.text = formatTaskDate(currentTask.taskStart.toLocalDate())
+            buttonTime.text =
+                getString(R.string.deadlines, currentTask.taskStart.toLocalTime(), currentTask.taskEnd.toLocalTime())
             setSeriousness(currentTask.seriousness ?: Importance.Medium)
             setState(buttonTaskState, currentTask.condition ?: Condition.Open)
-
-
         }
 
         if (currentTask?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
@@ -140,25 +145,30 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         }
         setRole()
 
-        if(currentTask?.condition == Condition.Accept){
+        if (currentTask?.condition == Condition.Accept) {
             goneAllButtons()
         }
         closeLoading()
     }
 
-    private fun goneAllButtons(){
+    private fun formatTaskDate(taskDate: LocalDate): String {
+        val formatter = DateTimeFormatter.ofPattern("d MMMM", Locale("ru")) // Форматирование даты в виде "день Месяц"
+        return taskDate.format(formatter)
+    }
+
+    private fun goneAllButtons() {
         buttonEditTask.visibility = View.GONE
         buttonTaskCompleted.visibility = View.GONE
         buttonTaskNotCompleted.visibility = View.GONE
         buttonTaskState.isEnabled = false
     }
 
-
     @SuppressLint("ResourceAsColor")
     private fun setRole() {
         if (isParent) {
             buttonEditTask.visibility = View.VISIBLE
             buttonTaskNotCompleted.visibility = View.VISIBLE
+
 
             buttonEditTask.setOnClickListener {
                 changeEnableButton()
@@ -223,13 +233,24 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
     private fun changeEnableButton() {
         if (modeEditTask) {
+            buttonData.isClickable = false
+            buttonTime.isClickable = false
             buttonTaskState.visibility = View.VISIBLE
             buttonTaskCompleted.visibility = View.VISIBLE
             buttonTaskNotCompleted.visibility = View.VISIBLE
         } else {
+            buttonData.isClickable = true
+            buttonTime.isClickable = true
             buttonTaskState.visibility = View.GONE
             buttonTaskCompleted.visibility = View.GONE
             buttonTaskNotCompleted.visibility = View.GONE
+
+            buttonData.setOnClickListener {
+                showDatePickerDialog(true)
+            }
+            buttonTime.setOnClickListener {
+                showTimePickerDialog(true, taskStart.toLocalDate())
+            }
         }
     }
 
@@ -260,7 +281,9 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             taskName = textViewNameTask.text.toString(),
             description = textViewDescriptionTask.text.toString(),
             importance = seriousness.name,
-            award = textAward.text.toString()
+            award = textAward.text.toString(),
+            startDateTime = taskStart.toString(),
+            endDateTime = taskEnd.toString()
         )
         presenter.applyChanges(newTask)
     }
@@ -305,10 +328,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         seriousness = importance
     }
 
-    private fun formatDate(inputDate: LocalDateTime): String {
-        return inputDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-    }
-
     override fun taskCompletedShowDialog() {
         showInfoDialog(context = this, title = getString(R.string.task_completed), text = getString(R.string.text_compete_task))
         finish()
@@ -318,56 +337,83 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         showDialog(this)
     }
 
-    private fun showInputDialog() {
-        val task = presenter.getTask()
-        dialogChangeStatusTask = Dialog(this, R.style.DialogStyle)
-        dialogChangeStatusTask.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogChangeStatusTask.setCancelable(true)
-        dialogChangeStatusTask.setContentView(R.layout.dialog_change_state_task)
+    // Метод для отображения диалога выбора даты
+    private fun showDatePickerDialog(isStart: Boolean) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val taskState = dialogChangeStatusTask.findViewById<Button>(R.id.button_task_state)
-        val buttonStateOpen = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_open)
-        val buttonStateCompleted = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_completed)
-        val buttonStateReject = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_reject)
-        val buttonStateAccept = dialogChangeStatusTask.findViewById<Button>(R.id.button_select_state_accept)
-        val buttonApplyChange = dialogChangeStatusTask.findViewById<Button>(R.id.button_apply_changes)
+        val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
+            val date = LocalDate.of(year, month + 1, dayOfMonth)
+            taskStart = taskStart.withYear(year).withMonth(month + 1).withDayOfMonth(dayOfMonth)
+            taskEnd = taskEnd.withYear(year).withMonth(month + 1).withDayOfMonth(dayOfMonth)
+            buttonData.text = formatTaskDate(date)
+        }, year, month, dayOfMonth)
 
-        var taskStatus: Condition = task.condition ?: Condition.Open
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        datePickerDialog.show()
+    }
 
-        taskState?.apply {
-            text = getString(taskStatus.textResId)
-            setBackgroundColor(ContextCompat.getColor(this@MyTaskActivity, taskStatus.colorRes))
-        }
+    // Метод для отображения диалога выбора времени
+    private fun showTimePickerDialog(isStart: Boolean, selectedDate: LocalDate) {
+        val calendar = Calendar.getInstance()
+        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
 
-        val buttons = arrayOf(
-            buttonStateOpen to Condition.Open,
-            buttonStateCompleted to Condition.Completed,
-            buttonStateReject to Condition.Reject,
-            buttonStateAccept to Condition.Accept
-        )
+        val timePickerDialog = TimePickerDialog(this, { _, hourOfDay, minute ->
+            val selectedTime = LocalTime.of(hourOfDay, minute)
+            if (isStart) {
+                taskStart = taskStart.withHour(hourOfDay).withMinute(minute)
+                buttonTime.text = LocalTime.of(selectedTime.hour, selectedTime.minute).toString()
+                showTimePickerDialog(false, selectedDate)
+            } else {
+                taskEnd = taskEnd.withHour(hourOfDay).withMinute(minute)
+                buttonTime.text =
+                    (buttonTime.text.toString()) + "-" + (LocalTime.of(selectedTime.hour, selectedTime.minute).toString())
+                isError = false
+                checkDates()
+            }
 
-        buttons.forEach { (button, condition) ->
-            button?.setOnClickListener {
-                taskState?.apply {
-                    text = getString(condition.textResId)
-                    setBackgroundColor(ContextCompat.getColor(this@MyTaskActivity, condition.colorRes))
-                }
-                taskStatus = condition
+            println("MyLog selectedTime $taskStart $taskEnd")
+        }, hourOfDay, minute, true)
+
+
+        timePickerDialog.show()
+    }
+
+    private fun checkDates() {
+        when {
+            taskStart > taskEnd -> {
+                isError = true
+                showInfoDialog(
+                    this,
+                    getString(R.string.title_incorrect_start_end_data),
+                    getString(R.string.info_incorrect_start_end_data),
+                    true
+                )
+                buttonTime.setBackgroundColor(getColor(R.color.error))
+                buttonEditTask.setBackgroundColor(getColor(R.color.error))
+                buttonEditTask.isClickable = false
+            }
+
+            taskStart < LocalDateTime.now() || taskEnd < LocalDateTime.now() -> {
+                isError = true
+                closeDialog()
+                showInfoDialog(
+                    this, getString(R.string.title_incorrect_start_end_data), getString(R.string.info_incorrect_post_time), true
+                )
+                buttonTime.setBackgroundColor(getColor(R.color.error))
+                buttonEditTask.setBackgroundColor(getColor(R.color.error))
+                buttonEditTask.isClickable = false
+            }
+
+            else -> {
+                buttonTime.setBackgroundColor(getColor(R.color.main))
+                buttonEditTask.setBackgroundColor(getColor(R.color.main))
+                buttonEditTask.isClickable = true
             }
         }
-
-        buttonApplyChange.setOnClickListener {
-            val updatedTask = (task as DataTask).copy(
-                status = taskStatus.name
-            )
-            presenter.applyChanges(updatedTask)
-        }
-
-        val window = dialogChangeStatusTask.window
-        window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        dialogChangeStatusTask.show()
     }
 
     private fun showDialogAcceptTask() {

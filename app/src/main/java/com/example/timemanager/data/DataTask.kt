@@ -20,6 +20,7 @@ data class DataTask(
     override val award: String,
     val status: String?,
     val importance: String?,
+    override val error: String?
 ) : Task {
     constructor(task: Task) : this(
         task.idTask,
@@ -30,7 +31,8 @@ data class DataTask(
         "",
         task.award,
         null,
-        null
+        null,
+        task.error
     )
 
     override val taskStart: LocalDateTime

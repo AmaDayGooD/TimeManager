@@ -11,34 +11,102 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingVertical="10dp"
+        android:orientation="horizontal"
         android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:weightSum="2">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="@string/my_tasks"
             android:textColor="@color/white"
             android:textSize="26sp" />
 
-        <Button
-            android:id="@+id/button_change_view"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="0dp"
-            android:textSize="18sp"
-            android:backgroundTint="@color/light_main"
-            android:text="@string/show_today"
-            android:textColor="@color/main" />
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    app:cardCornerRadius="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/button_sort_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:background="@color/gray"
+                        android:backgroundTint="@color/white"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_timer"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    app:cardCornerRadius="14dp"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/button_sort_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:background="@color/gray"
+                        android:backgroundTint="@color/light_main"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_filter_asc"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_list"
@@ -46,7 +114,6 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="70dp"
         android:orientation="vertical" />
-
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

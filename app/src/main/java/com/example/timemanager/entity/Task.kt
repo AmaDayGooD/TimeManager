@@ -14,4 +14,5 @@ interface Task {
     val award: String
     val condition: Condition?
     val seriousness: Importance?
+    val error: String?
 }

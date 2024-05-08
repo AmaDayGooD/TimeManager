@@ -9,6 +9,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RemoteApi {
 
@@ -48,6 +49,8 @@ interface RemoteApi {
     @GET("tasks")
     suspend fun getAllTasks(
         @Header("Authorization") token: String?,
+        @Query("sort") sort: String?,
+        @Query("order") order: String?
     ): List<DataTask>
 
     @GET("tasks/{taskId}")

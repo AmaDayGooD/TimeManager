@@ -53,7 +53,8 @@ class CreateTaskPresenter : BasePresenter<CreateTaskView>() {
             endDateTime = null,
             award = "",
             status = null,
-            importance = null
+            importance = null,
+            error = null
         )
     }
 

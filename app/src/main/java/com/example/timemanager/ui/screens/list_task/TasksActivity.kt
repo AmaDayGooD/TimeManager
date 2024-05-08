@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -37,7 +38,9 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
 
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var buttonChangeView: Button
+
+    private lateinit var buttonSortField: ImageView
+    private lateinit var buttonSortOrder: ImageView
     private lateinit var buttonProfile: CardView
     private val adapter = TaskListAdapter(this)
 
@@ -52,11 +55,16 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        buttonChangeView = binding.buttonChangeView
+        buttonSortField = binding.buttonSortField
+        buttonSortOrder = binding.buttonSortOrder
         buttonProfile = binding.buttonProfile
 
-        buttonChangeView.setOnClickListener {
-            presenter.changeViewList()
+        buttonSortField.setOnClickListener {
+            presenter.changeSortField()
+        }
+
+        buttonSortOrder.setOnClickListener {
+            presenter.changeOrder()
         }
 
         buttonProfile.setOnClickListener {
@@ -64,15 +72,34 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         }
     }
 
+    override fun setIconSortField(state: StateSortField){
+        buttonSortField.setImageResource(state.icon)
+    }
+
+    override fun setIconSortOrder(state: StateOrder){
+        buttonSortOrder.setImageResource(state.icon)
+    }
+
+    enum class StateSortField(val icon: Int) {
+        START_DATE_TIME(R.drawable.ic_timer),
+        TASK_NAME(R.drawable.ic_list_light),
+        AWARD(R.drawable.ic_fire_stroke),
+        STATUS(R.drawable.ic_bookmark),
+        IMPORTANCE(R.drawable.ic_lightning_40x40)
+    }
+
+    enum class StateOrder(val icon: Int) {
+        ASC(R.drawable.ic_filter_asc),
+        DESC(R.drawable.ic_filter_desc)
+    }
+
     override fun onResume() {
         super.onResume()
         presenter.updateList()
     }
 
-    override fun setTaskList(list: List<Task>, state: Boolean) {
+    override fun setTaskList(list: List<Task>) {
         adapter.setList(list)
-        if (state) binding.buttonChangeView.text = getString(R.string.show_all)
-        else binding.buttonChangeView.text = getString(R.string.show_today)
         closeLoading()
     }
 
