@@ -1,8 +1,10 @@
 package com.example.timemanager.data.remote_data_base
 
+import com.example.timemanager.data.DataAward
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
+import com.example.timemanager.entity.Award
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import retrofit2.Retrofit
@@ -65,5 +67,21 @@ class GetDataFromApi(retrofit: Retrofit) {
 
     suspend fun addChild(token: String, profile: DataProfile) {
         api.addChild(token, profile)
+    }
+
+    suspend fun createAward(token: String, award: DataAward) {
+        api.createAward(token, award)
+    }
+
+    suspend fun addAwardForUser(token: String, userId: Int, awardId: Int){
+        api.addAwardForUser(token, userId, awardId)
+    }
+
+    suspend fun getAllAwards(token: String): List<Award>{
+        return api.getAllAwards(token)
+    }
+
+    suspend fun getAwardsByUser(token: String, userId: String):List<Award>{
+        return api.getAwardsByUser(token, userId)
     }
 }

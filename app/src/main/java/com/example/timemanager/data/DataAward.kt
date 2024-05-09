@@ -13,24 +13,24 @@ import java.time.ZoneId
  * Copyright (c) 2024 Omega https://omega-r.com
  */
 data class DataAward(
-    override val idAward: Int?,
-    override val nameAward: String,
-    override val description: String,
-    val price: String,
-    val awarded: String?,
+    override val idAward: Int? = null,
+    override val nameAward: String = "",
+    override val description: String = "",
+    val price: String = "",
+    val awarded: String? = null,
 ) : Award {
     constructor(award: Award) : this(
         award.idAward,
         award.nameAward,
         award.description,
         "",
-        null
+        ""
     )
 
     override val priceAward: Int
         get() = price.toIntOrNull() ?: 10
 
-    override val awardedDateTime: LocalDateTime
+    override val awardedDateTime: LocalDateTime?
         @RequiresApi(Build.VERSION_CODES.O)
-        get() = LocalDateTime.ofInstant(Instant.parse(awarded), ZoneId.of("UTC"))
+        get() = awarded.let { LocalDateTime.ofInstant(Instant.parse(it), ZoneId.of("UTC")) }
 }

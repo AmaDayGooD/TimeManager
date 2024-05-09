@@ -100,11 +100,24 @@ interface RemoteApi {
     @POST("/awards/create")
     suspend fun createAward(
         @Header("Authorization") token: String?,
-        @Body award: DataAward
+        @Body award: DataAward,
+    )
+
+    @POST("/users/{userId}/awards/add/{awardId}")
+    suspend fun addAwardForUser(
+        @Header("Authorization") token: String?,
+        @Path("userId") userId: Int,
+        @Path("awardId") awardId: Int,
     )
 
     @GET("/awards")
-    suspend fun getAwards(
+    suspend fun getAllAwards(
         @Header("Authorization") token: String?,
-    ): List<Award>
+    ): List<DataAward>
+
+    @GET("/users/{userId}/awards")
+    suspend fun getAwardsByUser(
+        @Header("Authorization") token: String?,
+        @Path("userId") userId: String,
+    ): List<DataAward>
 }

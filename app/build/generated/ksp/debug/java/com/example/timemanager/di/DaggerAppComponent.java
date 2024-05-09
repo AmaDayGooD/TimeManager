@@ -4,6 +4,8 @@ import com.example.timemanager.data.local_data_base.DataBaseDao;
 import com.example.timemanager.data.local_data_base.Settings;
 import com.example.timemanager.ui.screens.authorization.AuthorizationPresenter;
 import com.example.timemanager.ui.screens.authorization.AuthorizationPresenter_MembersInjector;
+import com.example.timemanager.ui.screens.awards.AwardsPresenter;
+import com.example.timemanager.ui.screens.awards.AwardsPresenter_MembersInjector;
 import com.example.timemanager.ui.screens.create_task.CreateTaskPresenter;
 import com.example.timemanager.ui.screens.create_task.CreateTaskPresenter_MembersInjector;
 import com.example.timemanager.ui.screens.list_task.TasksPresenter;
@@ -147,6 +149,11 @@ public final class DaggerAppComponent {
     }
 
     @Override
+    public void inject(AwardsPresenter presenter) {
+      injectAwardsPresenter(presenter);
+    }
+
+    @Override
     public DataBaseDao getRoom() {
       return RoomModules_ProvideDataBaseFactory.provideDataBase(roomModules, ContextModules_ProvideContextFactory.provideContext(contextModules));
     }
@@ -202,6 +209,13 @@ public final class DaggerAppComponent {
       CreateTaskPresenter_MembersInjector.injectRetrofit(instance, NetWorkModules_ProvideRetrofitFactory.provideRetrofit(netWorkModules));
       CreateTaskPresenter_MembersInjector.injectDataBase(instance, getRoom());
       CreateTaskPresenter_MembersInjector.injectSettings(instance, settings());
+      return instance;
+    }
+
+    private AwardsPresenter injectAwardsPresenter(AwardsPresenter instance) {
+      AwardsPresenter_MembersInjector.injectRetrofit(instance, NetWorkModules_ProvideRetrofitFactory.provideRetrofit(netWorkModules));
+      AwardsPresenter_MembersInjector.injectDataBase(instance, getRoom());
+      AwardsPresenter_MembersInjector.injectSettings(instance, settings());
       return instance;
     }
   }

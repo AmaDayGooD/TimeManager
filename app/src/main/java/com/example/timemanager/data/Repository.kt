@@ -2,6 +2,7 @@ package com.example.timemanager.data
 
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.remote_data_base.GetDataFromApi
+import com.example.timemanager.entity.Award
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import kotlinx.coroutines.CoroutineScope
@@ -131,8 +132,7 @@ class Repository @Inject constructor(
 
     suspend fun getChildByRelationId(token: String, relationId: Int): Profile? {
         return try {
-            val r = retrofit.getChildByRelationId(token, relationId)
-            r
+            retrofit.getChildByRelationId(token, relationId)
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -146,6 +146,43 @@ class Repository @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             false
+        }
+    }
+
+    suspend fun createAward(token: String, award: DataAward) {
+        try {
+            retrofit.createAward(token, award)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            println("MyLog createAward: error $e ")
+        }
+    }
+
+    suspend fun addAwardForUser(token: String, userId: Int, awardId: Int) {
+        try {
+            retrofit.addAwardForUser(token, userId, awardId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            println("MyLog addAwardForUser: error $e ")
+        }
+    }
+
+    suspend fun getAllAwards(token: String): List<Award> {
+        return try {
+            retrofit.getAllAwards(token)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            println("MyLog getAllAwards: error $e ")
+            emptyList()
+        }
+    }
+
+    suspend fun getAwardsByUser(token: String, userId: String): List<Award> {
+        return try {
+            retrofit.getAwardsByUser(token, userId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
         }
     }
 
