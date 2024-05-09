@@ -3,6 +3,7 @@ package com.example.timemanager.ui.screens.my_children
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -10,13 +11,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timemanager.R
 import com.example.timemanager.databinding.ActivityMyChildrenBinding
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BaseActivity
+import com.example.timemanager.ui.screens.awards.AwardsActivity
+import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.my_children.recycle_view.ChildrenListAdapter
+import com.example.timemanager.ui.screens.profile.ProfileActivity
+import com.google.android.material.card.MaterialCardView
 
 class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildrenView {
 
@@ -34,15 +40,27 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
 
     private lateinit var dialog: Dialog
 
-    private lateinit var buttonBack :ImageButton
+    private lateinit var buttonAwards: MaterialCardView
+    private lateinit var buttonListTasks: MaterialCardView
+    private lateinit var buttonProfile: MaterialCardView
+    private lateinit var buttonStatistics: MaterialCardView
+
+    private lateinit var buttonBack: ImageButton
     private lateinit var recycleView: RecyclerView
     private lateinit var buttonAddChild: Button
 
     private val adapter = ChildrenListAdapter()
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyChildrenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        buttonListTasks = binding.buttonTasks
+        buttonProfile = binding.buttonProfile
+        buttonStatistics = binding.buttonStatistics
+        buttonAwards = binding.buttonAwards
 
         buttonBack = binding.buttonBack
         recycleView = binding.recycleViewList
@@ -51,12 +69,24 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
         recycleView.layoutManager = LinearLayoutManager(this)
         recycleView.adapter = adapter
 
-        buttonBack.setOnClickListener{
+        buttonBack.setOnClickListener {
             finish()
         }
 
         buttonAddChild.setOnClickListener {
             showInputDialog()
+        }
+
+        buttonListTasks.setOnClickListener {
+            startActivity(TasksActivity.createIntentTaskActivity(this))
+        }
+
+        buttonProfile.setOnClickListener {
+            startActivity(ProfileActivity.createIntentMainScreen(this))
+        }
+
+        buttonAwards.setOnClickListener {
+            startActivity(AwardsActivity.createIntentAwardsScreen(this))
         }
 
         presenter.getChild()

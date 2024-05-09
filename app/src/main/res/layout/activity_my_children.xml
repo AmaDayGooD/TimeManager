@@ -120,7 +120,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_leader_board"
+            android:id="@+id/button_awards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -109,7 +109,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view_list"
+        android:id="@+id/recycle_view_list_awards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="70dp"
@@ -173,7 +173,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_awards"
+            android:id="@+id/button_leader_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

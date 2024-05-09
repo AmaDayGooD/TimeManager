@@ -1,8 +1,10 @@
 package com.example.timemanager.data.remote_data_base
 
+import com.example.timemanager.data.DataAward
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
+import com.example.timemanager.entity.Award
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -50,7 +52,7 @@ interface RemoteApi {
     suspend fun getAllTasks(
         @Header("Authorization") token: String?,
         @Query("sort") sort: String?,
-        @Query("order") order: String?
+        @Query("order") order: String?,
     ): List<DataTask>
 
     @GET("tasks/{taskId}")
@@ -94,4 +96,15 @@ interface RemoteApi {
         @Header("Authorization") token: String?,
         @Path("childId") childId: String,
     ): List<DataTask>
+
+    @POST("/awards/create")
+    suspend fun createAward(
+        @Header("Authorization") token: String?,
+        @Body award: DataAward
+    )
+
+    @GET("/awards")
+    suspend fun getAwards(
+        @Header("Authorization") token: String?,
+    ): List<Award>
 }

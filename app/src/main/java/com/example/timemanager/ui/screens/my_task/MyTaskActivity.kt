@@ -26,7 +26,11 @@ import com.example.timemanager.databinding.ActivityMyTaskBinding
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
+import com.example.timemanager.ui.screens.awards.AwardsActivity
+import com.example.timemanager.ui.screens.list_task.TasksActivity
+import com.example.timemanager.ui.screens.profile.ProfileActivity
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -50,6 +54,11 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             return Intent(context, MyTaskActivity::class.java).putExtra(TASK_ID, idTask)
         }
     }
+
+    private lateinit var buttonAwards: MaterialCardView
+    private lateinit var buttonListTasks: MaterialCardView
+    private lateinit var buttonProfile: MaterialCardView
+    private lateinit var buttonStatistics: MaterialCardView
 
     private lateinit var dialogChangeStatusTask: Dialog
     private lateinit var dialogAcceptTask: Dialog
@@ -100,6 +109,22 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
 
         buttonBack.setOnClickListener {
             finish()
+        }
+
+        buttonListTasks.setOnClickListener {
+            startActivity(TasksActivity.createIntentTaskActivity(this))
+        }
+
+        buttonProfile.setOnClickListener {
+            startActivity(ProfileActivity.createIntentMainScreen(this))
+        }
+
+        buttonStatistics.setOnClickListener {
+            // startActivity(StatisticsActivity.createIntentStatisticsScreen(this))
+        }
+
+        buttonAwards.setOnClickListener {
+            startActivity(AwardsActivity.createIntentAwardsScreen(this))
         }
 
     }
@@ -374,8 +399,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
                 isError = false
                 checkDates()
             }
-
-            println("MyLog selectedTime $taskStart $taskEnd")
         }, hourOfDay, minute, true)
 
 

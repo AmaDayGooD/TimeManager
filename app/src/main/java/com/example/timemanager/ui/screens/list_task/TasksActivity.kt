@@ -16,10 +16,13 @@ import com.example.timemanager.data.Condition
 import com.example.timemanager.databinding.ActivityTasksBinding
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BaseActivity
+import com.example.timemanager.ui.screens.awards.AwardsActivity
 import com.example.timemanager.ui.screens.list_task.recycle_view.OnItemClickListener
 import com.example.timemanager.ui.screens.list_task.recycle_view.TaskListAdapter
 import com.example.timemanager.ui.screens.my_task.MyTaskActivity.Companion.createIntentMyTask
+import com.example.timemanager.ui.screens.profile.ProfileActivity
 import com.example.timemanager.ui.screens.profile.ProfileActivity.Companion.createIntentMainScreen
+import com.google.android.material.card.MaterialCardView
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemClickListener {
@@ -36,12 +39,16 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         }
     }
 
+    private lateinit var buttonAwards: MaterialCardView
+    private lateinit var buttonListTasks: MaterialCardView
+    private lateinit var buttonProfile: MaterialCardView
+    private lateinit var buttonStatistics: MaterialCardView
+
     private lateinit var recyclerView: RecyclerView
 
 
     private lateinit var buttonSortField: ImageView
     private lateinit var buttonSortOrder: ImageView
-    private lateinit var buttonProfile: CardView
     private val adapter = TaskListAdapter(this)
 
 
@@ -51,13 +58,16 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         binding = ActivityTasksBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        buttonProfile = binding.buttonProfile
+        buttonAwards = binding.buttonAwards
+        buttonStatistics = binding.buttonStatistics
         recyclerView = binding.recycleViewList
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         buttonSortField = binding.buttonSortField
         buttonSortOrder = binding.buttonSortOrder
-        buttonProfile = binding.buttonProfile
 
         buttonSortField.setOnClickListener {
             presenter.changeSortField()
@@ -70,13 +80,21 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         buttonProfile.setOnClickListener {
             startActivity(createIntentMainScreen(this))
         }
+
+        buttonStatistics.setOnClickListener {
+            // startActivity(StatisticsActivity.createIntentStatisticsScreen(this))
+        }
+
+        buttonAwards.setOnClickListener {
+            startActivity(AwardsActivity.createIntentAwardsScreen(this))
+        }
     }
 
-    override fun setIconSortField(state: StateSortField){
+    override fun setIconSortField(state: StateSortField) {
         buttonSortField.setImageResource(state.icon)
     }
 
-    override fun setIconSortOrder(state: StateOrder){
+    override fun setIconSortOrder(state: StateOrder) {
         buttonSortOrder.setImageResource(state.icon)
     }
 
@@ -107,7 +125,7 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
         startActivity(createIntentMyTask(this, taskId))
     }
 
-    override fun setState(button: Button, state: Condition): Button{
+    override fun setState(button: Button, state: Condition): Button {
         return button.apply {
             text = getString(state.textResId)
             setBackgroundColor(ContextCompat.getColor(this@TasksActivity, state.colorRes))

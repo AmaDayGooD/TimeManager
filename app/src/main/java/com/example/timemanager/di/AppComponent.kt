@@ -3,6 +3,7 @@ package com.example.timemanager.di
 
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.ui.screens.authorization.AuthorizationPresenter
+import com.example.timemanager.ui.screens.awards.AwardsPresenter
 import com.example.timemanager.ui.screens.create_task.CreateTaskPresenter
 import com.example.timemanager.ui.screens.list_task.TasksPresenter
 import com.example.timemanager.ui.screens.my_children.MyChildrenPresenter
@@ -21,6 +22,7 @@ interface AppComponent {
     fun inject(presenter: MyChildrenPresenter)
     fun inject(presenter: MyTaskPresenter)
     fun inject(presenter: CreateTaskPresenter)
+    fun inject(presenter: AwardsPresenter)
 
     val room: DataBaseDao
     val retrofit: Retrofit

@@ -16,6 +16,7 @@ import com.example.timemanager.databinding.ActivityProfileBinding
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BaseActivity
 import com.example.timemanager.ui.screens.authorization.AuthorizationActivity.Companion.createIntentAuthScreen
+import com.example.timemanager.ui.screens.awards.AwardsActivity.Companion.createIntentAwardsScreen
 import com.example.timemanager.ui.screens.create_task.CreateTaskActivity.Companion.createIntentCreateTaskActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity.Companion.createIntentTaskActivity
 import com.example.timemanager.ui.screens.my_children.MyChildrenActivity.Companion.createIntentMyChildren
@@ -38,7 +39,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
     private lateinit var buttonExit: Button
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonStatistics: MaterialCardView
-    private lateinit var buttonLeaderBoard: MaterialCardView
+    private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonMyChildren: Button
     private lateinit var buttonCreateNewTask: Button
 
@@ -69,7 +70,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
         buttonListTasks = binding.buttonTasks
         buttonStatistics = binding.buttonStatistics
-        buttonLeaderBoard = binding.buttonLeaderBoard
+        buttonAwards = binding.buttonAwards
 
 
         buttonMyChildren.setOnClickListener {
@@ -82,6 +83,10 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
         buttonListTasks.setOnClickListener {
             startActivity(createIntentTaskActivity(this))
+        }
+
+        buttonAwards.setOnClickListener{
+            startActivity(createIntentAwardsScreen(this))
         }
 
         buttonEditProfile.setOnClickListener {
