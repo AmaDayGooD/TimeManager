@@ -1,8 +1,6 @@
 package com.example.timemanager.ui.base
 
-import android.provider.ContactsContract.Profile
 import android.util.Log
-import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 import com.omega_r.base.mvp.views.OmegaView
 import kotlinx.coroutines.*
@@ -12,7 +10,9 @@ open class BasePresenter<View: OmegaView>: OmegaPresenter<View>(), CoroutineScop
     override fun onDestroy() {
         job.cancel()
     }
-
+    companion object {
+        const val PREFIX_TOKEN = "Bearer"
+    }
     private val job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext

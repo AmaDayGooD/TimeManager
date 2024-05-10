@@ -7,7 +7,6 @@ import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Settings
 import com.example.timemanager.ui.base.BasePresenter
-import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -31,7 +30,7 @@ class TasksPresenter : BasePresenter<TasksView>() {
 
     private var repository: Repository = Repository(coroutineContext, retrofit, dataBase)
 
-    private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
+    private val token: String = "$PREFIX_TOKEN ${settings.getToken()}"
 
     private var currentSortState = 0
     private var currentOrderState = 0

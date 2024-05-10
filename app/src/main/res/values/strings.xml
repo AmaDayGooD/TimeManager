@@ -61,11 +61,21 @@
     <string name="task_date">Дата</string>
     <string name="task_time">Время</string>
     <string name="award">Награда</string>
+    <string name="awards">Награды</string>
+    <string name="add_award">Добавить награду</string>
     <string name="create_task">Создание задачи</string>
+    <string name="name">Название</string>
+    <string name="description">Описание</string>
+    <string name="create_award">Создать награду</string>
+    <string name="creating_award">Создание награды</string>
+    <string name="price">Стоимость</string>
+    <string name="award_successfully_created">Награда успешно создана</string>
+    <string name="award_failed_created">При создани награды произошла ошибка\nпопробуйте позже</string>
 
     <string name="title_incorrect_start_end_data">Ошибка</string>
     <string name="info_incorrect_start_end_data">Введите корректные значения времени</string>
     <string name="info_incorrect_post_time">Время не может быть прошедшим</string>
+
 
     <string name="successfully">Успешно</string>
     <string name="error">Ошибка</string>

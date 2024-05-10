@@ -4,7 +4,6 @@ import com.example.timemanager.data.DataAward
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
-import com.example.timemanager.entity.Award
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -12,6 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.util.TimeZone
 
 interface RemoteApi {
 
@@ -21,7 +21,10 @@ interface RemoteApi {
     )
 
     @POST("users/login")
-    suspend fun login(@Body dataLogin: DataProfile): DataToken?
+    suspend fun login(
+        @Body dataLogin: DataProfile,
+        @Query("timeZone") timeZone: String
+    ): DataToken?
 
     @GET("users/me")
     suspend fun getProfile(

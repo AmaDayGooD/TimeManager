@@ -1,128 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    tools:context=".ui.screens.list_task.TasksActivity">
-
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:context=".ui.screens.my_children.MyChildrenActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
-        android:weightSum="2">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@string/my_tasks"
-            android:textColor="@color/white"
-            android:textSize="26sp" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageButton
+                android:id="@+id/button_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/ic_arrow_left" />
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    app:cardCornerRadius="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/button_sort_field"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:background="@color/gray"
-                        android:backgroundTint="@color/white"
-                        android:padding="0dp"
-                        android:src="@drawable/ic_timer"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.cardview.widget.CardView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    app:cardCornerRadius="14dp"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/button_sort_order"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:background="@color/gray"
-                        android:backgroundTint="@color/light_main"
-                        android:padding="0dp"
-                        android:src="@drawable/ic_filter_asc"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.cardview.widget.CardView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="@string/awards"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp" />
 
         </LinearLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add_award"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="@color/light_main"
+            android:elevation="0dp"
+            android:padding="15dp"
+            android:text="@string/add_award"
+            android:textColor="@color/main"
+            app:cornerRadius="26dp" />
 
     </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view_list_awards"
+        android:id="@+id/recycle_view_awards_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="70dp"
+        android:layout_weight="99"
         android:orientation="vertical" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
+        android:layout_weight="3"
         android:orientation="horizontal"
         android:padding="0dp"
         android:weightSum="4">
@@ -173,7 +120,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/button_leader_board"
+            android:id="@+id/button_awards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -189,4 +136,4 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</RelativeLayout>
+</LinearLayout>

@@ -11,14 +11,11 @@ import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BasePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
-import java.lang.Exception
 import javax.inject.Inject
 
 class ProfilePresenter : BasePresenter<ProfileView>() {
 
-    companion object {
-        const val PREFIX_TOKEN = "Bearer"
-    }
+
 
     init {
         TimeManagerApp.appComponent!!.inject(this)

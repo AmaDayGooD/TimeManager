@@ -8,13 +8,22 @@ import com.example.timemanager.entity.Award
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import retrofit2.Retrofit
+import java.util.TimeZone
 
 class GetDataFromApi(retrofit: Retrofit) {
 
     private val api = retrofit.create(RemoteApi::class.java)
 
     suspend fun login(dataLogin: DataProfile): DataToken? {
-        return api.login(dataLogin)
+        return try {
+            val token = api.login(dataLogin, TimeZone.getDefault().id)
+            println("MyLog NOT ERROR $token")
+            token
+        }catch (e:Exception){
+            e.printStackTrace()
+            println("MyLog ERROR $e")
+            null
+        }
     }
 
     suspend fun registration(body: DataProfile) {
@@ -73,15 +82,15 @@ class GetDataFromApi(retrofit: Retrofit) {
         api.createAward(token, award)
     }
 
-    suspend fun addAwardForUser(token: String, userId: Int, awardId: Int){
+    suspend fun addAwardForUser(token: String, userId: Int, awardId: Int) {
         api.addAwardForUser(token, userId, awardId)
     }
 
-    suspend fun getAllAwards(token: String): List<Award>{
+    suspend fun getAllAwards(token: String): List<Award> {
         return api.getAllAwards(token)
     }
 
-    suspend fun getAwardsByUser(token: String, userId: String):List<Award>{
+    suspend fun getAwardsByUser(token: String, userId: String): List<Award> {
         return api.getAwardsByUser(token, userId)
     }
 }

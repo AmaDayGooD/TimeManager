@@ -19,12 +19,13 @@
 
         <ProgressBar
             android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
+            style="@style/CustomProgressBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#E0E0E0"
             android:maxHeight="20dp"
             android:minHeight="10dp"
+            android:visibility="gone"
             android:progressTint="#FF4081" />
 
         <LinearLayout
@@ -43,7 +44,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/text_award"
+                android:id="@+id/text_view_award"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="20"

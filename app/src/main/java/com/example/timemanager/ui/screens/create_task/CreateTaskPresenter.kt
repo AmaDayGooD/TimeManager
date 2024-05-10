@@ -9,7 +9,6 @@ import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Settings
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BasePresenter
-import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import java.time.LocalDateTime
@@ -36,7 +35,7 @@ class CreateTaskPresenter : BasePresenter<CreateTaskView>() {
 
     private var repository: Repository = Repository(coroutineContext, retrofit, dataBase)
 
-    private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
+    private val token: String = "$PREFIX_TOKEN ${settings.getToken()}"
 
     private var currentDataTask: DataTask
     private var listChildren: MutableList<Profile> = mutableListOf()

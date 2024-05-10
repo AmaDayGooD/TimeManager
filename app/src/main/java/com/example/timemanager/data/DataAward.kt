@@ -14,7 +14,7 @@ import java.time.ZoneId
  */
 data class DataAward(
     override val idAward: Int? = null,
-    override val nameAward: String = "",
+    val awardName: String = "",
     override val description: String = "",
     val price: String = "",
     val awarded: String? = null,
@@ -26,6 +26,9 @@ data class DataAward(
         "",
         ""
     )
+
+    override val nameAward: String
+        get() = awardName
 
     override val priceAward: Int
         get() = price.toIntOrNull() ?: 10

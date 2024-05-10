@@ -30,7 +30,7 @@ class MyChildrenPresenter : BasePresenter<MyChildrenView>() {
 
     private var repository: Repository = Repository(coroutineContext, retrofit, dataBase)
 
-    private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
+    private val token: String = "$PREFIX_TOKEN ${settings.getToken()}"
 
 
     fun addChild(login: String, firstName: String, lastName: String) {

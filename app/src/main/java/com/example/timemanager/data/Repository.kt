@@ -149,12 +149,14 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun createAward(token: String, award: DataAward) {
-        try {
+    suspend fun createAward(token: String, award: DataAward): Boolean {
+        return try {
             retrofit.createAward(token, award)
+            true
         } catch (e: Exception) {
             e.printStackTrace()
             println("MyLog createAward: error $e ")
+            false
         }
     }
 

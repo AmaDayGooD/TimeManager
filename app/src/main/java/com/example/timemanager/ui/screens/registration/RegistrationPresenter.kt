@@ -1,6 +1,5 @@
 package com.example.timemanager.ui.screens.registration
 
-import android.util.Log
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.Repository
@@ -9,6 +8,7 @@ import com.example.timemanager.data.local_data_base.Settings
 import com.example.timemanager.ui.base.BasePresenter
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
+import java.util.TimeZone
 import javax.inject.Inject
 
 class RegistrationPresenter() : BasePresenter<RegistrationView>() {
@@ -88,7 +88,7 @@ class RegistrationPresenter() : BasePresenter<RegistrationView>() {
             }
         }
         profile = profile.copy(
-            login = login, password = password
+            login = login, password = password, timezone = TimeZone.getDefault().id
         )
         registration(profile)
     }

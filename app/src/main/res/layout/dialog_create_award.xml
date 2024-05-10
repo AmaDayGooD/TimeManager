@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:backgroundTint="@color/main"
+    android:orientation="vertical"
+    app:cardCornerRadius="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/creating_award"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="32sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semi_bold"
+            android:text="@string/price"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            app:cardCornerRadius="26dp">
+
+            <EditText
+                android:id="@+id/edit_text_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="13dp"
+                android:backgroundTint="@color/white"
+                android:drawableStart="@drawable/ic_coin_fire"
+                android:drawablePadding="0dp"
+                android:hint="@string/price"
+                android:maxLength="10"
+                android:textColorHint="@color/gray_light" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semi_bold"
+            android:text="@string/name"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            app:cardCornerRadius="26dp">
+
+            <EditText
+                android:id="@+id/edit_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="13dp"
+                android:backgroundTint="@color/white"
+                android:hint="@string/name"
+                android:textColorHint="@color/gray_light" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_semi_bold"
+            android:text="@string/description"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            app:cardCornerRadius="26dp">
+
+            <EditText
+                android:id="@+id/edit_text_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="13dp"
+                android:backgroundTint="@color/white"
+                android:hint="@string/description"
+                android:maxLines="4"
+                android:textColorHint="@color/gray_light" />
+
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_create_award"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/background_edit_text"
+            android:elevation="0dp"
+            android:fontFamily="@font/manrope_bold"
+            android:paddingVertical="12dp"
+            android:text="@string/create_award"
+            android:textColor="@color/main"
+            android:textSize="18sp"
+            app:cornerRadius="26dp" />
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

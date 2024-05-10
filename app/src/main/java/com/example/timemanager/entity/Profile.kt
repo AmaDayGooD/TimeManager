@@ -9,4 +9,5 @@ interface Profile {
     val username: String?
     val userRole: Role?
     val count: Int?
+    val timezone: String?
 }

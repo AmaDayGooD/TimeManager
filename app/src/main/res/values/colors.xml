@@ -15,6 +15,7 @@
     <color name="base_black">#000000</color>
     <color name="error">#E43939</color>
     <color name="main">#6e6aba</color>
+    <color name="light_main2">#C2C0E4</color>
     <color name="light_main">#fafafa</color>
     <color name="blue">#2B55ED</color>
     <color name="gray">#5E5E5E</color>

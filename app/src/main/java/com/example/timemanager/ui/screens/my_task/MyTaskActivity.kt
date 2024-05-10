@@ -106,6 +106,10 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonData = binding.buttonSetData
         buttonTime = binding.buttonSetTime
         labelExecutor = binding.labelExecutor
+        buttonListTasks = binding.buttonTasks
+        buttonProfile = binding.buttonProfile
+        buttonStatistics = binding.buttonStatistics
+        buttonAwards = binding.buttonAwards
 
         buttonBack.setOnClickListener {
             finish()

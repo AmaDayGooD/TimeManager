@@ -34,7 +34,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
 
     private var repository: Repository = Repository(coroutineContext, retrofit, dataBase)
 
-    private val token: String = "${ProfilePresenter.PREFIX_TOKEN} ${settings.getToken()}"
+    private val token: String = "$PREFIX_TOKEN ${settings.getToken()}"
 
     private var taskInfo: Task? = null
     private var profile: Profile? = null
