@@ -9,15 +9,22 @@ import com.omegar.mvp.viewstate.ViewCommand
 import com.omegar.mvp.viewstate.strategy.AddToEndStrategy
 import com.omegar.mvp.viewstate.strategy.SingleStateStrategy
 import com.omegar.mvp.viewstate.strategy.SkipStrategy
-import kotlin.Boolean
 import kotlin.String
 import kotlin.collections.List
 import kotlin.reflect.KClass
 
 public open class TasksMvpViewState<OMEGAVIEW : TasksView> : OmegaMvpViewState<OMEGAVIEW>(),
 		TasksView {
-	override fun setTaskList(list: List<Task>, state: Boolean) {
-		apply(SetTaskListCommand(list, state))
+	override fun setTaskList(list: List<Task>) {
+		apply(SetTaskListCommand(list))
+	}
+
+	override fun setIconSortField(state: TasksActivity.StateSortField) {
+		apply(SetIconSortFieldCommand(state))
+	}
+
+	override fun setIconSortOrder(state: TasksActivity.StateOrder) {
+		apply(SetIconSortOrderCommand(state))
 	}
 
 	override fun log(message: String) {
@@ -39,13 +46,32 @@ public open class TasksMvpViewState<OMEGAVIEW : TasksView> : OmegaMvpViewState<O
 
 	private class SetTaskListCommand<OMEGAVIEW : TasksView>(
 		public val list: List<Task>,
-		public val state: Boolean,
 	) : ViewCommand<OMEGAVIEW>("setTaskList", AddToEndStrategy) {
 		override fun apply(mvpView: OMEGAVIEW) {
-			mvpView.setTaskList(list, state)
+			mvpView.setTaskList(list)
 		}
 
-		override fun toString(): String = buildString("setTaskList","list",list, "state",state)
+		override fun toString(): String = buildString("setTaskList","list",list)
+	}
+
+	private class SetIconSortFieldCommand<OMEGAVIEW : TasksView>(
+		public val state: TasksActivity.StateSortField,
+	) : ViewCommand<OMEGAVIEW>("setIconSortField", AddToEndStrategy) {
+		override fun apply(mvpView: OMEGAVIEW) {
+			mvpView.setIconSortField(state)
+		}
+
+		override fun toString(): String = buildString("setIconSortField","state",state)
+	}
+
+	private class SetIconSortOrderCommand<OMEGAVIEW : TasksView>(
+		public val state: TasksActivity.StateOrder,
+	) : ViewCommand<OMEGAVIEW>("setIconSortOrder", AddToEndStrategy) {
+		override fun apply(mvpView: OMEGAVIEW) {
+			mvpView.setIconSortOrder(state)
+		}
+
+		override fun toString(): String = buildString("setIconSortOrder","state",state)
 	}
 
 	private class LogCommand<OMEGAVIEW : TasksView>(
