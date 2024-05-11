@@ -86,4 +86,5 @@
     <string name="lack_off_fire">Недостаточно огоньков</string>
     <string name="already_received">Награда уже получена</string>
     <string name="my_awards">Мои награды</string>
+    <string name="received">Получено:</string>
 </resources>
