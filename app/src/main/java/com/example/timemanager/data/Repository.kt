@@ -176,6 +176,15 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun getMyAwards(token: String): List<DataAward> {
+        return try {
+            retrofit.getMyAwards(token)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
     suspend fun getAwardsByUser(token: String, userId: String): List<Award> {
         return try {
             retrofit.getAwardsByUser(token, userId)

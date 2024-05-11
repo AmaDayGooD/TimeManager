@@ -74,7 +74,7 @@ class AwardsPresenter() : BasePresenter<AwardsView>() {
     }
 
     fun getAward(awardId: Int) {
-        if ((profile?.count ?: 0) < listAward[awardId].priceAward) {
+        if ((profile?.count ?: 0) < listAward[awardId-1].priceAward) {
             viewState.showDialogError(AwardErrors.LACK_OFF_FIRE)
             return
         }

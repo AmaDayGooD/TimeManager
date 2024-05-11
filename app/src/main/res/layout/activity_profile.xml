@@ -104,6 +104,20 @@
                         android:textSize="26sp" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_my_awards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:elevation="0dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:padding="15dp"
+                        android:visibility="gone"
+                        android:text="@string/my_awards"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:cornerRadius="26dp" />
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_my_children"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import com.example.timemanager.ui.screens.authorization.AuthorizationPresenter
 import com.example.timemanager.ui.screens.awards.AwardsPresenter
 import com.example.timemanager.ui.screens.create_task.CreateTaskPresenter
 import com.example.timemanager.ui.screens.list_task.TasksPresenter
+import com.example.timemanager.ui.screens.my_awards.MyAwardsPresenter
 import com.example.timemanager.ui.screens.my_children.MyChildrenPresenter
 import com.example.timemanager.ui.screens.my_task.MyTaskPresenter
 import com.example.timemanager.ui.screens.profile.ProfilePresenter
@@ -24,6 +25,7 @@ interface AppComponent {
     fun inject(presenter: MyTaskPresenter)
     fun inject(presenter: CreateTaskPresenter)
     fun inject(presenter: AwardsPresenter)
+    fun inject(presenter: MyAwardsPresenter)
 
     val moshi: Moshi
     val room: DataBaseDao

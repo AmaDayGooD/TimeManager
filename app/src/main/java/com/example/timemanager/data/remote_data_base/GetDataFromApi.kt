@@ -90,6 +90,10 @@ class GetDataFromApi(retrofit: Retrofit) {
         return api.getAllAwards(token)
     }
 
+    suspend fun getMyAwards(token: String): List<DataAward> {
+        return api.getMyAwards(token)
+    }
+
     suspend fun getAwardsByUser(token: String, userId: String): List<Award> {
         return api.getAwardsByUser(token, userId)
     }

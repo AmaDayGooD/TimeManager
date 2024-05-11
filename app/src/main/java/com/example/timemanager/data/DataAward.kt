@@ -17,14 +17,14 @@ data class DataAward(
     val awardName: String = "",
     override val description: String = "",
     val price: String = "",
-    val awarded: String? = null,
+    val userAwards: UserAwards? = null,
 ) : Award {
     constructor(award: Award) : this(
         award.idAward,
         award.nameAward,
         award.description,
         "",
-        "",
+        null,
     )
 
     override val nameAward: String
@@ -33,7 +33,12 @@ data class DataAward(
     override val priceAward: Int
         get() = price.toIntOrNull() ?: 10
 
-    override val awardedDateTime: LocalDateTime?
-        @RequiresApi(Build.VERSION_CODES.O)
-        get() = awarded.let { LocalDateTime.ofInstant(Instant.parse(it), ZoneId.of("UTC")) }
+    override val awarded: UserAwards?
+        get() = userAwards
 }
+
+data class UserAwards(
+    val userId: Int,
+    val awardId: Int,
+    val awarded: String,
+)

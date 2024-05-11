@@ -15,7 +15,7 @@ import com.example.timemanager.entity.Profile
 class AwardListAdapter(private val listener: OnItemClickListener, private val profile: Profile) :
     RecyclerView.Adapter<AwardHolder>() {
 
-    private var listAward = emptyList<Award>()
+    private var listAward: List<Award> = emptyList()
 
     fun setList(list: List<Award>) {
         listAward = list

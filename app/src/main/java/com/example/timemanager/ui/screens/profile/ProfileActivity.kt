@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.view.ContentInfoCompat.Flags
 import com.example.timemanager.R
 import com.example.timemanager.databinding.ActivityProfileBinding
 import com.example.timemanager.entity.Profile
@@ -19,6 +18,7 @@ import com.example.timemanager.ui.screens.authorization.AuthorizationActivity.Co
 import com.example.timemanager.ui.screens.awards.AwardsActivity.Companion.createIntentAwardsScreen
 import com.example.timemanager.ui.screens.create_task.CreateTaskActivity.Companion.createIntentCreateTaskActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity.Companion.createIntentTaskActivity
+import com.example.timemanager.ui.screens.my_awards.MyAwardsActivity.Companion.createIntentMyAwardsScreen
 import com.example.timemanager.ui.screens.my_children.MyChildrenActivity.Companion.createIntentMyChildren
 import com.google.android.material.card.MaterialCardView
 
@@ -37,6 +37,8 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
     private lateinit var buttonEditProfile: Button
     private lateinit var buttonAcceptEdit: Button
     private lateinit var buttonExit: Button
+    private lateinit var buttonMyAwards: Button
+
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonStatistics: MaterialCardView
     private lateinit var buttonAwards: MaterialCardView
@@ -66,7 +68,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         buttonAcceptEdit = binding.buttonAcceptEdit
         buttonMyChildren = binding.buttonMyChildren
         buttonCreateNewTask = binding.buttonCreateNewTask
-
+        buttonMyAwards = binding.buttonMyAwards
 
         buttonListTasks = binding.buttonTasks
         buttonStatistics = binding.buttonStatistics
@@ -85,7 +87,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
             startActivity(createIntentTaskActivity(this))
         }
 
-        buttonAwards.setOnClickListener{
+        buttonAwards.setOnClickListener {
             startActivity(createIntentAwardsScreen(this))
         }
 
@@ -98,6 +100,10 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
             textViewLastName.isEnabled = true
             textViewLastName.backgroundTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(this, R.color.black))
+        }
+
+        buttonMyAwards.setOnClickListener {
+            startActivity(createIntentMyAwardsScreen(this))
         }
 
         buttonAcceptEdit.setOnClickListener {
@@ -126,6 +132,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
             buttonCreateNewTask.visibility = View.GONE
             buttonMyChildren.visibility = View.GONE
             textViewBalance.visibility = View.VISIBLE
+            buttonMyAwards.visibility = View.VISIBLE
             textViewBalance.text = (profile.count ?: 0).toString()
         }
         closeLoading()

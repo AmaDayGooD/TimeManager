@@ -1,6 +1,6 @@
 package com.example.timemanager.entity
 
-import java.time.LocalDateTime
+import com.example.timemanager.data.UserAwards
 
 
 /**
@@ -12,5 +12,5 @@ interface Award {
     val nameAward: String
     val description: String
     val priceAward: Int
-    val awardedDateTime: LocalDateTime?
+    val awarded: UserAwards?
 }

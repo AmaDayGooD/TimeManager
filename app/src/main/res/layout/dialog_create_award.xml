@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="26dp">
 
             <EditText
@@ -46,8 +47,12 @@
                 android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/ic_coin_fire"
                 android:drawablePadding="0dp"
+                android:fontFamily="@font/manrope_medium"
                 android:hint="@string/price"
+                android:imeOptions="actionNext"
+                android:inputType="number"
                 android:maxLength="10"
+                android:textColor="@color/main"
                 android:textColorHint="@color/gray_light" />
 
         </androidx.cardview.widget.CardView>
@@ -64,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="26dp">
 
             <EditText
@@ -73,6 +79,10 @@
                 android:layout_marginHorizontal="13dp"
                 android:backgroundTint="@color/white"
                 android:hint="@string/name"
+                android:fontFamily="@font/manrope_medium"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:textColor="@color/main"
                 android:textColorHint="@color/gray_light" />
 
         </androidx.cardview.widget.CardView>
@@ -89,6 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="26dp">
 
             <EditText
@@ -98,7 +109,11 @@
                 android:layout_marginHorizontal="13dp"
                 android:backgroundTint="@color/white"
                 android:hint="@string/description"
+                android:imeOptions="actionDone"
+                android:fontFamily="@font/manrope_medium"
+                android:inputType="text"
                 android:maxLines="4"
+                android:textColor="@color/main"
                 android:textColorHint="@color/gray_light" />
 
         </androidx.cardview.widget.CardView>

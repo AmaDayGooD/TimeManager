@@ -24,7 +24,7 @@ interface RemoteApi {
     @POST("users/login")
     suspend fun login(
         @Body dataLogin: DataProfile,
-        @Query("timeZone") timeZone: String
+        @Query("timeZone") timeZone: String,
     ): DataToken?
 
     @GET("users/me")
@@ -111,10 +111,15 @@ interface RemoteApi {
     suspend fun addAwardForUser(
         @Header("Authorization") token: String?,
         @Path("awardId") awardId: Int?,
-    ) : DataAward
+    ): DataAward
 
     @GET("/awards")
     suspend fun getAllAwards(
+        @Header("Authorization") token: String?,
+    ): List<DataAward>
+
+    @GET("/users//awards")
+    suspend fun getMyAwards(
         @Header("Authorization") token: String?,
     ): List<DataAward>
 

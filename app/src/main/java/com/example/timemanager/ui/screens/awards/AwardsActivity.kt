@@ -175,8 +175,5 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
                 showInfoDialog(title = getString(R.string.attention), text = getString(error.stringId))
             }
         }
-
     }
-
-
 }
