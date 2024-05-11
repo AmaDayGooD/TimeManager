@@ -10,6 +10,7 @@
     app:cardCornerRadius="26dp">
 
     <LinearLayout
+        android:id="@+id/linear_layout_item_award"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"

@@ -81,4 +81,8 @@
     <string name="error">Ошибка</string>
     <string name="successfully_created">Задача успешно создана</string>
     <string name="failed_created">Задача не создана, попробуйте позже</string>
+    <string name="do_you_agree">Вы согласны?</string>
+    <string name="attention">Внимание!</string>
+    <string name="lack_off_fire">Недостаточно огоньков</string>
+    <string name="already_received">Награда уже получена</string>
 </resources>

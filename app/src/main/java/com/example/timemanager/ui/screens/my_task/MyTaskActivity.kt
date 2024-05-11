@@ -10,7 +10,6 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -358,7 +357,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     override fun taskCompletedShowDialog() {
-        showInfoDialog(context = this, title = getString(R.string.task_completed), text = getString(R.string.text_compete_task))
+        showInfoDialog(title = getString(R.string.task_completed), text = getString(R.string.text_compete_task))
         finish()
     }
 
@@ -414,7 +413,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             taskStart > taskEnd -> {
                 isError = true
                 showInfoDialog(
-                    this,
                     getString(R.string.title_incorrect_start_end_data),
                     getString(R.string.info_incorrect_start_end_data),
                     true
@@ -427,9 +425,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             taskStart < LocalDateTime.now() || taskEnd < LocalDateTime.now() -> {
                 isError = true
                 closeDialog()
-                showInfoDialog(
-                    this, getString(R.string.title_incorrect_start_end_data), getString(R.string.info_incorrect_post_time), true
-                )
+                showInfoDialog(getString(R.string.title_incorrect_start_end_data), getString(R.string.info_incorrect_post_time), true)
                 buttonTime.setBackgroundColor(getColor(R.color.error))
                 buttonEditTask.setBackgroundColor(getColor(R.color.error))
                 buttonEditTask.isClickable = false
@@ -444,30 +440,17 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     private fun showDialogAcceptTask() {
-        val task = presenter.getTask()
-        dialogAcceptTask = Dialog(this, R.style.DialogStyle)
-        dialogAcceptTask.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogAcceptTask.setCancelable(false)
-        dialogAcceptTask.setContentView(R.layout.dialog_accept_task)
-
-        val buttonPositive = dialogAcceptTask.findViewById<Button>(R.id.button_positive)
-        val buttonNegative = dialogAcceptTask.findViewById<Button>(R.id.button_negative)
-
-        buttonPositive.setOnClickListener {
-            val newTask = (currentTask as DataTask).copy(
-                status = Condition.Accept.name
-            )
-            presenter.applyChanges(newTask)
-            presenter.payReward(task.award.toFloat())
-            finish()
-        }
-
-        buttonNegative.setOnClickListener {
-            dialogAcceptTask.dismiss()
-        }
-
-        dialogAcceptTask.show()
-
+        showDialogWithChoice(
+            getString(R.string.confirmation),
+            getString(R.string.confirmation_info),
+            {
+                val task = presenter.getTask()
+                val newTask = (currentTask as DataTask).copy(
+                    status = Condition.Accept.name
+                )
+                presenter.applyChanges(newTask)
+                presenter.payReward(task.award.toFloat())
+            })
     }
 
     private fun setState(button: Button, state: Condition) {

@@ -6,6 +6,8 @@ import com.example.timemanager.entity.Award
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import kotlinx.coroutines.CoroutineScope
+import okhttp3.OkHttp
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -160,13 +162,8 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun addAwardForUser(token: String, userId: Int, awardId: Int) {
-        try {
-            retrofit.addAwardForUser(token, userId, awardId)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            println("MyLog addAwardForUser: error $e ")
-        }
+    suspend fun addAwardForUser(token: String, awardId: Int?) {
+        retrofit.addAwardForUser(token, awardId)
     }
 
     suspend fun getAllAwards(token: String): List<Award> {

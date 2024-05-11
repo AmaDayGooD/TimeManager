@@ -154,10 +154,10 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
 
     override fun showResultCreateTask(result: Boolean) {
         if (result) {
-            showInfoDialog(this, getString(R.string.successfully), getString(R.string.successfully_created))
+            showInfoDialog(getString(R.string.successfully), getString(R.string.successfully_created))
             finish()
         } else {
-            showInfoDialog(this, getString(R.string.error), getString(R.string.failed_created))
+            showInfoDialog(getString(R.string.error), getString(R.string.failed_created))
         }
         closeLoading()
     }
@@ -253,7 +253,6 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
                 if (dateTimeStart > dateTimeEnd) {
                     isError = true
                     showInfoDialog(
-                        this,
                         getString(R.string.title_incorrect_start_end_data),
                         getString(R.string.info_incorrect_start_end_data),
                         true
@@ -275,12 +274,11 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
         timePickerDialog.show()
     }
 
-    private fun checkDate(){
+    private fun checkDate() {
         if (taskDate.atTime(dateTimeStart) < LocalDateTime.now() && taskDate.atTime(dateTimeEnd) < LocalDateTime.now()) {
             closeDialog()
             isError = true
             showInfoDialog(
-                this,
                 getString(R.string.title_incorrect_start_end_data),
                 getString(R.string.info_incorrect_post_time),
                 true

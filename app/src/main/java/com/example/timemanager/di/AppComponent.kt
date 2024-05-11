@@ -10,6 +10,7 @@ import com.example.timemanager.ui.screens.my_children.MyChildrenPresenter
 import com.example.timemanager.ui.screens.my_task.MyTaskPresenter
 import com.example.timemanager.ui.screens.profile.ProfilePresenter
 import com.example.timemanager.ui.screens.registration.RegistrationPresenter
+import com.squareup.moshi.Moshi
 import dagger.Component
 import retrofit2.Retrofit
 
@@ -24,6 +25,7 @@ interface AppComponent {
     fun inject(presenter: CreateTaskPresenter)
     fun inject(presenter: AwardsPresenter)
 
+    val moshi: Moshi
     val room: DataBaseDao
     val retrofit: Retrofit
 }

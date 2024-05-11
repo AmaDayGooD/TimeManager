@@ -6,4 +6,5 @@ package com.example.timemanager.ui.screens.awards.recycle_view
  * Copyright (c) 2024 Omega https://omega-r.com
  */
 interface OnItemClickListener {
+    fun onClickGetAward(awardId: Int)
 }

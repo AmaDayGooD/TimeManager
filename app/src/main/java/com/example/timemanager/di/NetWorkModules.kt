@@ -9,21 +9,18 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@Module
+@Module(includes = [MoshiModule::class])
 class NetWorkModules {
     @Provides
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(moshi: Moshi): Retrofit {
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-
         return Retrofit.Builder().baseUrl("https://savinov.site/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(client).build()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client).build()
     }
 }

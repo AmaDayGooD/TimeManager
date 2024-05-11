@@ -35,7 +35,9 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
 
     companion object {
         fun createIntentTaskActivity(context: Context): Intent {
-            return Intent(context, TasksActivity::class.java)
+            return Intent(context, TasksActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
         }
     }
 

@@ -3,20 +3,29 @@ package com.example.timemanager.ui.screens.awards
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timemanager.R
 import com.example.timemanager.databinding.ActivityAwardsBinding
 import com.example.timemanager.entity.Award
+import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BaseActivity
 import com.example.timemanager.ui.screens.awards.recycle_view.AwardListAdapter
 import com.example.timemanager.ui.screens.awards.recycle_view.OnItemClickListener
+import com.example.timemanager.ui.screens.list_task.TasksActivity
+import com.example.timemanager.ui.screens.profile.ProfileActivity
+import com.google.android.material.card.MaterialCardView
+import com.example.timemanager.ui.screens.awards.AwardsPresenter.AwardErrors as AwardErrors
 
 class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnItemClickListener {
 
@@ -28,9 +37,17 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
 
     companion object {
         fun createIntentAwardsScreen(context: Context): Intent {
-            return Intent(context, AwardsActivity::class.java)
+            return Intent(context, AwardsActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
         }
     }
+
+    private lateinit var buttonBack: ImageButton
+    private lateinit var buttonAwards: MaterialCardView
+    private lateinit var buttonListTasks: MaterialCardView
+    private lateinit var buttonProfile: MaterialCardView
+    private lateinit var buttonStatistics: MaterialCardView
 
     private lateinit var dialog: Dialog
 
@@ -39,10 +56,33 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
 
     private lateinit var adapter: AwardListAdapter
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAwardsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        buttonBack = binding.buttonBack
+        buttonProfile = binding.buttonProfile
+        buttonAwards = binding.buttonAwards
+        buttonStatistics = binding.buttonStatistics
+        buttonListTasks = binding.buttonTasks
+
+        buttonBack.setOnClickListener {
+            finish()
+        }
+
+        buttonListTasks.setOnClickListener {
+            startActivity(TasksActivity.createIntentTaskActivity(this))
+        }
+
+        buttonProfile.setOnClickListener {
+            startActivity(ProfileActivity.createIntentMainScreen(this))
+        }
+
+        buttonStatistics.setOnClickListener {
+            // startActivity(StatisticsActivity.createIntentStatisticsScreen(this))
+        }
 
         recycleView = binding.recycleViewAwardsList
         recycleView.layoutManager = LinearLayoutManager(this)
@@ -54,8 +94,13 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
         }
     }
 
-    override fun setListAdapter(userBalance: Int) {
-        adapter = AwardListAdapter(this, userBalance)
+    override fun setRole(isParent: Boolean) {
+        buttonCreateAward.visibility = if (isParent) View.VISIBLE else View.GONE
+    }
+
+    override fun setListAdapter(profile: Profile?) {
+        if (profile == null) return
+        adapter = AwardListAdapter(this, profile)
         recycleView.adapter = adapter
     }
 
@@ -110,4 +155,28 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
     override fun closeLoading() {
         closeDialog()
     }
+
+    override fun onClickGetAward(awardId: Int) {
+        showDialogWithChoice(
+            title = getString(R.string.award),
+            text = getString(R.string.award),
+            onClickPositive = { presenter.getAward(awardId) },
+            onClickNegative = {}
+        )
+    }
+
+    override fun showDialogError(error: AwardErrors) {
+        when (error) {
+            AwardErrors.LACK_OFF_FIRE -> {
+                showInfoDialog(title = getString(R.string.attention), text = getString(error.stringId))
+            }
+
+            AwardErrors.ALREADY_RECEIVED -> {
+                showInfoDialog(title = getString(R.string.attention), text = getString(error.stringId))
+            }
+        }
+
+    }
+
+
 }

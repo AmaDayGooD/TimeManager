@@ -111,6 +111,11 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.getProfile()
+    }
+
     override fun setProfile(profile: Profile) {
         val username = profile.username?.split(" ")
         textViewFirstName.text = username?.get(0).orEmpty()

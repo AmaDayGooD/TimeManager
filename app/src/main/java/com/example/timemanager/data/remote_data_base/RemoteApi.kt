@@ -4,6 +4,7 @@ import com.example.timemanager.data.DataAward
 import com.example.timemanager.data.DataProfile
 import com.example.timemanager.data.DataTask
 import com.example.timemanager.data.DataToken
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -106,12 +107,11 @@ interface RemoteApi {
         @Body award: DataAward,
     )
 
-    @POST("/users/{userId}/awards/add/{awardId}")
+    @POST("/users/awards/add/{awardId}")
     suspend fun addAwardForUser(
         @Header("Authorization") token: String?,
-        @Path("userId") userId: Int,
-        @Path("awardId") awardId: Int,
-    )
+        @Path("awardId") awardId: Int?,
+    ) : DataAward
 
     @GET("/awards")
     suspend fun getAllAwards(

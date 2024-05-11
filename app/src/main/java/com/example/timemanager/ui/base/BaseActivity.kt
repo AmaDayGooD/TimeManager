@@ -45,25 +45,57 @@ abstract class BaseActivity : OmegaActivity, BaseView {
         dialog?.show()
     }
 
-    private var infoDialog: Dialog? = null
-    fun showInfoDialog(context: Context, title: String = "", text: String = "", cancelable: Boolean = false) {
-        infoDialog = Dialog(this, R.style.DialogFullscreen)
-        infoDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE) // Переместите вызов requestWindowFeature() перед setContentView()
-        infoDialog?.setCancelable(false)
-        infoDialog?.setContentView(R.layout.dialog_info)
+    fun showInfoDialog(title: String = "", text: String = "", cancelable: Boolean = false) {
+        val infoDialog = Dialog(this, R.style.DialogFullscreen)
+        infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        infoDialog.setCancelable(cancelable)
+        infoDialog.setContentView(R.layout.dialog_info)
 
-        val infoTitle = infoDialog?.findViewById<TextView>(R.id.dialog_title)
-        val infoText = infoDialog?.findViewById<TextView>(R.id.dialog_text)
-        val buttonOk = infoDialog?.findViewById<Button>(R.id.button_ok)
+        val infoTitle = infoDialog.findViewById<TextView>(R.id.dialog_title)
+        val infoText = infoDialog.findViewById<TextView>(R.id.dialog_text)
+        val buttonOk = infoDialog.findViewById<Button>(R.id.button_ok)
 
         infoTitle?.text = title
         infoText?.text = text
 
         buttonOk?.setOnClickListener {
-            infoDialog?.dismiss()
+            infoDialog.dismiss()
         }
 
-        infoDialog?.show()
+        infoDialog.show()
+    }
+
+    fun showDialogWithChoice(
+        title: String = getString(R.string.attention),
+        text: String = getString(R.string.do_you_agree),
+        onClickPositive: () -> Unit = {},
+        onClickNegative: () -> Unit = {},
+    ) {
+        val dialogAcceptTask = Dialog(this, R.style.DialogStyle)
+        dialogAcceptTask.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogAcceptTask.setCancelable(false)
+        dialogAcceptTask.setContentView(R.layout.dialog_accept_task)
+
+        val textViewTitle = dialogAcceptTask.findViewById<TextView>(R.id.text_view_title)
+        val textViewText = dialogAcceptTask.findViewById<TextView>(R.id.text_view_text)
+        val buttonPositive = dialogAcceptTask.findViewById<Button>(R.id.button_positive)
+        val buttonNegative = dialogAcceptTask.findViewById<Button>(R.id.button_negative)
+
+        textViewTitle.text = title
+        textViewText.text = text
+
+        buttonPositive.setOnClickListener {
+            onClickPositive()
+            dialogAcceptTask.dismiss()
+        }
+
+        buttonNegative.setOnClickListener {
+            onClickNegative()
+            dialogAcceptTask.dismiss()
+        }
+
+        dialogAcceptTask.show()
+
     }
 
     fun closeDialog() {

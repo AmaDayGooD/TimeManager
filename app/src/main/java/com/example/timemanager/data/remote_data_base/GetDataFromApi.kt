@@ -82,8 +82,8 @@ class GetDataFromApi(retrofit: Retrofit) {
         api.createAward(token, award)
     }
 
-    suspend fun addAwardForUser(token: String, userId: Int, awardId: Int) {
-        api.addAwardForUser(token, userId, awardId)
+    suspend fun addAwardForUser(token: String, awardId: Int?): DataAward {
+        return api.addAwardForUser(token, awardId)
     }
 
     suspend fun getAllAwards(token: String): List<Award> {

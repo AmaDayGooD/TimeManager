@@ -41,7 +41,7 @@ class ProfilePresenter : BasePresenter<ProfileView>() {
         getProfile()
     }
 
-    private fun getProfile() {
+    fun getProfile() {
         launch {
             profile = repository.getProfile(token)
             viewState.setProfile(profile)

@@ -24,7 +24,7 @@ data class DataAward(
         award.nameAward,
         award.description,
         "",
-        ""
+        "",
     )
 
     override val nameAward: String
