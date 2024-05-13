@@ -300,7 +300,7 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {

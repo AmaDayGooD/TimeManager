@@ -9,9 +9,9 @@ import com.example.timemanager.data.Condition
 import com.example.timemanager.data.Importance
 import com.example.timemanager.databinding.ItemTaskBinding
 import com.example.timemanager.entity.Task
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class ItemHolder(private val itemView: View, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,8 +21,8 @@ class ItemHolder(private val itemView: View, private val listener: OnItemClickLi
     fun onBindView(itemTask: Task) = with(binding) {
         listener.setState(cardTaskState, itemTask.condition ?: Condition.Open)
         textViewTaskName.text = itemTask.taskName
-        textTaskTimeLimit.text =
-            listener.getResourcesString(R.string.execution_range, formatDate(itemTask.taskStart), formatDate(itemTask.taskEnd))
+        textTaskTimeLimit.text = formatDate(itemTask.taskStart)
+        textTaskDateLimit.text = listener.getResourcesString(R.string.time_range, formatTime(itemTask.taskStart), formatTime(itemTask.taskEnd))
         textAward.text = itemTask.award
         setSeriousness(itemTask.seriousness ?: Importance.Low)
         taskItem.setOnClickListener {
@@ -32,11 +32,12 @@ class ItemHolder(private val itemView: View, private val listener: OnItemClickLi
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun formatDate(inputDate: LocalDateTime): String {
-        return if (inputDate.toLocalDate() == LocalDate.now()) {
-            listener.getResourcesString(R.string.now_data, inputDate.format(DateTimeFormatter.ofPattern("HH:mm")))
-        } else {
-            inputDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-        }
+        return inputDate.format(DateTimeFormatter.ofPattern("dd MMMM").withLocale(Locale("ru")))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun formatTime(inputDate:LocalDateTime): String {
+        return inputDate.format(DateTimeFormatter.ofPattern("HH:mm"))
     }
 
     private fun setSeriousness(seriousness: Importance) {

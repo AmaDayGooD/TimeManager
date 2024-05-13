@@ -80,7 +80,7 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {

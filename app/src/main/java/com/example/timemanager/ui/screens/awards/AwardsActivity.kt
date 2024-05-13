@@ -149,7 +149,7 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {
@@ -158,8 +158,8 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
 
     override fun onClickGetAward(awardId: Int) {
         showDialogWithChoice(
-            title = getString(R.string.award),
-            text = getString(R.string.award),
+            title = getString(R.string.get_award),
+            text = getString(R.string.for_you_work),
             onClickPositive = { presenter.getAward(awardId) },
             onClickNegative = {}
         )

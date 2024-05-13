@@ -85,7 +85,7 @@ class MyAwardsActivity : BaseActivity(R.layout.activity_my_awards), MyAwardsView
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {

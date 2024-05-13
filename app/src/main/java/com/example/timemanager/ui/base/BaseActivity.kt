@@ -32,11 +32,11 @@ abstract class BaseActivity : OmegaActivity, BaseView {
     }
 
     private var dialog: Dialog? = null
-    fun showDialog(context: Context) {
+    fun showDialog() {
         dialog = Dialog(this, R.style.DialogFullscreen)
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE) // Переместите вызов requestWindowFeature() перед setContentView()
-        dialog?.setCancelable(false)
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.setContentView(R.layout.dialog_loading)
+        dialog?.setCancelable(false)
         val window = dialog?.window
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,

@@ -50,10 +50,8 @@
     <string name="ok">Ок</string>
     <string name="confirmation_info">Вы действительно подтвердаете выполнение задачи?</string>
     <string name="confirmation">Подтверждение</string>
-    <string name="execution_range">Выполнить задачу\nс %s\nдо %s</string>
+    <string name="time_range">%s - %s</string>
     <string name="deadline">Срок</string>
-    <string name="deadlines">%s - %s</string>
-    <string name="now_data">сегодня %s</string>
     <string name="text_compete_task">Задача завершена, ожидайте смены статуса задания</string>
     <string name="importance">Важность</string>
     <string name="begin_and_end_task">Начало и окончание задачи</string>
@@ -64,9 +62,11 @@
     <string name="awards">Награды</string>
     <string name="add_award">Добавить награду</string>
     <string name="create_task">Создание задачи</string>
+    <string name="get_award">Получить награду</string>
+    <string name="for_you_work">Она за твои старания!</string>
     <string name="name">Название</string>
     <string name="description">Описание</string>
-    <string name="create_award">Создать награду</string>
+    <string name="create">Создать</string>
     <string name="creating_award">Создание награды</string>
     <string name="price">Стоимость</string>
     <string name="award_successfully_created">Награда успешно создана</string>

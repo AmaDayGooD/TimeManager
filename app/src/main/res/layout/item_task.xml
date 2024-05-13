@@ -26,9 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
+                android:paddingBottom="10dp"
                 android:text="@string/task_name"
                 android:textColor="@color/main"
-                android:paddingBottom="10dp"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -37,31 +37,68 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/text_task_time_limit"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="textEnd"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:text="30.03.2024 12:00"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/main"
-                    android:textSize="18sp" />
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        app:cardBackgroundColor="@color/main"
+                        app:cardCornerRadius="20dp">
+
+                        <TextView
+                            android:id="@+id/text_task_time_limit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="5dp"
+                            android:text="12:00 - 14:00"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        app:cardBackgroundColor="@color/main"
+                        app:cardCornerRadius="20dp">
+
+                        <TextView
+                            android:id="@+id/text_task_date_limit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="5dp"
+                            android:text="10 мая"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="10dp"
                     android:layout_gravity="end"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/text_award"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:drawableEnd="@drawable/ic_award_fire"
                         android:drawablePadding="5dp"
@@ -80,8 +117,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
                             android:layout_marginEnd="15dp"
+                            android:layout_weight="2"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 

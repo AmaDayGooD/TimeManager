@@ -24,7 +24,7 @@
             android:maxEms="40"
             android:text="dgdfg"
             android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/dialog_text"
@@ -35,7 +35,7 @@
             android:maxLines="10"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:textSize="18sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_ok"

@@ -135,7 +135,7 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {

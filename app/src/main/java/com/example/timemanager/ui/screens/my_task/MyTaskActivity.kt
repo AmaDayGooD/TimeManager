@@ -60,7 +60,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonStatistics: MaterialCardView
 
     private lateinit var dialogChangeStatusTask: Dialog
-    private lateinit var dialogAcceptTask: Dialog
 
     private lateinit var buttonBack: ImageButton
     private lateinit var textAward: TextView
@@ -143,7 +142,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             textViewNameTask.text = currentTask.taskName
             buttonData.text = formatTaskDate(currentTask.taskStart.toLocalDate())
             buttonTime.text =
-                getString(R.string.deadlines, currentTask.taskStart.toLocalTime(), currentTask.taskEnd.toLocalTime())
+                getString(R.string.time_range, currentTask.taskStart.toLocalTime(), currentTask.taskEnd.toLocalTime())
             setSeriousness(currentTask.seriousness ?: Importance.Medium)
             setState(buttonTaskState, currentTask.condition ?: Condition.Open)
         }
@@ -362,7 +361,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     // Метод для отображения диалога выбора даты

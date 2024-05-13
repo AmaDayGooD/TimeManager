@@ -182,7 +182,7 @@ class RegistrationActivity : BaseActivity(R.layout.activity_registration), Regis
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {

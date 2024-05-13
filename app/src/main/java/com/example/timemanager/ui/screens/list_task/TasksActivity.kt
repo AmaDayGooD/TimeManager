@@ -143,7 +143,7 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
     }
 
     override fun showLoading() {
-        showDialog(this)
+        showDialog()
     }
 
     override fun closeLoading() {
