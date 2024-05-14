@@ -3,6 +3,7 @@ package com.example.timemanager.ui.screens.list_task
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.timemanager.TimeManagerApp
+import com.example.timemanager.data.Condition
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Settings
@@ -34,6 +35,7 @@ class TasksPresenter : BasePresenter<TasksView>() {
 
     private var currentSortState = 0
     private var currentOrderState = 0
+    private var currentSelectState = Condition.Open
 
     fun updateList() {
         launch {
@@ -48,8 +50,7 @@ class TasksPresenter : BasePresenter<TasksView>() {
     }
 
     fun changeSortField() {
-        currentSortState = (currentSortState + 1) % 5
-        println("MyLog $currentSortState ${StateSortField.entries[currentSortState].icon}")
+        currentSortState = (currentSortState + 1) % 4
         setListTask()
     }
 
@@ -58,20 +59,27 @@ class TasksPresenter : BasePresenter<TasksView>() {
         setListTask()
     }
 
+    fun changeStatusField(condition: Condition) {
+        currentSelectState = condition
+        setListTask()
+    }
+
     private fun setListTask() {
         launch {
+            viewState.showLoading()
             val field = StateSortField.entries[currentSortState]
             val order = StateOrder.entries[currentOrderState]
 
             val listTasks = repository.getTasks(
                 token,
                 field.name,
-                order.name
+                order.name,
+                currentSelectState.name
             )
             viewState.setIconSortField(field)
             viewState.setIconSortOrder(order)
             viewState.setTaskList(listTasks ?: emptyList())
-
+            viewState.closeLoading()
         }
     }
 }

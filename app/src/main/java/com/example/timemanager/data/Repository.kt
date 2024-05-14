@@ -6,8 +6,6 @@ import com.example.timemanager.entity.Award
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import kotlinx.coroutines.CoroutineScope
-import okhttp3.OkHttp
-import retrofit2.HttpException
 import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -78,9 +76,14 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getTasks(token: String, sortField: String = "START_DATE_TIME", sortOrder: String = "ASC"): List<Task>? {
+    suspend fun getTasks(
+        token: String,
+        sortField: String = "START_DATE_TIME",
+        sortOrder: String = "ASC",
+        sortState: String = Condition.Open.name,
+    ): List<Task>? {
         return try {
-            retrofit.getTasks(token, sortField, sortOrder)
+            retrofit.getTasks(token, sortField, sortOrder, sortState)
         } catch (e: Exception) {
             e.printStackTrace()
             println("MyLog $e")

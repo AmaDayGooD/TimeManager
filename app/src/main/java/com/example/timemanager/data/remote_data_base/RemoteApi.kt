@@ -57,6 +57,7 @@ interface RemoteApi {
         @Header("Authorization") token: String?,
         @Query("sort") sort: String?,
         @Query("order") order: String?,
+        @Query("state") state: String?
     ): List<DataTask>
 
     @GET("tasks/{taskId}")

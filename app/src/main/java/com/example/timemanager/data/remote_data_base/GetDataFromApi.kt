@@ -19,7 +19,7 @@ class GetDataFromApi(retrofit: Retrofit) {
             val token = api.login(dataLogin, TimeZone.getDefault().id)
             println("MyLog NOT ERROR $token")
             token
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             println("MyLog ERROR $e")
             null
@@ -46,8 +46,8 @@ class GetDataFromApi(retrofit: Retrofit) {
         api.createTask(token, childId, newTask)
     }
 
-    suspend fun getTasks(token: String, sortField: String, sortOrder: String): List<Task> {
-        return api.getAllTasks(token, sortField, sortOrder)
+    suspend fun getTasks(token: String, sortField: String, sortOrder: String, sortState: String): List<Task> {
+        return api.getAllTasks(token, sortField, sortOrder, sortState)
     }
 
     suspend fun getTask(token: String, idTask: String): Task {
