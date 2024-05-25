@@ -77,7 +77,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var seriousness: Importance
     private var currentTask: Task? = null
 
-    private var idTask: Int = -1
     private var isParent: Boolean = false
     private var modeEditTask: Boolean = false
 
@@ -89,8 +88,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         super.onCreate(savedInstanceState)
         binding = ActivityMyTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        idTask = intent.getIntExtra(TASK_ID, -1)
 
         buttonBack = binding.buttonBack
         textAward = binding.textAward
@@ -151,26 +148,10 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         else textViewDescriptionTask.text = currentTask?.description
 
         when (userRole) {
-            Role.Child -> {
-                labelExecutor.visibility = View.GONE
-                textTaskPerformer.visibility = View.GONE
-                buttonTaskNotCompleted.visibility = View.GONE
-                buttonTaskState.isEnabled = false
-                isParent = false
-            }
-
-            Role.Parent -> {
-                labelExecutor.visibility = View.VISIBLE
-                textTaskPerformer.apply {
-                    visibility = View.VISIBLE
-                    text = taskPerformer?.username
-                }
-                buttonTaskNotCompleted.visibility = View.VISIBLE
-
-                isParent = true
-            }
+            Role.Child -> isParent = false
+            Role.Parent -> isParent = true
         }
-        setRole()
+        setRole(taskPerformer)
 
         if (currentTask?.condition == Condition.Accept) {
             goneAllButtons()
@@ -191,11 +172,15 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     @SuppressLint("ResourceAsColor")
-    private fun setRole() {
+    private fun setRole(taskPerformer: Profile?) {
         if (isParent) {
-            buttonEditTask.visibility = View.VISIBLE
+            labelExecutor.visibility = View.VISIBLE
+            textTaskPerformer.apply {
+                visibility = View.VISIBLE
+                text = taskPerformer?.username
+            }
             buttonTaskNotCompleted.visibility = View.VISIBLE
-
+            buttonEditTask.visibility = View.VISIBLE
 
             buttonEditTask.setOnClickListener {
                 changeEnableButton()
@@ -245,6 +230,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             }
 
         } else {
+            labelExecutor.visibility = View.GONE
+            textTaskPerformer.visibility = View.GONE
             buttonEditTask.visibility = View.GONE
             buttonTaskNotCompleted.visibility = View.GONE
 
