@@ -1,10 +1,10 @@
 package com.example.timemanager.ui.screens.my_task
 
-import com.example.timemanager.R
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Condition
 import com.example.timemanager.data.DataTask
-import com.example.timemanager.data.Importance
 import com.example.timemanager.data.Repository
 import com.example.timemanager.data.local_data_base.DataBaseDao
 import com.example.timemanager.data.local_data_base.Role
@@ -12,8 +12,6 @@ import com.example.timemanager.data.local_data_base.Settings
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.entity.Task
 import com.example.timemanager.ui.base.BasePresenter
-import com.example.timemanager.ui.screens.profile.ProfilePresenter
-import com.omega_r.libs.extensions.common.ifNull
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -66,6 +64,7 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun taskCompleted() {
         applyChanges((taskInfo as DataTask).copy(status = Condition.Completed.toString()))
         viewState.taskCompletedShowDialog()

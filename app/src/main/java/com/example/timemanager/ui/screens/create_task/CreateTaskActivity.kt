@@ -15,11 +15,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.timemanager.R
 import com.example.timemanager.data.Importance
 import com.example.timemanager.databinding.ActivityCreateTaskBinding
 import com.example.timemanager.ui.base.BaseActivity
+import com.example.timemanager.ui.screens.list_task.TasksActivity.Companion.createIntentTaskActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -154,8 +156,8 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
 
     override fun showResultCreateTask(result: Boolean) {
         if (result) {
-            showInfoDialog(getString(R.string.successfully), getString(R.string.successfully_created))
-            finish()
+            Toast.makeText(this, getString(R.string.successfully_created), Toast.LENGTH_SHORT ).show()
+            startActivity(createIntentTaskActivity(this))
         } else {
             showInfoDialog(getString(R.string.error), getString(R.string.failed_created))
         }

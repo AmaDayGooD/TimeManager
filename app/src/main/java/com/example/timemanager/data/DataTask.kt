@@ -10,11 +10,13 @@ import java.time.ZoneId
 import kotlin.reflect.KCallable
 import kotlin.reflect.full.starProjectedType
 
+@RequiresApi(Build.VERSION_CODES.O)
 data class DataTask(
     override val idTask: Int?,
     override val relationId: Int?,
     override val taskName: String,
     override val description: String,
+    val executionTime: String?,
     val startDateTime: String?,
     val endDateTime: String?,
     override val award: String,
@@ -29,18 +31,20 @@ data class DataTask(
         task.description,
         "",
         "",
+        "",
         task.award,
         null,
         null,
         task.error
     )
 
+    override val completedAt: LocalDateTime
+        get() = LocalDateTime.ofInstant(Instant.parse(executionTime), ZoneId.of("UTC"))
+
     override val taskStart: LocalDateTime
-        @RequiresApi(Build.VERSION_CODES.O)
         get() = LocalDateTime.ofInstant(Instant.parse(startDateTime), ZoneId.of("UTC"))
 
     override val taskEnd: LocalDateTime
-        @RequiresApi(Build.VERSION_CODES.O)
         get() = LocalDateTime.ofInstant(Instant.parse(endDateTime), ZoneId.of("UTC"))
 
     override val seriousness: Importance

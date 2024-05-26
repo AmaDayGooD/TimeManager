@@ -73,6 +73,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonData: Button
     private lateinit var buttonTime: Button
     private lateinit var labelExecutor: LinearLayout
+    private lateinit var layoutCompletedAt: LinearLayout
+    private lateinit var buttonCompletedAt: Button
 
     private lateinit var seriousness: Importance
     private var currentTask: Task? = null
@@ -101,6 +103,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonData = binding.buttonSetData
         buttonTime = binding.buttonSetTime
         labelExecutor = binding.labelExecutor
+        layoutCompletedAt = binding.linearLayoutCompletedAt
+        buttonCompletedAt = binding.buttonCompletedAt
         buttonListTasks = binding.buttonTasks
         buttonProfile = binding.buttonProfile
         buttonStatistics = binding.buttonStatistics
@@ -147,9 +151,9 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         if (currentTask?.description.isNullOrEmpty()) textViewDescriptionTask.visibility = View.GONE
         else textViewDescriptionTask.text = currentTask?.description
 
-        when (userRole) {
-            Role.Child -> isParent = false
-            Role.Parent -> isParent = true
+        isParent = when (userRole) {
+            Role.Child -> false
+            Role.Parent -> true
         }
         setRole(taskPerformer)
 
@@ -224,9 +228,12 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
                     showDialogAcceptTask()
                 }
 
-            } else buttonTaskCompleted.apply {
-                isEnabled = false
-                backgroundTintList = ColorStateList.valueOf(getColor(R.color.button_disable))
+            } else {
+                showCompletedAt()
+                buttonTaskCompleted.apply {
+                    isEnabled = false
+                    backgroundTintList = ColorStateList.valueOf(getColor(R.color.button_disable))
+                }
             }
 
         } else {
@@ -235,6 +242,9 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             buttonEditTask.visibility = View.GONE
             buttonTaskNotCompleted.visibility = View.GONE
 
+            if (currentTask?.condition == Condition.Accept) {
+                showCompletedAt()
+            }
             if (currentTask?.condition == Condition.Completed || currentTask?.condition == Condition.Accept) {
                 buttonTaskCompleted.visibility = View.GONE
             } else {
@@ -243,6 +253,18 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
                 }
             }
         }
+    }
+
+    private fun showCompletedAt() {
+        currentTask?.completedAt?.let {
+            layoutCompletedAt.visibility = View.VISIBLE
+            buttonCompletedAt.text = convertDataTime(it)
+        }
+    }
+
+    private fun convertDataTime(dataTime: LocalDateTime): String {
+        val formatter = DateTimeFormatter.ofPattern("d MMMM HH:mm", Locale("ru"))
+        return dataTime.format(formatter)
     }
 
     private fun changeEnableButton() {
@@ -399,9 +421,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             taskStart > taskEnd -> {
                 isError = true
                 showInfoDialog(
-                    getString(R.string.title_incorrect_start_end_data),
-                    getString(R.string.info_incorrect_start_end_data),
-                    true
+                    getString(R.string.title_incorrect_start_end_data), getString(R.string.info_incorrect_start_end_data), true
                 )
                 buttonTime.setBackgroundColor(getColor(R.color.error))
                 buttonEditTask.setBackgroundColor(getColor(R.color.error))
@@ -411,7 +431,9 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             taskStart < LocalDateTime.now() || taskEnd < LocalDateTime.now() -> {
                 isError = true
                 closeDialog()
-                showInfoDialog(getString(R.string.title_incorrect_start_end_data), getString(R.string.info_incorrect_post_time), true)
+                showInfoDialog(
+                    getString(R.string.title_incorrect_start_end_data), getString(R.string.info_incorrect_post_time), true
+                )
                 buttonTime.setBackgroundColor(getColor(R.color.error))
                 buttonEditTask.setBackgroundColor(getColor(R.color.error))
                 buttonEditTask.isClickable = false
@@ -426,17 +448,14 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     private fun showDialogAcceptTask() {
-        showDialogWithChoice(
-            getString(R.string.confirmation),
-            getString(R.string.confirmation_info),
-            {
-                val task = presenter.getTask()
-                val newTask = (currentTask as DataTask).copy(
-                    status = Condition.Accept.name
-                )
-                presenter.applyChanges(newTask)
-                presenter.payReward(task.award.toFloat())
-            })
+        showDialogWithChoice(getString(R.string.confirmation), getString(R.string.confirmation_info), {
+            val task = presenter.getTask()
+            val newTask = (currentTask as DataTask).copy(
+                status = Condition.Accept.name
+            )
+            presenter.applyChanges(newTask)
+            presenter.payReward(task.award.toFloat())
+        })
     }
 
     private fun setState(button: Button, state: Condition) {

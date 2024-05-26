@@ -1,5 +1,7 @@
 package com.example.timemanager.ui.screens.create_task
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.timemanager.TimeManagerApp
 import com.example.timemanager.data.Condition
 import com.example.timemanager.data.DataTask
@@ -19,6 +21,7 @@ import javax.inject.Inject
  * Created by Alexander Shibaev on 04.05.2024.
  * Copyright (c) 2024 Omega https://omega-r.com
  */
+@RequiresApi(Build.VERSION_CODES.O)
 class CreateTaskPresenter : BasePresenter<CreateTaskView>() {
     init {
         TimeManagerApp.appComponent!!.inject(this)
@@ -48,6 +51,7 @@ class CreateTaskPresenter : BasePresenter<CreateTaskView>() {
             relationId = null,
             taskName = "",
             description = "",
+            executionTime = "",
             startDateTime = null,
             endDateTime = null,
             award = "",

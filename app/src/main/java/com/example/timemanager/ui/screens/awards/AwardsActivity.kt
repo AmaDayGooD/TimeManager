@@ -138,6 +138,7 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
     override fun resultCreatingAward(result: Boolean) {
         if (result) {
             Toast.makeText(this, getString(R.string.award_successfully_created), Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
             presenter.updateListAward()
         } else {
             Toast.makeText(this, getString(R.string.award_failed_created), Toast.LENGTH_SHORT).show()

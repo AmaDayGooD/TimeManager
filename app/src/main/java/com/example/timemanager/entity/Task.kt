@@ -9,6 +9,7 @@ interface Task {
     val relationId: Int?
     val taskName: String
     val description: String
+    val completedAt: LocalDateTime
     val taskStart: LocalDateTime
     val taskEnd: LocalDateTime
     val award: String
