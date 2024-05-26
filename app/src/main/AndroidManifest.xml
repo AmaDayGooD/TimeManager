@@ -17,6 +17,12 @@
         android:windowSoftInputMode="adjustPan|adjustResize"
         tools:targetApi="31">
         <activity
+            android:name=".ui.screens.users_top.UsersTopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.users_top.UsersTopActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.screens.my_awards.MyAwardsActivity"
             android:exported="false" />
         <activity

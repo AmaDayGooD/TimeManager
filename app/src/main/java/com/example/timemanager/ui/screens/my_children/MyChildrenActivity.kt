@@ -22,6 +22,7 @@ import com.example.timemanager.ui.screens.awards.AwardsActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.my_children.recycle_view.ChildrenListAdapter
 import com.example.timemanager.ui.screens.profile.ProfileActivity
+import com.example.timemanager.ui.screens.users_top.UsersTopActivity
 import com.google.android.material.card.MaterialCardView
 
 class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildrenView {
@@ -43,13 +44,14 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
     private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonProfile: MaterialCardView
-    private lateinit var buttonStatistics: MaterialCardView
+    private lateinit var buttonUserTop: MaterialCardView
 
     private lateinit var buttonBack: ImageButton
     private lateinit var recycleView: RecyclerView
     private lateinit var buttonAddChild: Button
 
     private val adapter = ChildrenListAdapter()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
 
         buttonListTasks = binding.buttonTasks
         buttonProfile = binding.buttonProfile
-        buttonStatistics = binding.buttonStatistics
+        buttonUserTop = binding.buttonStatistics
         buttonAwards = binding.buttonAwards
 
         buttonBack = binding.buttonBack
@@ -83,6 +85,10 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
 
         buttonProfile.setOnClickListener {
             startActivity(ProfileActivity.createIntentMainScreen(this))
+        }
+
+        buttonUserTop.setOnClickListener {
+            startActivity(UsersTopActivity.createIntentUsersTopScreen(this))
         }
 
         buttonAwards.setOnClickListener {

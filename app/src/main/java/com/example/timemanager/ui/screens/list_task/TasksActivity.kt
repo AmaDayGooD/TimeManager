@@ -21,6 +21,7 @@ import com.example.timemanager.ui.screens.list_task.recycle_view.OnItemClickList
 import com.example.timemanager.ui.screens.list_task.recycle_view.TaskListAdapter
 import com.example.timemanager.ui.screens.my_task.MyTaskActivity.Companion.createIntentMyTask
 import com.example.timemanager.ui.screens.profile.ProfileActivity.Companion.createIntentMainScreen
+import com.example.timemanager.ui.screens.users_top.UsersTopActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -44,7 +45,7 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
     private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonProfile: MaterialCardView
-    private lateinit var buttonStatistics: MaterialCardView
+    private lateinit var buttonUserTop: MaterialCardView
 
     private lateinit var recyclerView: RecyclerView
 
@@ -68,7 +69,7 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
 
         buttonProfile = binding.buttonProfile
         buttonAwards = binding.buttonAwards
-        buttonStatistics = binding.buttonStatistics
+        buttonUserTop = binding.buttonStatistics
         recyclerView = binding.recycleViewList
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -115,8 +116,8 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
             startActivity(createIntentMainScreen(this))
         }
 
-        buttonStatistics.setOnClickListener {
-            // startActivity(StatisticsActivity.createIntentStatisticsScreen(this))
+        buttonUserTop.setOnClickListener {
+            startActivity(UsersTopActivity.createIntentUsersTopScreen(this))
         }
 
         buttonAwards.setOnClickListener {

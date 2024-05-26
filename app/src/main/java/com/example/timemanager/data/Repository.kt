@@ -197,4 +197,13 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun getTopUser(token: String, family: Boolean = false, sortByBalance: Boolean = false): List<Profile> {
+        return try {
+            retrofit.getTopUser(token, family.toString(), sortByBalance.toString())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
 }

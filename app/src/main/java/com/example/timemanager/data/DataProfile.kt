@@ -10,7 +10,8 @@ data class DataProfile(
     override val username: String? = null,
     val role: String? = null,
     val balance: String? = "0",
-    override val timezone: String? = ""
+    override val timezone: String? = "",
+    override val numberCompletedTask: Int? = 0
 ) : Profile {
     constructor(profile: Profile) : this(
         profile.id,

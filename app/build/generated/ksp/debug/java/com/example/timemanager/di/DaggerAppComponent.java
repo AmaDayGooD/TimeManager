@@ -20,6 +20,8 @@ import com.example.timemanager.ui.screens.profile.ProfilePresenter;
 import com.example.timemanager.ui.screens.profile.ProfilePresenter_MembersInjector;
 import com.example.timemanager.ui.screens.registration.RegistrationPresenter;
 import com.example.timemanager.ui.screens.registration.RegistrationPresenter_MembersInjector;
+import com.example.timemanager.ui.screens.users_top.UsersTopPresenter;
+import com.example.timemanager.ui.screens.users_top.UsersTopPresenter_MembersInjector;
 import com.squareup.moshi.Moshi;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Preconditions;
@@ -176,6 +178,11 @@ public final class DaggerAppComponent {
     }
 
     @Override
+    public void inject(UsersTopPresenter presenter) {
+      injectUsersTopPresenter(presenter);
+    }
+
+    @Override
     public Moshi getMoshi() {
       return MoshiModule_ProvideMoshiFactory.provideMoshi(moshiModule);
     }
@@ -251,6 +258,13 @@ public final class DaggerAppComponent {
       MyAwardsPresenter_MembersInjector.injectRetrofit(instance, getRetrofit());
       MyAwardsPresenter_MembersInjector.injectDataBase(instance, getRoom());
       MyAwardsPresenter_MembersInjector.injectSettings(instance, settings());
+      return instance;
+    }
+
+    private UsersTopPresenter injectUsersTopPresenter(UsersTopPresenter instance) {
+      UsersTopPresenter_MembersInjector.injectRetrofit(instance, getRetrofit());
+      UsersTopPresenter_MembersInjector.injectDataBase(instance, getRoom());
+      UsersTopPresenter_MembersInjector.injectSettings(instance, settings());
       return instance;
     }
   }

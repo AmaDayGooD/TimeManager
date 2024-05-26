@@ -24,6 +24,7 @@ import com.example.timemanager.ui.screens.awards.recycle_view.AwardListAdapter
 import com.example.timemanager.ui.screens.awards.recycle_view.OnItemClickListener
 import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.profile.ProfileActivity
+import com.example.timemanager.ui.screens.users_top.UsersTopActivity.Companion.createIntentUsersTopScreen
 import com.google.android.material.card.MaterialCardView
 import com.example.timemanager.ui.screens.awards.AwardsPresenter.AwardErrors as AwardErrors
 
@@ -47,7 +48,7 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
     private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonProfile: MaterialCardView
-    private lateinit var buttonStatistics: MaterialCardView
+    private lateinit var buttonUserTop: MaterialCardView
 
     private lateinit var dialog: Dialog
 
@@ -65,7 +66,7 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
         buttonBack = binding.buttonBack
         buttonProfile = binding.buttonProfile
         buttonAwards = binding.buttonAwards
-        buttonStatistics = binding.buttonStatistics
+        buttonUserTop = binding.buttonStatistics
         buttonListTasks = binding.buttonTasks
 
         buttonBack.setOnClickListener {
@@ -80,8 +81,8 @@ class AwardsActivity : BaseActivity(R.layout.activity_awards), AwardsView, OnIte
             startActivity(ProfileActivity.createIntentMainScreen(this))
         }
 
-        buttonStatistics.setOnClickListener {
-            // startActivity(StatisticsActivity.createIntentStatisticsScreen(this))
+        buttonUserTop.setOnClickListener {
+             startActivity(createIntentUsersTopScreen(this))
         }
 
         recycleView = binding.recycleViewAwardsList

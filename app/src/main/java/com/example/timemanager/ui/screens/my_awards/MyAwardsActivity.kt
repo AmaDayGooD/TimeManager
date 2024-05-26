@@ -16,6 +16,7 @@ import com.example.timemanager.ui.screens.awards.AwardsActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.my_awards.my_awards_recycle_view.MyAwardsListAdapter
 import com.example.timemanager.ui.screens.profile.ProfileActivity
+import com.example.timemanager.ui.screens.users_top.UsersTopActivity
 import com.google.android.material.card.MaterialCardView
 
 class MyAwardsActivity : BaseActivity(R.layout.activity_my_awards), MyAwardsView {
@@ -38,7 +39,7 @@ class MyAwardsActivity : BaseActivity(R.layout.activity_my_awards), MyAwardsView
     private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonProfile: MaterialCardView
-    private lateinit var buttonStatistics: MaterialCardView
+    private lateinit var buttonUserTop: MaterialCardView
 
     private lateinit var recycleView: RecyclerView
     private lateinit var adapter: MyAwardsListAdapter
@@ -53,7 +54,7 @@ class MyAwardsActivity : BaseActivity(R.layout.activity_my_awards), MyAwardsView
         buttonAwards = binding.buttonAwards
         buttonListTasks = binding.buttonTasks
         buttonProfile = binding.buttonProfile
-        buttonStatistics = binding.buttonStatistics
+        buttonUserTop = binding.buttonStatistics
 
         recycleView = binding.recycleViewMyAwardsList
         recycleView.layoutManager = LinearLayoutManager(this)
@@ -68,6 +69,10 @@ class MyAwardsActivity : BaseActivity(R.layout.activity_my_awards), MyAwardsView
 
         buttonProfile.setOnClickListener {
             startActivity(ProfileActivity.createIntentMainScreen(this))
+        }
+
+        buttonUserTop.setOnClickListener {
+            startActivity(UsersTopActivity.createIntentUsersTopScreen(this))
         }
 
         buttonAwards.setOnClickListener {

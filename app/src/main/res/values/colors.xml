@@ -25,6 +25,10 @@
     <color name="reject">#D83C18</color>
     <color name="accept">#E37D00</color>
 
+    <color name="first_position">#F3D035</color>
+    <color name="two_position">#939393</color>
+    <color name="three_position">#B15A02</color>
+
     <color name="semitransparent_gray">#564A4A4A</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

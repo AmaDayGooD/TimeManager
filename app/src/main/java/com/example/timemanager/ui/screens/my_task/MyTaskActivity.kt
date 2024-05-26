@@ -28,6 +28,7 @@ import com.example.timemanager.ui.base.BaseActivity
 import com.example.timemanager.ui.screens.awards.AwardsActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.profile.ProfileActivity
+import com.example.timemanager.ui.screens.users_top.UsersTopActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import java.time.LocalDate
@@ -57,7 +58,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonProfile: MaterialCardView
-    private lateinit var buttonStatistics: MaterialCardView
+    private lateinit var buttonUserTop: MaterialCardView
 
     private lateinit var dialogChangeStatusTask: Dialog
 
@@ -107,7 +108,7 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
         buttonCompletedAt = binding.buttonCompletedAt
         buttonListTasks = binding.buttonTasks
         buttonProfile = binding.buttonProfile
-        buttonStatistics = binding.buttonStatistics
+        buttonUserTop = binding.buttonStatistics
         buttonAwards = binding.buttonAwards
 
         buttonBack.setOnClickListener {
@@ -122,8 +123,8 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             startActivity(ProfileActivity.createIntentMainScreen(this))
         }
 
-        buttonStatistics.setOnClickListener {
-            // startActivity(StatisticsActivity.createIntentStatisticsScreen(this))
+        buttonUserTop.setOnClickListener {
+            startActivity(UsersTopActivity.createIntentUsersTopScreen(this))
         }
 
         buttonAwards.setOnClickListener {

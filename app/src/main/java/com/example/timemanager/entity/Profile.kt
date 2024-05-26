@@ -10,4 +10,5 @@ interface Profile {
     val userRole: Role?
     val count: Int?
     val timezone: String?
+    val numberCompletedTask: Int?
 }

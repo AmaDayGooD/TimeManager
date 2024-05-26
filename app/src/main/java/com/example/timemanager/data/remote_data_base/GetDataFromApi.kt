@@ -97,4 +97,8 @@ class GetDataFromApi(retrofit: Retrofit) {
     suspend fun getAwardsByUser(token: String, userId: String): List<Award> {
         return api.getAwardsByUser(token, userId)
     }
+
+    suspend fun getTopUser(token: String, family: String?, sortByBalance: String?): List<Profile> {
+        return api.getTopUser(token, family, sortByBalance)
+    }
 }

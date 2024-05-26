@@ -129,4 +129,11 @@ interface RemoteApi {
         @Header("Authorization") token: String?,
         @Path("userId") userId: String,
     ): List<DataAward>
+
+    @GET("/users/top")
+    suspend fun getTopUser(
+        @Header("Authorization") token: String?,
+        @Query("family") family: String? = null,
+        @Query("sortByBalance") sortByBalance: String? = null,
+    ): List<DataProfile>
 }

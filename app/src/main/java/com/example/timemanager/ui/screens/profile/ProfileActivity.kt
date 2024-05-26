@@ -20,6 +20,7 @@ import com.example.timemanager.ui.screens.create_task.CreateTaskActivity.Compani
 import com.example.timemanager.ui.screens.list_task.TasksActivity.Companion.createIntentTaskActivity
 import com.example.timemanager.ui.screens.my_awards.MyAwardsActivity.Companion.createIntentMyAwardsScreen
 import com.example.timemanager.ui.screens.my_children.MyChildrenActivity.Companion.createIntentMyChildren
+import com.example.timemanager.ui.screens.users_top.UsersTopActivity
 import com.google.android.material.card.MaterialCardView
 
 class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
@@ -40,7 +41,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
     private lateinit var buttonMyAwards: Button
 
     private lateinit var buttonListTasks: MaterialCardView
-    private lateinit var buttonStatistics: MaterialCardView
+    private lateinit var buttonUserTop: MaterialCardView
     private lateinit var buttonAwards: MaterialCardView
     private lateinit var buttonMyChildren: Button
     private lateinit var buttonCreateNewTask: Button
@@ -71,7 +72,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         buttonMyAwards = binding.buttonMyAwards
 
         buttonListTasks = binding.buttonTasks
-        buttonStatistics = binding.buttonStatistics
+        buttonUserTop = binding.buttonStatistics
         buttonAwards = binding.buttonAwards
 
 
@@ -85,6 +86,10 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
         buttonListTasks.setOnClickListener {
             startActivity(createIntentTaskActivity(this))
+        }
+
+        buttonUserTop.setOnClickListener {
+            startActivity(UsersTopActivity.createIntentUsersTopScreen(this))
         }
 
         buttonAwards.setOnClickListener {
