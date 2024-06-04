@@ -1,13 +1,19 @@
 package com.example.timemanager.ui.screens.profile
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.timemanager.R
@@ -39,6 +45,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
     private lateinit var buttonAcceptEdit: Button
     private lateinit var buttonExit: Button
     private lateinit var buttonMyAwards: Button
+    private lateinit var buttonShowQrCode: Button
 
     private lateinit var buttonListTasks: MaterialCardView
     private lateinit var buttonUserTop: MaterialCardView
@@ -70,6 +77,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         buttonMyChildren = binding.buttonMyChildren
         buttonCreateNewTask = binding.buttonCreateNewTask
         buttonMyAwards = binding.buttonMyAwards
+        buttonShowQrCode = binding.buttonShowQrCode
 
         buttonListTasks = binding.buttonTasks
         buttonUserTop = binding.buttonStatistics
@@ -111,6 +119,10 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
             startActivity(createIntentMyAwardsScreen(this))
         }
 
+        buttonShowQrCode.setOnClickListener {
+            showDialogWithQrCode()
+        }
+
         buttonAcceptEdit.setOnClickListener {
             val firstName = textViewFirstName.text.toString()
             val lastName = textViewLastName.text.toString()
@@ -138,6 +150,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
             buttonMyChildren.visibility = View.GONE
             textViewBalance.visibility = View.VISIBLE
             buttonMyAwards.visibility = View.VISIBLE
+            buttonShowQrCode.visibility = View.VISIBLE
             textViewBalance.text = (profile.count ?: 0).toString()
         }
         closeLoading()
@@ -156,6 +169,37 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
     override fun gotoAuthorization() {
         startActivity(createIntentAuthScreen(this))
+    }
+
+    private fun showDialogWithQrCode() {
+        val dialog = Dialog(this, R.style.DialogFullscreen)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_qr_code)
+        dialog.setCancelable(true)
+        val window = dialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val imageQr = dialog.findViewById<ImageView>(R.id.image_qr)
+        val userName = dialog.findViewById<TextView>(R.id.text_view_user_name)
+        val profile = presenter.getFullProfile()
+        val login = profile.login
+        userName.text = profile.username
+
+        try {
+            val qrGenerator = QRGEncoder(login, QRGContents.Type.TEXT, 500)
+            qrGenerator.colorWhite
+            val bitMap = qrGenerator.getBitmap(1)
+
+            imageQr.setImageBitmap(bitMap)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        dialog.show()
     }
 
     override fun showToast(text: String) {

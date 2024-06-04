@@ -48,6 +48,8 @@ class ProfilePresenter : BasePresenter<ProfileView>() {
         }
     }
 
+    fun getFullProfile(): Profile = profile
+
     private fun getToken(): String {
         return settings.getToken() ?: ""
     }

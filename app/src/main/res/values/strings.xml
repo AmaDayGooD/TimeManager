@@ -90,4 +90,5 @@
     <string name="my_awards">Мои награды</string>
     <string name="received">Получено:</string>
     <string name="users_rating">Рейтинг пользователей</string>
+    <string name="qr_code">QR-код</string>
 </resources>

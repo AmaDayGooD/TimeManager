@@ -76,6 +76,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.48"
     implementation 'javax.inject:javax.inject:1'
     ksp "com.google.dagger:dagger-compiler:2.48"
+    // QR-code
+    implementation 'com.github.androidmads:QRGenerator:1.0.1'
+//    implementation 'me.dm7.barcodescanner:zbar:1.8.4'
     //OmegaBase
     implementation 'com.github.Omega-R.OmegaBase:core:16c07b6196'
 }
