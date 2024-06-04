@@ -81,7 +81,7 @@
                 android:textColor="@color/main"
                 android:textSize="20sp"
                 app:cornerRadius="60dp"
-                app:strokeColor="@color/semitransparent_gray"
+                app:strokeColor="@color/white"
                 app:strokeWidth="5dp" />
         </LinearLayout>
 

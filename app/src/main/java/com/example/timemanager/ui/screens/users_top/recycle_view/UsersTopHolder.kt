@@ -25,7 +25,7 @@ class UsersTopHolder(private val itemView: View) : RecyclerView.ViewHolder(itemV
     @SuppressLint("ResourceType")
     fun onBind(item: Profile, position: Int) = with(binding) {
         textViewUserName.text = item.username
-        textViewBalance.text = item.count.toString()
+        textViewBalance.text = item.numberCompletedTask.toString()
         setColorItem(position)
     }
 
@@ -52,7 +52,6 @@ class UsersTopHolder(private val itemView: View) : RecyclerView.ViewHolder(itemV
                 textViewUserName.setTextColor(getColor(itemView.context, R.color.light_main))
                 textViewBalance.setTextColor(getColor(itemView.context, R.color.light_main))
             }
-
         }
     }
 }
