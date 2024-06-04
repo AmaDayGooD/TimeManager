@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
     android:orientation="vertical"
-    android:paddingTop="30dp"
+    android:weightSum="100"
     tools:context=".ui.screens.profile.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="100"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/manrope_extra_bold"
             android:text="@string/my_profile"
             android:textAlignment="center"
@@ -90,6 +91,7 @@
                         android:id="@+id/textview_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
                         android:backgroundTint="@color/transparent"
                         android:enabled="false"
                         android:fontFamily="@font/manrope_semi_bold"
@@ -111,8 +113,20 @@
                         android:elevation="0dp"
                         android:fontFamily="@font/manrope_medium"
                         android:padding="15dp"
-                        android:visibility="gone"
                         android:text="@string/my_awards"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        app:cornerRadius="26dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_show_qr_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        android:fontFamily="@font/manrope_medium"
+                        android:padding="15dp"
+                        android:text="@string/show_qr_code"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:cornerRadius="26dp" />
@@ -121,7 +135,6 @@
                         android:id="@+id/button_my_children"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:elevation="0dp"
                         android:fontFamily="@font/manrope_medium"
                         android:padding="15dp"
@@ -134,7 +147,6 @@
                         android:id="@+id/button_create_new_task"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:elevation="0dp"
                         android:fontFamily="@font/manrope_medium"
                         android:padding="15dp"
@@ -147,7 +159,7 @@
                         android:id="@+id/button_edit_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="15dp"
+                        android:layout_marginBottom="15dp"
                         android:elevation="0dp"
                         android:fontFamily="@font/manrope_medium"
                         android:padding="15dp"
@@ -184,7 +196,9 @@
                 </LinearLayout>
 
             </ScrollView>
+
         </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -259,4 +273,4 @@
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-</RelativeLayout>
+</LinearLayout>

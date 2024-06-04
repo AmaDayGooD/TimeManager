@@ -24,6 +24,7 @@
     <string name="show_today">На сегодня</string>
     <string name="show_all">Все</string>
     <string name="my_children">Мои дети</string>
+    <string name="show_qr_code">Показать QR-код</string>
     <string name="new_task">Новая задача</string>
     <string name="add_chldren">Добавить ребёнка</string>
     <string name="task_name">Название задачи</string>

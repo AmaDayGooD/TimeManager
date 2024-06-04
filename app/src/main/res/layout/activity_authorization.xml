@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    android:gravity="center_horizontal|top"
+    android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="150dp"
     tools:context=".ui.screens.authorization.AuthorizationActivity">
 
     <com.google.android.material.card.MaterialCardView
