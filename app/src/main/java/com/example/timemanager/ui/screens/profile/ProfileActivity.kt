@@ -130,7 +130,9 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
         }
 
         buttonExit.setOnClickListener {
-            presenter.requestGotoAuthorization()
+            showDialogWithChoice(
+                text = getString(R.string.really_get_out),
+                onClickPositive = { presenter.requestGotoAuthorization() })
         }
     }
 

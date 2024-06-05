@@ -91,4 +91,6 @@
     <string name="received">Получено:</string>
     <string name="users_rating">Рейтинг пользователей</string>
     <string name="qr_code">QR-код</string>
+    <string name="really_get_out">Вы действительно хотите выйти?</string>
+    <string name="title_activity_scan">ScanActivity</string>
 </resources>

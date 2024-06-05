@@ -1,5 +1,6 @@
 package com.example.timemanager.ui.screens.my_children
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +21,7 @@ import com.example.timemanager.R
 import com.example.timemanager.databinding.ActivityMyChildrenBinding
 import com.example.timemanager.entity.Profile
 import com.example.timemanager.ui.base.BaseActivity
+import com.example.timemanager.ui.screens.ScanActivity.Companion.createIntentScanActivity
 import com.example.timemanager.ui.screens.awards.AwardsActivity
 import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.my_children.recycle_view.ChildrenListAdapter
@@ -28,6 +32,7 @@ import com.google.android.material.card.MaterialCardView
 class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildrenView {
 
     private lateinit var binding: ActivityMyChildrenBinding
+    private lateinit var scanActivityResultLauncher: ActivityResultLauncher<Intent>
 
     override val presenter: MyChildrenPresenter by providePresenter {
         MyChildrenPresenter()
@@ -37,6 +42,7 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
         fun createIntentMyChildren(context: Context): Intent {
             return Intent(context, MyChildrenActivity::class.java)
         }
+        const val SCAN_REQUEST_CODE = 102
     }
 
     private lateinit var dialog: Dialog
@@ -58,7 +64,6 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
         binding = ActivityMyChildrenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         buttonListTasks = binding.buttonTasks
         buttonProfile = binding.buttonProfile
         buttonUserTop = binding.buttonStatistics
@@ -75,8 +80,19 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
             finish()
         }
 
+        scanActivityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val scanResult = result.data?.getStringExtra("SCAN_RESULT")
+                Toast.makeText(this, "Scanned: $scanResult", Toast.LENGTH_LONG).show()
+            }
+        }
+
         buttonAddChild.setOnClickListener {
-            showInputDialog()
+//            showInputDialog()
+//            startActivity(createIntentScanActivity(this))
+            scanActivityResultLauncher.launch(createIntentScanActivity(this))
         }
 
         buttonListTasks.setOnClickListener {
@@ -129,6 +145,16 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         dialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        println("MyLog scanResult ${requestCode == SCAN_REQUEST_CODE} && ${resultCode == Activity.RESULT_OK}")
+        if (requestCode == SCAN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val scanResult = data?.getStringExtra("SCAN_RESULT")
+            println("MyLog scanResult $scanResult")
+            Toast.makeText(this, "MyLog Scanned: $scanResult", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun successfullyAdded() {
