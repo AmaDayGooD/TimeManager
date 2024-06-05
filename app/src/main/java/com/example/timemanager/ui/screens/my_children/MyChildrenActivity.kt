@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +29,7 @@ import com.example.timemanager.ui.screens.list_task.TasksActivity
 import com.example.timemanager.ui.screens.my_children.recycle_view.ChildrenListAdapter
 import com.example.timemanager.ui.screens.profile.ProfileActivity
 import com.example.timemanager.ui.screens.users_top.UsersTopActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildrenView {
@@ -85,14 +88,14 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 val scanResult = result.data?.getStringExtra("SCAN_RESULT")
-                Toast.makeText(this, "Scanned: $scanResult", Toast.LENGTH_LONG).show()
+                scanResult?.let { result ->
+                    presenter.addChild(result)
+                }
             }
         }
 
         buttonAddChild.setOnClickListener {
-//            showInputDialog()
-//            startActivity(createIntentScanActivity(this))
-            scanActivityResultLauncher.launch(createIntentScanActivity(this))
+            showInputDialog()
         }
 
         buttonListTasks.setOnClickListener {
@@ -125,19 +128,32 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.dialog_add_child)
 
+        val buttonFindByQrCode = dialog.findViewById<MaterialButton>(R.id.button_by_qr_code)
+        val buttonFindByLogin = dialog.findViewById<MaterialButton>(R.id.button_by_login)
+        val linearLayoutFindByLogin = dialog.findViewById<LinearLayout>(R.id.linear_layout_find_by_login)
+        val editTextLogin = dialog.findViewById<EditText>(R.id.edit_text_login)
         val buttonAddChild = dialog.findViewById<Button>(R.id.button_add_child)
 
-        buttonAddChild.setOnClickListener {
-            val login = dialog.findViewById<EditText>(R.id.edit_text_login).text.toString()
-            val firstName = dialog.findViewById<EditText>(R.id.edit_text_first_name).text.toString()
-            val lastName = dialog.findViewById<EditText>(R.id.edit_text_last_name).text.toString()
+        buttonFindByQrCode.setOnClickListener {
+            scanActivityResultLauncher.launch(createIntentScanActivity(this))
+        }
 
-            if (login.isNotEmpty() && firstName.isNotEmpty() && lastName.isNotEmpty()) {
-                presenter.addChild(login, firstName, lastName)
-            } else {
-                Toast.makeText(this@MyChildrenActivity, "Заполните все поля", Toast.LENGTH_LONG)
+        buttonFindByLogin.setOnClickListener {
+            buttonFindByQrCode.visibility = View.GONE
+            buttonFindByLogin.visibility = View.GONE
+            linearLayoutFindByLogin.visibility = View.VISIBLE
+            editTextLogin.isFocusable = true
+        }
+
+        buttonAddChild.setOnClickListener {
+            val login = editTextLogin.text.toString()
+
+            if (login.isNotEmpty())
+                presenter.addChild(login)
+             else
+                Toast.makeText(this@MyChildrenActivity, R.string.empty_field, Toast.LENGTH_LONG)
                     .show()
-            }
+
         }
         val window = dialog.window
         window?.setLayout(
@@ -149,10 +165,8 @@ class MyChildrenActivity : BaseActivity(R.layout.activity_my_children), MyChildr
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        println("MyLog scanResult ${requestCode == SCAN_REQUEST_CODE} && ${resultCode == Activity.RESULT_OK}")
         if (requestCode == SCAN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val scanResult = data?.getStringExtra("SCAN_RESULT")
-            println("MyLog scanResult $scanResult")
             Toast.makeText(this, "MyLog Scanned: $scanResult", Toast.LENGTH_LONG).show()
         }
     }

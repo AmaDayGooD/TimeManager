@@ -33,20 +33,16 @@ class MyChildrenPresenter : BasePresenter<MyChildrenView>() {
     private val token: String = "$PREFIX_TOKEN ${settings.getToken()}"
 
 
-    fun addChild(login: String, firstName: String, lastName: String) {
-        firstName.replace('ё','е',ignoreCase = true)
-        lastName.replace('ё','е',ignoreCase = true)
-            val profile = DataProfile(
-                login = login,
-                username = "$firstName $lastName"
-            )
+    fun addChild(login: String) {
+        val profile = DataProfile(
+            login = login
+        )
         launch {
             val result = repository.addChild(token, profile)
             if (result) {
                 getChild()
                 viewState.successfullyAdded()
-            }
-            else viewState.filedAdded()
+            } else viewState.filedAdded()
         }
     }
 

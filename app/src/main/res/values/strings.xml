@@ -5,6 +5,7 @@
     <string name="sign_up">Войти</string>
     <string name="forgot_password">Забыли пароль?</string>
     <string name="registration">Зарегистрироваться</string>
+    <string name="empty_field">Пустое поле</string>
     <string name="fill_all_field">Заполните все поля</string>
     <string name="registration_completed_successfully">Регистрация прошла успешно</string>
     <string name="error_has_occurred">Произошла ошибка: \n%s</string>
@@ -28,6 +29,8 @@
     <string name="new_task">Новая задача</string>
     <string name="add_chldren">Добавить ребёнка</string>
     <string name="task_name">Название задачи</string>
+    <string name="find_by_qr_code">Найти по QR-коду</string>
+    <string name="find_by_login">Найти по логину</string>
     <string name="find_child">Найти ребёнка</string>
     <string name="filed_find">Пользователя с данным\nлогином и паролем не найдено\nили вы уже добавили этот профиль</string>
     <string name="child_added">Ребёнок добавлен</string>
