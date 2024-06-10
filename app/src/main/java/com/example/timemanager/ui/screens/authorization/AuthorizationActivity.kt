@@ -30,7 +30,7 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
     companion object {
         fun createIntentAuthScreen(context: Context): Intent {
             return Intent(context, AuthorizationActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK)
             }
         }
     }
@@ -69,6 +69,7 @@ class AuthorizationActivity : BaseActivity(R.layout.activity_authorization), Aut
 
     override fun requestGotoMainActivity() {
         startActivity(createIntentMainScreen(this))
+        finish()
     }
 
     override fun requestGotoRegisterActivity() {

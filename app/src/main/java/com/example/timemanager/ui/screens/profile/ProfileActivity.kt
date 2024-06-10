@@ -171,6 +171,7 @@ class ProfileActivity : BaseActivity(R.layout.activity_profile), ProfileView {
 
     override fun gotoAuthorization() {
         startActivity(createIntentAuthScreen(this))
+        finish()
     }
 
     private fun showDialogWithQrCode() {

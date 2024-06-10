@@ -79,7 +79,9 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
         buttonTaskDate = binding.buttonSetData
         buttonTaskTime = binding.buttonSetTime
         buttonAcceptCreateTask = binding.buttonAcceptNewTask
+
         setStateButton()
+
         buttonBack.setOnClickListener {
             finish()
         }
@@ -122,7 +124,6 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
             override fun afterTextChanged(p0: Editable?) {}
         })
 
-
         enableEditField()
 
         buttonAcceptCreateTask.setOnClickListener {
@@ -139,7 +140,16 @@ class CreateTaskActivity : BaseActivity(R.layout.activity_create_task), CreateTa
 
     override fun setNameChild(nameChild: List<String>) {
         list = nameChild
-        initSpinner()
+        if (list.isEmpty()) {
+            showInfoDialog(
+                title = getString(R.string.attention),
+                text = getString(R.string.need_add_child),
+                cancelable = true
+            ) {
+                finish()
+            }
+        }
+        else initSpinner()
     }
 
     private fun initSpinner() {

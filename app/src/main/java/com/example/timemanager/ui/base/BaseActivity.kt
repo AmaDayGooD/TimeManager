@@ -45,7 +45,7 @@ abstract class BaseActivity : OmegaActivity, BaseView {
         dialog?.show()
     }
 
-    fun showInfoDialog(title: String = "", text: String = "", cancelable: Boolean = false) {
+    fun showInfoDialog(title: String = "", text: String = "", cancelable: Boolean = false, buttonAction: ()->(Unit) = { }) {
         val infoDialog = Dialog(this, R.style.DialogFullscreen)
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         infoDialog.setCancelable(cancelable)
@@ -59,6 +59,7 @@ abstract class BaseActivity : OmegaActivity, BaseView {
         infoText?.text = text
 
         buttonOk?.setOnClickListener {
+            buttonAction.invoke()
             infoDialog.dismiss()
         }
 
