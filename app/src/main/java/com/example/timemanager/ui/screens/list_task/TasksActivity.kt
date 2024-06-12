@@ -60,6 +60,7 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
     private val adapter = TaskListAdapter(this)
 
     private var buttons = listOf<MaterialButton>()
+    private var currentButton: MaterialButton? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,6 +127,7 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
     }
 
     private fun selectButton(button: MaterialButton) {
+        currentButton = button
         button.strokeColor = ColorStateList.valueOf(getColor(R.color.semitransparent_gray))
         buttons.forEach {
             if (it != button) it.strokeColor = ColorStateList.valueOf(getColor(R.color.transparent))
@@ -164,7 +166,9 @@ class TasksActivity : BaseActivity(R.layout.activity_tasks), TasksView, OnItemCl
 
     override fun onResume() {
         super.onResume()
-        presenter.updateList()
+        currentButton?.let{
+            selectButton(it)
+        }
     }
 
     override fun setTaskList(list: List<Task>) {
