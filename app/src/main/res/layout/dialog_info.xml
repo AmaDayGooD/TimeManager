@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/manrope_bold"
             android:maxEms="40"
-            android:text="dgdfg"
+            android:text="@string/attention"
             android:textColor="@color/white"
             android:textSize="22sp" />
 

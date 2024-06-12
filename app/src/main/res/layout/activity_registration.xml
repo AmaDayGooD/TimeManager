@@ -69,6 +69,7 @@
                         android:paddingVertical="70dp"
                         android:text="@string/parent"
                         android:textAlignment="center"
+                        android:textColor="@color/gray_light"
                         android:textSize="30sp" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -89,6 +90,7 @@
                         android:paddingVertical="70dp"
                         android:text="@string/сhildren"
                         android:textAlignment="center"
+                        android:textColor="@color/gray_light"
                         android:textSize="30sp" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -98,8 +100,8 @@
         <ScrollView
             android:id="@+id/linear_layout_text_fields"
             android:layout_width="match_parent"
-            android:scrollbars="none"
             android:layout_height="match_parent"
+            android:scrollbars="none"
             android:visibility="gone">
 
             <LinearLayout
