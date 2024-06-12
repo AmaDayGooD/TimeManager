@@ -57,7 +57,7 @@
     <string name="time_range">%s - %s</string>
     <string name="deadline">Срок</string>
     <string name="completedAt">Выполнена</string>
-    <string name="text_compete_task">Задача завершена, ожидайте смены статуса задания</string>
+    <string name="text_compete_task">Задача завершена, ожидайте подтверждения родителя</string>
     <string name="importance">Важность</string>
     <string name="begin_and_end_task">Начало и окончание задачи</string>
 

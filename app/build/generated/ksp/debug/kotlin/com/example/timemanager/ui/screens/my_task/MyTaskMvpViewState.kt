@@ -24,10 +24,6 @@ public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState
 		apply(SetTaskInfoCommand(task, userRole, taskPerformer))
 	}
 
-	override fun closeDialogChangeStatus() {
-		apply(CloseDialogChangeStatusCommand())
-	}
-
 	override fun taskCompletedShowDialog() {
 		apply(TaskCompletedShowDialogCommand())
 	}
@@ -60,15 +56,6 @@ public open class MyTaskMvpViewState<OMEGAVIEW : MyTaskView> : OmegaMvpViewState
 
 		override fun toString(): String = buildString("setTaskInfo","task",task, "userRole",userRole,
 				"taskPerformer",taskPerformer)
-	}
-
-	private class CloseDialogChangeStatusCommand<OMEGAVIEW : MyTaskView>() :
-			ViewCommand<OMEGAVIEW>("closeDialogChangeStatus", AddToEndStrategy) {
-		override fun apply(mvpView: OMEGAVIEW) {
-			mvpView.closeDialogChangeStatus()
-		}
-
-		override fun toString(): String = buildString("closeDialogChangeStatus",)
 	}
 
 	private class TaskCompletedShowDialogCommand<OMEGAVIEW : MyTaskView>() :

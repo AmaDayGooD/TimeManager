@@ -366,8 +366,9 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
     }
 
     override fun taskCompletedShowDialog() {
-        showInfoDialog(title = getString(R.string.task_completed), text = getString(R.string.text_compete_task))
-        finish()
+        showInfoDialog(title = getString(R.string.task_completed), text = getString(R.string.text_compete_task)) {
+            finish()
+        }
     }
 
     override fun showLoading() {
@@ -464,10 +465,6 @@ class MyTaskActivity : BaseActivity(R.layout.activity_my_task), MyTaskView {
             text = getString(state.textResId)
             setBackgroundColor(ContextCompat.getColor(this@MyTaskActivity, state.colorRes))
         }
-    }
-
-    override fun closeDialogChangeStatus() {
-        dialogChangeStatusTask.dismiss()
     }
 
     override fun closeLoading() {

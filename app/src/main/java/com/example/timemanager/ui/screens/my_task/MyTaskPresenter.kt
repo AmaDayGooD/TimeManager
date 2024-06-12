@@ -82,7 +82,6 @@ class MyTaskPresenter(private val taskId: Int) : BasePresenter<MyTaskView>() {
             repository.updateTask(token, newTask)
             viewState.closeLoading()
             setTask()
-            viewState.closeDialogChangeStatus()
         }
     }
 

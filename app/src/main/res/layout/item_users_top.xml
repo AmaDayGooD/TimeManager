@@ -38,7 +38,7 @@
             android:gravity="center_vertical|end"
             android:textColor="@color/main"
             android:textSize="20sp"
-            app:drawableEndCompat="@drawable/ic_award_fire" />
+            app:drawableEndCompat="@drawable/ic_list_light" />
 
     </LinearLayout>
 
